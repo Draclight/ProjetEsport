@@ -10,9 +10,9 @@ namespace projetesport.Models
     {
         #region Propriétés
         public int ID { get; set; }
-        public int CompetitionId { get; set; }
+        public int CompetitionID{ get; set; }
         public Competition Competition { get; set; }
-        public int EquipeId { get; set; }
+        public int EquipeID { get; set; }
         public Equipe Equipe { get; set; }
         public int Position { get; set; }
         [Display(Name = "Victoires")]

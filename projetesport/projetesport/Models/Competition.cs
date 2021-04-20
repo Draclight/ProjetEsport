@@ -24,7 +24,7 @@ namespace projetesport.Models
         #endregion
 
         #region Clées
-        public int TypeCompetitiionId { get; set; }
+        public int TypeCompetitionID { get; set; }
         public TypeCompetition TypeCompetition { get; set; }
         public ICollection<Equipe> Equipes { get; set; }
         public ICollection<Jeu> Jeux { get; set; }

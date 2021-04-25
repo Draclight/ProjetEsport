@@ -11,7 +11,7 @@ using projetesport.Models;
 
 namespace projetesport.Pages.Licencies
 {
-    [Authorize(Roles = "Administrateur, Licencie")]
+    [Authorize(Roles = "Administrateur")]
     public class CreateModel : PageModel
     {
         private readonly projetesport.Data.ApplicationDbContext _context;

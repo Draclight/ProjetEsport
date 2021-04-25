@@ -20,18 +20,19 @@ namespace projetesport.Models
         [Required]
         public String Nom { get; set; }
         [Display(Name = "Identifiant utilisateur")]
-        public Guid IdUtilisateur { get; set; }
+        public String IdUtilisateur { get; set; }
         [Display(Name = "Créé le")]
         public DateTime CreeLe { get; set; }
         [Display(Name = "Modifié le")]
         public DateTime ModifieeLe { get; set; }
+        public bool PremierConnexion { get; set; }
         #endregion
 
         #region Clées
         [Display(Name = "Numéro de l'équipe")]
-        public int EquipeID { get; set; }
+        public int? EquipeID { get; set; }
         [Display(Name = "Equipe")]
-        public Equipe Equipe { get; set; }
+        public Equipe? Equipe { get; set; }
         #endregion
     }
 }

@@ -16,12 +16,13 @@ namespace projetEsport.Models
         public String Penom { get; set; }
         [Display(Name = "Nom")]
         public String Nom { get; set; }
-        [Display(Name = "Identifiant utilisateur")]
+        [Display(Name = "Identifiant")]
         public String IdUtilisateur { get; set; }
         [Display(Name = "Créé le")]
         public DateTime CreeLe { get; set; }
         [Display(Name = "Modifié le")]
         public DateTime ModifieeLe { get; set; }
+        [Display(Name = "Déjà Connecté?")]
         public bool PremierConnexion { get; set; }
         #endregion
 

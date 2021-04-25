@@ -3,8 +3,47 @@
 @{
     ViewData["Title"] = "Home page";
 }
+@if (User.Identity.IsAuthenticated)
+{
+    @if (Model.Licencie.PremierConnexion)
+    {
+        ViewData["Title"] = "Home page - Première Connexion";
+        <h1>Première Connexion</h1>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+        <h4>Licencie</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Licencie.ID" />
+                    <div class="form-group">
+                        <label asp-for="Licencie.Pseudo" class="control-label"></label>
+                        <input asp-for="Licencie.Pseudo" class="form-control" />
+                        <span asp-validation-for="Licencie.Pseudo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Licencie.Penom" class="control-label"></label>
+                        <input asp-for="Licencie.Penom" class="form-control" />
+                        <span asp-validation-for="Licencie.Penom" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Licencie.Nom" class="control-label"></label>
+                        <input asp-for="Licencie.Nom" class="form-control" />
+                        <span asp-validation-for="Licencie.Nom" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" asp-page-handler="PremiereConnexion" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>
+}

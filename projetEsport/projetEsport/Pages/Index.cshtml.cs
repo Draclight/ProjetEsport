@@ -60,38 +60,30 @@ namespace projetEsport.Pages
         {
             try
             {
-                //Info user
-                Licencie.PremierConnexion = false;
-                Licencie.ModifieeLe = DateTime.UtcNow;
-                _context.Attach(Licencie).State = EntityState.Added;
-                await _context.SaveChangesAsync();
+                if (await _context.Users.AnyAsync(u => u.Id == Licencie.IdUtilisateur))
+                {
+                    //Licencie
+                    Licencie.PremierConnexion = false;
+                    _context.Attach(Licencie).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
 
-                //Suppréssion role
-                var rolesUser = _context.UserRoles.Where(l => l.UserId == Licencie.IdUtilisateur);
-                _context.UserRoles.RemoveRange(rolesUser);
-                await _context.SaveChangesAsync();
 
-                //Nouveau role user
-                IdentityUserRole<string> newRole = new IdentityUserRole<string>();
-                newRole.RoleId = _context.Roles.First(r => r.Name.Equals("LICENCIE")).Id;
-                newRole.UserId = Licencie.IdUtilisateur;
-                _context.Attach(newRole).State = EntityState.Added;
-                await _context.SaveChangesAsync();
+                    //Suppréssion ancien role
+                    IEnumerable<IdentityUserRole<string>> roles = _context.UserRoles.Where(ur => ur.UserId == Licencie.IdUtilisateur);
+                    _context.UserRoles.RemoveRange(roles) ;
+                    await _context.SaveChangesAsync();
+
+                    //Nouveau role user
+                    IdentityUserRole<string> newRole = new IdentityUserRole<string>();
+                    newRole.RoleId = _context.Roles.First(r => r.Name.Equals("LICENCIE")).Id;
+                    newRole.UserId = Licencie.IdUtilisateur;
+                    _context.UserRoles.Add(newRole);
+                    await _context.SaveChangesAsync();
+                }
             }
             catch (DbUpdateConcurrencyException ex)
             {
                 _logger.LogError(ex.Message);
-
-                //check si user à un role
-                var rolesUser = _context.UserRoles.Where(l => l.UserId == Licencie.IdUtilisateur);
-                if (rolesUser.Count() == 0)
-                {
-                    IdentityUserRole<string> newRole = new IdentityUserRole<string>();
-                    newRole.RoleId = _context.Roles.First(r => r.Name.Equals("LICENCIE")).Id;
-                    newRole.UserId = Licencie.IdUtilisateur;
-                    _context.Attach(newRole).State = EntityState.Added;
-                    await _context.SaveChangesAsync();
-                }
             }
 
             return Page();

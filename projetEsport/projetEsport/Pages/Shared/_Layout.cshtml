@@ -26,6 +26,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Licencies/Index">Licenciés</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/ApproveUsers">Admin</a>
+                            </li>
                         }
                         @if (User.IsInRole("ADMINISTRATEUR") || User.IsInRole("LICENCIE"))
                         {

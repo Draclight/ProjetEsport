@@ -1,15 +1,18 @@
 ﻿@page
 @model projetEsport.Pages.Competitions.IndexModel
-
+@using Microsoft.AspNetCore.Identity
+@using projetEsport.Authorization;
+@using projetEsport.Models;
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1>Index</h1>
-
-<p>
+@if ((await AuthorizationService.AuthorizeAsync(User, new Competition(), ESportOperations.Create)).Succeeded)
+{
     <a asp-page="Create">Create New</a>
-</p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -35,32 +38,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Competition) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateDebut)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateFin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreeLe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifieeLe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeCompetition.Nom)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Competition)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateDebut)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateFin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreeLe)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifieeLe)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeCompetition.Nom)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

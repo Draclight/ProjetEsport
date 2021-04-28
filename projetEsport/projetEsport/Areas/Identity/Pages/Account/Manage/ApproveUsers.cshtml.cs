@@ -42,33 +42,14 @@ namespace projetEsport.Pages.Admin
                 user.EmailConfirmed = true;
                 _context.Attach(user).State = EntityState.Modified;
 
-
                 //User role
                 IdentityUserRole<string> newRole = new IdentityUserRole<string>();
-                newRole.RoleId = _context.Roles.First(r => r.Name.Equals(Constants.ConnexionRole)).Id;
+                newRole.RoleId = _context.Roles.First(r => r.Name.Equals(Constants.LicenciesRole)).Id;
                 newRole.UserId = id;
                 _context.UserRoles.Add(newRole);
                 await _context.SaveChangesAsync();
             }
-
-            //Licencie
-            if (!await _context.Licencie.AnyAsync(l => l.IdUtilisateur == id))
-            {
-                //créer un licencié avec le guid et les données de base nécéssaires
-                Licencie NouveauLicencie = new Licencie
-                {
-                    IdUtilisateur = id,
-                    Nom = string.Empty,
-                    Penom = string.Empty,
-                    Pseudo = string.Empty,
-                    PremierConnexion = true,
-                    CreeLe = DateTime.UtcNow,
-                    ModifieeLe = DateTime.UtcNow
-                };
-                _context.Licencie.Add(NouveauLicencie);
-                await _context.SaveChangesAsync();
-            }
-
+            
             Page();
         }
 

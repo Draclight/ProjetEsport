@@ -28,6 +28,5 @@ namespace projetEsport.Authorization
         public static readonly string AdministrateursRole = "ADMINISTRATEUR";
         public static readonly string OrganisteursRole = "ORGANISATEUR";
         public static readonly string LicenciesRole = "LICENCIE";
-        public static readonly string ConnexionRole = "CONNEXION";
     }
 }

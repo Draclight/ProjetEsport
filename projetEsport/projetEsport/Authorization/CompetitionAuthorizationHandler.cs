@@ -23,11 +23,6 @@ namespace projetEsport.Authorization
                 context.Succeed(requirement);
             }
 
-            if (context.User.IsInRole(Constants.ConnexionRole))
-            {
-                context.Fail();
-            }
-
             return Task.CompletedTask;
         }
     }

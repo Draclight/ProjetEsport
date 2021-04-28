@@ -1,0 +1,60 @@
+﻿@page
+@model projetEsport.Pages.Admin.ApproveUsersModel
+@{
+    ViewData["Title"] = "Approve Users";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].EmailConfirmed)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                </td>
+                <td>
+                    @if (!item.EmailConfirmed)
+                    {
+                        <form method="post">
+                            <input asp-for="@item.Id" value="@item.Id" type="hidden" />
+                            <input type="submit" class="btn btn-success" asp-page-handler="ApproveUser" asp-route-id="@item.Id" value="Approve" />
+                            <input type="submit" class="btn btn-danger" asp-page-handler="RejectUser" asp-route-id="@item.Id" value="Reject" />
+                        </form>
+                    }
+                    else
+                    {
+                        Html.Display("Approuvé");
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

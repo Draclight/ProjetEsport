@@ -1,0 +1,37 @@
+﻿@page
+@model projetEsport.Areas.Admin.Pages.Equipes.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Equipe</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Equipe.Nom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Equipe.Nom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Equipe.CreeLe)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Equipe.CreeLe)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Equipe.ModifieeLe)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Equipe.ModifieeLe)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Equipe.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

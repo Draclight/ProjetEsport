@@ -12,7 +12,7 @@ using projetEsport.Authorization;
 using projetEsport.Data;
 using projetEsport.Models;
 
-namespace projetEsport.Pages.Admin
+namespace projetEsport.Pages.Admin.Users
 {
     public class ApproveUsersModel : PageModel
     {

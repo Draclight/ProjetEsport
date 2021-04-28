@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Pages\Competition\**" />
+    <Content Remove="Areas\Admin\Pages\Competition\**" />
+    <EmbeddedResource Remove="Areas\Admin\Pages\Competition\**" />
+    <None Remove="Areas\Admin\Pages\Competition\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.4" />
@@ -20,11 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Pages\Jeux\" />
-    <Folder Include="Areas\Admin\Pages\Licencies\" />
-    <Folder Include="Areas\Admin\Pages\Equipes\" />
-    <Folder Include="Areas\Admin\Pages\Competition\" />
-    <Folder Include="Areas\Admin\Pages\TypesCompetition\" />
     <Folder Include="Data\" />
     <Folder Include="Models\" />
     <Folder Include="wwwroot\css\" />

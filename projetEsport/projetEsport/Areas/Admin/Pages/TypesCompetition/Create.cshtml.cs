@@ -34,6 +34,9 @@ namespace projetEsport.Areas.Admin.Pages.TypesCompetition
             {
                 return Page();
             }
+            var dateTime = DateTime.UtcNow;
+            TypeCompetition.CreeLe = dateTime;
+            TypeCompetition.ModifieeLe = dateTime;
 
             _context.TypeCompetition.Add(TypeCompetition);
             await _context.SaveChangesAsync();

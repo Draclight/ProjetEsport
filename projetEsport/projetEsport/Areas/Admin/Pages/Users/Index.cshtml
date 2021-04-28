@@ -1,11 +1,14 @@
 ﻿@page
-@model projetEsport.Pages.Admin.Users.ApproveUsersModel
+@model projetEsport.Areas.Admin.Pages.Users.IndexModel
 @{
-    ViewData["Title"] = "Utilisateurs";
+    ViewData["Title"] = "Users";
 }
 
 <h1>@ViewData["Title"]</h1>
 
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -20,6 +23,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Users[0].EmailConfirmed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].PhoneNumber)
             </th>
             <th></th>
         </tr>
@@ -41,18 +47,12 @@
                     @Html.DisplayFor(modelItem => item.EmailConfirmed)
                 </td>
                 <td>
-                    @if (!item.EmailConfirmed)
-                    {
-                        <form method="post">
-                            <input asp-for="@item.Id" value="@item.Id" type="hidden" />
-                            <input type="submit" class="btn btn-success" asp-page-handler="ApproveUser" asp-route-id="@item.Id" value="Approve" />
-                            <input type="submit" class="btn btn-danger" asp-page-handler="RejectUser" asp-route-id="@item.Id" value="Reject" />
-                        </form>
-                    }
-                    else
-                    {
-                        Html.Display("Approuvé");
-                    }
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }

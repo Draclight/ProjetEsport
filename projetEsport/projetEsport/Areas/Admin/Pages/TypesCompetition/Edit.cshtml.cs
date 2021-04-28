@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using projetEsport.Data;
 using projetEsport.Models;
+using projetEsport.Areas.Admin.ViewModels;
 
 namespace projetEsport.Areas.Admin.Pages.TypesCompetition
 {
@@ -21,7 +22,10 @@ namespace projetEsport.Areas.Admin.Pages.TypesCompetition
         }
 
         [BindProperty]
+        public EditTypeCompetitionViewModel viewModel { get; set; }
+        [BindProperty]
         public TypeCompetition TypeCompetition { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,6 +40,7 @@ namespace projetEsport.Areas.Admin.Pages.TypesCompetition
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -48,6 +53,7 @@ namespace projetEsport.Areas.Admin.Pages.TypesCompetition
                 return Page();
             }
 
+            TypeCompetition.ModifieeLe = DateTime.UtcNow;
             _context.Attach(TypeCompetition).State = EntityState.Modified;
 
             try

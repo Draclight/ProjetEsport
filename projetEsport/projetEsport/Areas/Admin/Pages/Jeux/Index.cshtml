@@ -2,10 +2,10 @@
 @model projetEsport.Areas.Admin.Pages.Jeux.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Jeux";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Jeu[0].Pseudo)
+                @Html.DisplayNameFor(model => model.Jeu[0].Nom)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Jeu[0].CreeLe)
@@ -29,7 +29,7 @@
 @foreach (var item in Model.Jeu) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Pseudo)
+                @Html.DisplayFor(modelItem => item.Nom)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreeLe)

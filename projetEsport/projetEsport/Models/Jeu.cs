@@ -10,9 +10,9 @@ namespace projetEsport.Models
     {
         #region Propriétés
         public int ID { get; set; }
-        [Display(Name = "Pseudo")]
+        [Display(Name = "Nom")]
         [Required]
-        public String Pseudo { get; set; }
+        public String Nom { get; set; }
         [Display(Name = "Créé le")]
         public DateTime CreeLe { get; set; }
         [Display(Name = "Modifié le")]

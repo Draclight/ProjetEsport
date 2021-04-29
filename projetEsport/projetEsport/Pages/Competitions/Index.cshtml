@@ -5,6 +5,7 @@
 @using projetEsport.Models;
 @using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
+@inject UserManager<IdentityUser> userManager
 @{
     ViewData["Title"] = "Index";
 }
@@ -48,9 +49,13 @@
                     @Html.DisplayFor(modelItem => item.TypeCompetition.Nom)
                 </td>
                 <td>
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    @if (item.Proprietaire.IdUtilisateur.Equals(userManager.GetUserId(User)))
+                    {
+                        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.ID">Edit</a>
+                    }
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ID">Details</a>
                 </td>
             </tr>
-        }
+}
     </tbody>
 </table>

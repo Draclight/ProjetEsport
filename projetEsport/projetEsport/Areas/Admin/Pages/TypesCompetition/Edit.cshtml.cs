@@ -9,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using projetEsport.Data;
 using projetEsport.Models;
 using projetEsport.Areas.Admin.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace projetEsport.Areas.Admin.Pages.TypesCompetition
 {
+    [Authorize(Roles = "ADMINISTRATEUR")]
     public class EditModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;

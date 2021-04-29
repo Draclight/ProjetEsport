@@ -13,7 +13,7 @@ namespace projetEsport.Models
         [Display(Name = "Pseudo")]
         public String Pseudo { get; set; }
         [Display(Name = "Prénom")]
-        public String Penom { get; set; }
+        public String Prenom { get; set; }
         [Display(Name = "Nom")]
         public String Nom { get; set; }
         [Display(Name = "Identifiant")]
@@ -22,8 +22,6 @@ namespace projetEsport.Models
         public DateTime CreeLe { get; set; }
         [Display(Name = "Modifié le")]
         public DateTime ModifieeLe { get; set; }
-        [Display(Name = "Déjà Connecté?")]
-        public bool PremierConnexion { get; set; }
         #endregion
 
         #region Clées
@@ -31,6 +29,7 @@ namespace projetEsport.Models
         public int? EquipeID { get; set; }
         [Display(Name = "Equipe")]
         public Equipe? Equipe { get; set; }
+        public IList<Competition> Competitions { get; set; }
         #endregion
     }
 }

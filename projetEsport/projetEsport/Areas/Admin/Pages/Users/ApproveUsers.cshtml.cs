@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ using projetEsport.Models;
 
 namespace projetEsport.Pages.Admin.Users
 {
+    [Authorize(Roles = "ADMINISTRATEUR")]
     public class ApproveUsersModel : PageModel
     {
         private readonly ILogger<RegisterConfirmationModel> _logger;

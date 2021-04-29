@@ -25,9 +25,13 @@ namespace projetEsport.Models
 
         #region Clées
         public int TypeCompetitionID { get; set; }
+        [Display(Name = "Type de compétition")]
         public TypeCompetition TypeCompetition { get; set; }
         public ICollection<Equipe> Equipes { get; set; }
         public ICollection<Jeu> Jeux { get; set; }
+        public int ProprietaireID { get; set; }
+        [Display(Name = "Propriétaire")]
+        public Licencie Proprietaire { get; set; }
         #endregion
     }
 }

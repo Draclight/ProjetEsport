@@ -100,9 +100,8 @@ namespace projetEsport.Areas.Identity.Pages.Account
                     {
                         IdUtilisateur = user.Id,
                         Nom = Input.Nom,
-                        Penom = Input.Prenom,
+                        Prenom = Input.Prenom,
                         Pseudo = Input.UserName,
-                        PremierConnexion = true,
                         CreeLe = DateTime.UtcNow,
                         ModifieeLe = DateTime.UtcNow
                     };

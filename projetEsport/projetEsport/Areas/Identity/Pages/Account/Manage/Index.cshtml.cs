@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using projetEsport.Data;
+using projetEsport.Models;
 
 namespace projetEsport.Areas.Identity.Pages.Account.Manage
 {
@@ -13,17 +16,17 @@ namespace projetEsport.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ApplicationDbContext _context;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
-
-        [BindProperty]
-        public string Username { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -36,18 +39,26 @@ namespace projetEsport.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            [Display(Name = "Pseudo")]
+            public string Pseudo { get; set; }
+            [Display(Name = "Nom")]
+            public string Nom { get; set; }
+            [Display(Name = "Prénom")]
+            public string Prenom { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
+            var licencie = await _context.Licencie.Include(l => l.Equipe).FirstOrDefaultAsync(l => l.IdUtilisateur == user.Id);
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Pseudo = userName,
+                Nom = (string.IsNullOrEmpty(licencie.Nom) ? string.Empty : licencie.Nom),
+                Prenom = (string.IsNullOrEmpty(licencie.Prenom) ? string.Empty : licencie.Prenom)
             };
         }
 
@@ -78,11 +89,18 @@ namespace projetEsport.Areas.Identity.Pages.Account.Manage
             }
 
             var userName = await _userManager.GetUserNameAsync(user);
-            if (Username != userName)
+            if (Input.Pseudo != userName)
             {
                 try
                 {
-                    await _userManager.SetUserNameAsync(user, Username);
+                    await _userManager.SetUserNameAsync(user, Input.Pseudo);
+
+                    Licencie licencie = await _context.Licencie.Include(l => l.Equipe).FirstOrDefaultAsync(l => l.IdUtilisateur == user.Id);
+                    licencie.Pseudo = Input.Pseudo;
+                    licencie.Nom = Input.Nom;
+                    licencie.Prenom = Input.Prenom;
+                    _context.Attach(licencie).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
                 }
                 catch (Exception ex)
                 {

@@ -23,7 +23,7 @@ namespace projetEsport.Areas.Identity.Pages.Account.Manage
         public static string PersonalData => "PersonalData";
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
-        public static string ApproveUsers => "ApproveUsers";
+        public static string Admin => "Admin";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
@@ -40,7 +40,7 @@ namespace projetEsport.Areas.Identity.Pages.Account.Manage
         public static string PersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, PersonalData);
 
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
-        public static string ApproveUsersNavClass(ViewContext viewContext) => PageNavClass(viewContext, ApproveUsers);
+        public static string AdminNavClass(ViewContext viewContext) => PageNavClass(viewContext, Admin);
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {

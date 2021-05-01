@@ -20,7 +20,7 @@ namespace projetEsport.Models
         #endregion
 
         #region Clées
-        public ICollection<Competition> Competitions { get; set; }
+        public ICollection<CompetitionJeu> Competitions { get; set; }
         #endregion
     }
 }

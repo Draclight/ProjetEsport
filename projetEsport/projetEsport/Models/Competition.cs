@@ -27,11 +27,14 @@ namespace projetEsport.Models
         public int TypeCompetitionID { get; set; }
         [Display(Name = "Type de compétition")]
         public TypeCompetition TypeCompetition { get; set; }
-        public ICollection<Equipe> Equipes { get; set; }
-        public ICollection<Jeu> Jeux { get; set; }
         public int ProprietaireID { get; set; }
         [Display(Name = "Propriétaire")]
         public Licencie Proprietaire { get; set; }
+        public ICollection<CompetitionJeu> Jeux { get; set; }
+        [Display(Name = "Classement")]
+        public ICollection<ClassementCompetition> Classements { get; set; }
+        [Display(Name = "Equipes")]
+        public ICollection<CompetitionEquipe> EquipesDeCompetition { get; set; }
         #endregion
     }
 }

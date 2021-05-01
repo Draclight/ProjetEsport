@@ -20,5 +20,7 @@ namespace projetEsport.Data
         public DbSet<TypeCompetition> TypeCompetition { get; set; }
         public DbSet<Competition> Competition { get; set; }
         public DbSet<ClassementCompetition> ClassementCompetition { get; set; }
+        public DbSet<CompetitionEquipe> CompetitionEquipe { get; set; }
+        public DbSet<CompetitionJeu> CompetitionJeu { get; set; }
     }
 }

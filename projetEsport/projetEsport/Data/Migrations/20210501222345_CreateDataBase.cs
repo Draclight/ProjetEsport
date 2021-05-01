@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace projetEsport.Data.Migrations
 {
-    public partial class AjoutModels : Migration
+    public partial class CreateDataBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,7 @@ namespace projetEsport.Data.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Pseudo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreeLe = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifieeLe = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -66,12 +66,11 @@ namespace projetEsport.Data.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Pseudo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Penom = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Prenom = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Nom = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdUtilisateur = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreeLe = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifieeLe = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PremierConnexion = table.Column<bool>(type: "bit", nullable: false),
                     EquipeID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -96,11 +95,18 @@ namespace projetEsport.Data.Migrations
                     DateFin = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreeLe = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifieeLe = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TypeCompetitionID = table.Column<int>(type: "int", nullable: false)
+                    TypeCompetitionID = table.Column<int>(type: "int", nullable: false),
+                    ProprietaireID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Competition", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Competition_Licencie_ProprietaireID",
+                        column: x => x.ProprietaireID,
+                        principalTable: "Licencie",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Competition_TypeCompetition_TypeCompetitionID",
                         column: x => x.TypeCompetitionID,
@@ -143,21 +149,23 @@ namespace projetEsport.Data.Migrations
                 name: "CompetitionEquipe",
                 columns: table => new
                 {
-                    CompetitionsID = table.Column<int>(type: "int", nullable: false),
-                    EquipesID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompetitionID = table.Column<int>(type: "int", nullable: false),
+                    EquipeID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CompetitionEquipe", x => new { x.CompetitionsID, x.EquipesID });
+                    table.PrimaryKey("PK_CompetitionEquipe", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_CompetitionEquipe_Competition_CompetitionsID",
-                        column: x => x.CompetitionsID,
+                        name: "FK_CompetitionEquipe_Competition_CompetitionID",
+                        column: x => x.CompetitionID,
                         principalTable: "Competition",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CompetitionEquipe_Equipe_EquipesID",
-                        column: x => x.EquipesID,
+                        name: "FK_CompetitionEquipe_Equipe_EquipeID",
+                        column: x => x.EquipeID,
                         principalTable: "Equipe",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -167,21 +175,23 @@ namespace projetEsport.Data.Migrations
                 name: "CompetitionJeu",
                 columns: table => new
                 {
-                    CompetitionsID = table.Column<int>(type: "int", nullable: false),
-                    JeuxID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompetitionID = table.Column<int>(type: "int", nullable: false),
+                    JeuID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CompetitionJeu", x => new { x.CompetitionsID, x.JeuxID });
+                    table.PrimaryKey("PK_CompetitionJeu", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_CompetitionJeu_Competition_CompetitionsID",
-                        column: x => x.CompetitionsID,
+                        name: "FK_CompetitionJeu_Competition_CompetitionID",
+                        column: x => x.CompetitionID,
                         principalTable: "Competition",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CompetitionJeu_Jeu_JeuxID",
-                        column: x => x.JeuxID,
+                        name: "FK_CompetitionJeu_Jeu_JeuID",
+                        column: x => x.JeuID,
                         principalTable: "Jeu",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -198,19 +208,34 @@ namespace projetEsport.Data.Migrations
                 column: "EquipeID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Competition_ProprietaireID",
+                table: "Competition",
+                column: "ProprietaireID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Competition_TypeCompetitionID",
                 table: "Competition",
                 column: "TypeCompetitionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompetitionEquipe_EquipesID",
+                name: "IX_CompetitionEquipe_CompetitionID",
                 table: "CompetitionEquipe",
-                column: "EquipesID");
+                column: "CompetitionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompetitionJeu_JeuxID",
+                name: "IX_CompetitionEquipe_EquipeID",
+                table: "CompetitionEquipe",
+                column: "EquipeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CompetitionJeu_CompetitionID",
                 table: "CompetitionJeu",
-                column: "JeuxID");
+                column: "CompetitionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CompetitionJeu_JeuID",
+                table: "CompetitionJeu",
+                column: "JeuID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Licencie_EquipeID",
@@ -235,19 +260,19 @@ namespace projetEsport.Data.Migrations
                 name: "CompetitionJeu");
 
             migrationBuilder.DropTable(
-                name: "Licencie");
-
-            migrationBuilder.DropTable(
                 name: "Competition");
 
             migrationBuilder.DropTable(
                 name: "Jeu");
 
             migrationBuilder.DropTable(
-                name: "Equipe");
+                name: "Licencie");
 
             migrationBuilder.DropTable(
                 name: "TypeCompetition");
+
+            migrationBuilder.DropTable(
+                name: "Equipe");
         }
     }
 }

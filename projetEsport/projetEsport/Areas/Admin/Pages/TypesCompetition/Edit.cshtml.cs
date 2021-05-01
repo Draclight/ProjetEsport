@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using projetEsport.Data;
 using projetEsport.Models;
-using projetEsport.Areas.Admin.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace projetEsport.Areas.Admin.Pages.TypesCompetition
@@ -23,8 +22,6 @@ namespace projetEsport.Areas.Admin.Pages.TypesCompetition
             _context = context;
         }
 
-        [BindProperty]
-        public EditTypeCompetitionViewModel viewModel { get; set; }
         [BindProperty]
         public TypeCompetition TypeCompetition { get; set; }
 

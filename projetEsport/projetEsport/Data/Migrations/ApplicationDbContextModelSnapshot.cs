@@ -19,36 +19,6 @@ namespace projetEsport.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CompetitionEquipe", b =>
-                {
-                    b.Property<int>("CompetitionsID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EquipesID")
-                        .HasColumnType("int");
-
-                    b.HasKey("CompetitionsID", "EquipesID");
-
-                    b.HasIndex("EquipesID");
-
-                    b.ToTable("CompetitionEquipe");
-                });
-
-            modelBuilder.Entity("CompetitionJeu", b =>
-                {
-                    b.Property<int>("CompetitionsID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("JeuxID")
-                        .HasColumnType("int");
-
-                    b.HasKey("CompetitionsID", "JeuxID");
-
-                    b.HasIndex("JeuxID");
-
-                    b.ToTable("CompetitionJeu");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -321,6 +291,50 @@ namespace projetEsport.Data.Migrations
                     b.ToTable("Competition");
                 });
 
+            modelBuilder.Entity("projetEsport.Models.CompetitionEquipe", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompetitionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EquipeID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CompetitionID");
+
+                    b.HasIndex("EquipeID");
+
+                    b.ToTable("CompetitionEquipe");
+                });
+
+            modelBuilder.Entity("projetEsport.Models.CompetitionJeu", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompetitionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JeuID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CompetitionID");
+
+                    b.HasIndex("JeuID");
+
+                    b.ToTable("CompetitionJeu");
+                });
+
             modelBuilder.Entity("projetEsport.Models.Equipe", b =>
                 {
                     b.Property<int>("ID")
@@ -427,36 +441,6 @@ namespace projetEsport.Data.Migrations
                     b.ToTable("TypeCompetition");
                 });
 
-            modelBuilder.Entity("CompetitionEquipe", b =>
-                {
-                    b.HasOne("projetEsport.Models.Competition", null)
-                        .WithMany()
-                        .HasForeignKey("CompetitionsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("projetEsport.Models.Equipe", null)
-                        .WithMany()
-                        .HasForeignKey("EquipesID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CompetitionJeu", b =>
-                {
-                    b.HasOne("projetEsport.Models.Competition", null)
-                        .WithMany()
-                        .HasForeignKey("CompetitionsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("projetEsport.Models.Jeu", null)
-                        .WithMany()
-                        .HasForeignKey("JeuxID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -546,6 +530,44 @@ namespace projetEsport.Data.Migrations
                     b.Navigation("TypeCompetition");
                 });
 
+            modelBuilder.Entity("projetEsport.Models.CompetitionEquipe", b =>
+                {
+                    b.HasOne("projetEsport.Models.Competition", "Competition")
+                        .WithMany()
+                        .HasForeignKey("CompetitionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("projetEsport.Models.Equipe", "Equipe")
+                        .WithMany()
+                        .HasForeignKey("EquipeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Competition");
+
+                    b.Navigation("Equipe");
+                });
+
+            modelBuilder.Entity("projetEsport.Models.CompetitionJeu", b =>
+                {
+                    b.HasOne("projetEsport.Models.Competition", "Competition")
+                        .WithMany("Jeux")
+                        .HasForeignKey("CompetitionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("projetEsport.Models.Jeu", "Jeu")
+                        .WithMany("Competitions")
+                        .HasForeignKey("JeuID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Competition");
+
+                    b.Navigation("Jeu");
+                });
+
             modelBuilder.Entity("projetEsport.Models.Licencie", b =>
                 {
                     b.HasOne("projetEsport.Models.Equipe", "Equipe")
@@ -562,9 +584,19 @@ namespace projetEsport.Data.Migrations
                         .HasForeignKey("TypeCompetitionID");
                 });
 
+            modelBuilder.Entity("projetEsport.Models.Competition", b =>
+                {
+                    b.Navigation("Jeux");
+                });
+
             modelBuilder.Entity("projetEsport.Models.Equipe", b =>
                 {
                     b.Navigation("Membres");
+                });
+
+            modelBuilder.Entity("projetEsport.Models.Jeu", b =>
+                {
+                    b.Navigation("Competitions");
                 });
 
             modelBuilder.Entity("projetEsport.Models.Licencie", b =>

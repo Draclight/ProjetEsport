@@ -1,0 +1,61 @@
+﻿@page
+@model projetEsport.Pages.Competitions.IndexModel
+@using Microsoft.AspNetCore.Identity
+@using projetEsport.Authorization;
+@using projetEsport.Models;
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@inject UserManager<IdentityUser> userManager
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Competitions</h1>
+@if ((await AuthorizationService.AuthorizeAsync(User, new Competition(), ESportOperations.Create)).Succeeded)
+{
+    <a asp-page="Create">Create New</a>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Competition[0].Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competition[0].DateDebut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competition[0].DateFin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competition[0].TypeCompetition)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Competition)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateDebut)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateFin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeCompetition.Nom)
+                </td>
+                <td>
+                    @if (item.Proprietaire.IdUtilisateur.Equals(userManager.GetUserId(User)))
+                    {
+                        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.ID">Edit</a>
+                    }
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ID">Details</a>
+                </td>
+            </tr>
+}
+    </tbody>
+</table>

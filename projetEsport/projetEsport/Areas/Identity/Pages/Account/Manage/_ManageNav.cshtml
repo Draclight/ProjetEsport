@@ -1,0 +1,14 @@
+﻿@inject SignInManager<IdentityUser> SignInManager
+@using projetEsport.Authorization
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item"><a class="nav-link icon-manage @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
+    <li class="nav-item"><a class="nav-link icon-email @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
+    <li class="nav-item"><a class="nav-link icon-password @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
+    @if (User.IsInRole(Constants.AdministrateursRole))
+    {
+        <li class="nav-item"><a class="nav-link icon-admin" id="admin" asp-area="Admin" asp-page="/Index">Admin</a></li>
+    }
+</ul>

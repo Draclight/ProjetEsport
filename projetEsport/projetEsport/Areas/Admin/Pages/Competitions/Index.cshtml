@@ -8,7 +8,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="btn btn-success" asp-page="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -23,10 +23,10 @@
                 @Html.DisplayNameFor(model => model.Competition[0].DateFin)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Competition[0].CreeLe)
+                @*@Html.DisplayNameFor(model => model.Competition[0].Jeux)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Competition[0].ModifieeLe)
+                @Html.DisplayNameFor(model => model.Competition[0].Equipes)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Competition[0].TypeCompetition)
@@ -35,30 +35,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Competition) {
+@foreach (var item in Model.ListeCompetition) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Nom)
+                @Html.DisplayFor(modelItem => item.Competition.Nom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateDebut)
+                @Html.DisplayFor(modelItem => item.Competition.DateDebut)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateFin)
+                @Html.DisplayFor(modelItem => item.Competition.DateFin)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreeLe)
+                @Html.DisplayFor(modelItem => item.NbJeux)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModifieeLe)
+                @Html.DisplayFor(modelItem => item.NbEquipes)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TypeCompetition.Nom)
+                @Html.DisplayFor(modelItem => item.Competition.TypeCompetition.Nom)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.Competition.ID">Edit</a>
+                <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.Competition.ID">Details</a>
+                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Competition.ID">Delete</a>
             </td>
         </tr>
 }

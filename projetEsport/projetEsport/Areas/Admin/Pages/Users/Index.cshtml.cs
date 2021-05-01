@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace projetEsport.Areas.Admin.Pages.Users
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
     public class IndexModel : PageModel
     {
 

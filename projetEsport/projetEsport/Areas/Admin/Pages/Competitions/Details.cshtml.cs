@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using projetEsport.Data;
 using projetEsport.Models;
+using projetEsport.ViewModels;
 
 namespace projetEsport.Areas.Admin.Pages.Competitions
 {
+    [Authorize(Roles = "ADMINISTRATEUR")]
     public class DetailsModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -19,7 +22,7 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
             _context = context;
         }
 
-        public Competition Competition { get; set; }
+        public CompetitionViewModel Competition {get; set;}
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,10 +31,17 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
                 return NotFound();
             }
 
-            Competition = await _context.Competition
-                .Include(c => c.TypeCompetition).FirstOrDefaultAsync(m => m.ID == id);
+            var competition = await _context.Competition
+                .Include(c => c.TypeCompetition).Include(c => c.Proprietaire).Include(c => c.Equipes).FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Competition == null)
+            Competition = new CompetitionViewModel()
+            {
+                Competition = competition,
+                //NbJeux = competition.Jeux.Count,
+                NbEquipes = competition.Equipes.Count
+            };  
+
+            if (Competition.Competition == null)
             {
                 return NotFound();
             }

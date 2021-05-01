@@ -15,7 +15,6 @@ using projetEsport.Models;
 
 namespace projetEsport.Pages.Admin.Users
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
     public class ApproveUsersModel : PageModel
     {
         private readonly ILogger<RegisterConfirmationModel> _logger;

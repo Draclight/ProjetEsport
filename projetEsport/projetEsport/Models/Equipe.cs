@@ -12,6 +12,7 @@ namespace projetEsport.Models
         public int ID { get; set; }
         [Required]
         public String Nom { get; set; }
+        public bool IsApproved { get; set; }
         [Display(Name = "Créé le")]
         public DateTime CreeLe { get; set; }
         [Display(Name = "Modifié le")]
@@ -22,7 +23,7 @@ namespace projetEsport.Models
         public ICollection<Licencie> Membres { get; set; }
         ICollection<ClassementCompetition> Classements { get; set; }
         ICollection<CompetitionEquipe> CompetitionDeEquipes { get; set; }
-
+        ICollection<InvitationEquipe> InvitationsEquipe { get; set; }
         #endregion
     }
 }

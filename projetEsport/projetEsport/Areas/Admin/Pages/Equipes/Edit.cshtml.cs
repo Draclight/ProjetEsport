@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using projetEsport.Models;
 
 namespace projetEsport.Areas.Admin.Pages.Equipes
 {
+    [Authorize(Roles = "ADMINISTRATEUR")]
     public class EditModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -30,7 +32,7 @@ namespace projetEsport.Areas.Admin.Pages.Equipes
                 return NotFound();
             }
 
-            Equipe = await _context.Equipe.FirstOrDefaultAsync(m => m.ID == id);
+            Equipe = await _context.Equipe.Include(e => e.Membres).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Equipe == null)
             {

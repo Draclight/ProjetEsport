@@ -27,7 +27,7 @@ namespace projetEsport.Pages.Competitions
         public async Task<IActionResult> OnGetAsync()
         {
             Competition = await _context.Competition
-                    .Include(c => c.TypeCompetition).ToListAsync();
+                    .Include(c => c.TypeCompetition).Include(c => c.Proprietaire).Include(c => c.Jeux).Include(c => c.EquipesDeCompetition).Include(c => c.Classements).ToListAsync();
 
             if (User.Identity.IsAuthenticated)
             {

@@ -196,3 +196,18 @@ body {
 .dropdown:hover .dropbtn {
     background-color: #0056b3;
 }
+
+/*Equipes*/
+.membres-equipe-demandes {
+    list-style: none;
+}
+
+.invitation-accepted::after {
+    content: url('../images/icons/person-check-fill.svg');
+    margin-left: 2px;
+}
+
+.invitation-not-accepted::after {
+    content: url('../images/icons/person-x-fill.svg');
+    margin-left: 2px;
+}

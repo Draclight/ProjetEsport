@@ -31,6 +31,7 @@ namespace projetEsport.Models
         public Equipe? Equipe { get; set; }
         [Display(Name = "Mes Compétitions")]
         public IList<Competition> Competitions { get; set; }
+        public IList<InvitationEquipe> InvitationEquipe { get; set; }
         #endregion
     }
 }

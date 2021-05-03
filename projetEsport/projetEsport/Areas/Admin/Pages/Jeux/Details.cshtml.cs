@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using projetEsport.Models;
 
 namespace projetEsport.Areas.Admin.Pages.Jeux
 {
+    [Authorize(Roles = "ADMINISTRATEUR")]
     public class DetailsModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -28,7 +30,7 @@ namespace projetEsport.Areas.Admin.Pages.Jeux
                 return NotFound();
             }
 
-            Jeu = await _context.Jeu.FirstOrDefaultAsync(m => m.ID == id);
+            Jeu = await _context.Jeu.Include(j => j.Competitions).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Jeu == null)
             {

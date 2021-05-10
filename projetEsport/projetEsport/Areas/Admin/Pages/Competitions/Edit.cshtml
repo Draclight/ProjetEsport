@@ -44,6 +44,11 @@
                 <select asp-for="Competition.TypeCompetition" class="form-control" asp-items="ViewBag.TypeCompetition"></select>
                 <span asp-validation-for="Competition.TypeCompetition" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Competition.Proprietaire" class="control-label"></label>
+                <input asp-for="Competition.Proprietaire.Pseudo" class="form-control" />
+                <span asp-validation-for="Competition.Proprietaire" class="text-danger"></span>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
@@ -68,6 +73,7 @@
                             </td>
                             <td>
                                 <input type="hidden" asp-for="@Model.JeuxDisponible[i].JeuID" name="JeuxDisponible[@i].JeuID" class="form-control" />
+                                <input type="hidden" asp-for="@Model.JeuxDisponible[i].CompetitiionId" name="JeuxDisponible[@i].CompetitiionId" class="form-control" />
                             </td>
                         </tr>
                     }

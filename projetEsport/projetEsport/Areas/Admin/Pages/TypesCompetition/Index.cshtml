@@ -26,23 +26,27 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.TypeCompetition) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreeLe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifieeLe)
-            </td>
-            <td>
-                <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.TypeCompetition)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreeLe)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifieeLe)
+                </td>
+                <td>
+                    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div>
+    <a asp-page="/Competitions/Index">Back to Competitions</a>
+</div>

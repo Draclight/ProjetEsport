@@ -7,6 +7,16 @@ a.navbar-brand {
     word-break: break-all;
 }
 
+.navbar-nav.login .nav-item {
+    display: flex;
+}
+
+.text-bleu {
+    color: #0366d6;
+    text-decoration: none;
+    background-color: transparent;
+}
+
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;
@@ -80,75 +90,61 @@ body {
     }
 }
 
-.icon-register:before {
+.icon-register {
     content: url('../images/icons/pencil-square.svg');
-    margin-right: 2px;
 }
 
-.icon-login:before {
+.icon-login {
     content: url('../images/icons/box-arrow-in-up-right.svg');
-    margin-right: 2px;
 }
 
-.icon-logout:before {
+.icon-logout {
     content: url('../images/icons/box-arrow-right.svg');
-    margin-right: 2px;
 }
 
-.icon-competition:before {
+.icon-competition {
     content: url('../images/icons/trophy-fill.svg');
     margin-right: 2px;
 }
 
-.icon-manage:before {
+.icon-manage {
     content: url('../images/icons/person-circle.svg');
-    margin-right: 2px;
+    margin-left: 2px;
 }
 
-.icon-email:before {
+.icon-email {
     content: url('../images/icons/envelope-fill.svg');
     margin-right: 2px;
+    align-content: baseline;
 }
 
-.icon-password:before {
+.icon-password {
     content: url('../images/icons/file-earmark-lock.svg');
-    margin-right: 2px;
 }
 
-.icon-admin:before {
+.icon-admin {
     content: url('../images/icons/gear-fill.svg');
-    margin-right: 2px;
 }
 
-.icon-equipe:before {
+.icon-equipe {
     content: url('../images/icons/people-fill.svg');
-    margin-right: 2px;
 }
 
-.icon-equipe:hover {
-    background-color: #0056b3;
-}
-
-.icon-jeu:before {
+.icon-jeu {
     content: url('../images/icons/controller.svg');
-    margin-right: 2px;
 }
 
-.icon-jeu:hover {
-    background-color: #0056b3;
-}
-
-.icon-licencie:before {
+.icon-licencie {
     content: url('../images/icons/person-fill.svg');
     margin-right: 2px;
 }
 
-.icon-type-competition:before {
+.icon-type-competition {
     content: url('../images/icons/people-fill.svg');
     margin-right: 2px;
 }
 
-.icon-user:before {
+.icon-user {
     content: url('../images/icons/people-fill.svg');
     margin-right: 2px;
 }
@@ -159,6 +155,10 @@ body {
     font-size: 16px;
     border: none;
 }
+
+    .dropbtn:hover {
+        background-color: #0056b3;
+    }
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
@@ -173,7 +173,7 @@ body {
     position: absolute;
     background-color: #f1f1f1;
     list-style: none;
-    padding:0;
+    padding: 0;
 }
 
     /* Links inside the dropdown */
@@ -187,6 +187,10 @@ body {
         .dropdown-content a:hover {
             background-color: #ddd;
         }
+
+    .nav-item.flex {
+        display: flex;
+    }
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {

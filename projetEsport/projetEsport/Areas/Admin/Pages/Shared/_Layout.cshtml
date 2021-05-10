@@ -17,9 +17,9 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark icon-competition dropbtn" asp-area="Admin" asp-page="/Competitions/Index">Compétitions</a>
+                            <a class="nav-link text-dark dropbtn" asp-area="Admin" asp-page="/Competitions/Index"><span class="icon-competition"></span>Compétitions</a>
                             <ul class="dropdown-content">
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="Admin" asp-page="/TypesCompetition/Index">Types de competition</a>
@@ -27,7 +27,7 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark icon-equipe" asp-area="Admin" asp-page="/Equipes/Index">Equipes</a>
+                            <a class="nav-link text-dark dropbtn" asp-area="Admin" asp-page="/Equipes/Index"><span class="icon-equipe"></span>Equipes</a>
                             <ul class="dropdown-content">
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="Admin" asp-page="/Equipes/Demandes">Demandes</a>
@@ -35,20 +35,15 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark icon-jeu" asp-area="Admin" asp-page="/Jeux/Index">Jeux</a>
+                            <a class="nav-link text-dark dropbtn" asp-area="Admin" asp-page="/Jeux/Index"><span class="icon-jeu"></span>Jeux</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark icon-licencie dropbtn" asp-area="Admin" asp-page="/Licencies/Index">Licenciés</a>
+                            <a class="nav-link text-dark dropbtn" asp-area="Admin" asp-page="/Licencies/Index"><span class="icon-licencie"></span>Licenciés</a>
                             <ul class="dropdown-content">
-                                <li class="nav-item">
+                                <li class="nav-item flex">
                                     <a class="nav-link text-dark" asp-area="Admin" asp-page="/Users/ApproveUsers">Demandes</a>
                                 </li>
                             </ul>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a asp-area="" asp-page="/Index">Back to site...</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

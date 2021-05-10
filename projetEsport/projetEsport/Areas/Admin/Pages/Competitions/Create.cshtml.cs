@@ -51,7 +51,7 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
                 return Page();
             }
 
-            if (JeuxDisponible.Any(j => !j.IsInCompetition))
+            if (JeuxDisponible.All(j => !j.IsInCompetition))
             {
                 return RedirectToPage();
             }
@@ -60,6 +60,9 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
             //Propriétaire
             var licencie = await _context.Licencie.FirstOrDefaultAsync(l => l.IdUtilisateur == _userManager.GetUserId(User));
             Competition.ProprietaireID = licencie.ID;
+            var dateTimeCreate = DateTime.UtcNow;
+            Competition.CreeLe = dateTimeCreate;
+            Competition.ModifieeLe = dateTimeCreate;
 
             //Sauvegarde
             _context.Competition.Add(Competition);

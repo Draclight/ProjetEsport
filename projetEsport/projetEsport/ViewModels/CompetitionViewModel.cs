@@ -10,6 +10,7 @@ namespace projetEsport.ViewModels
     public class CompetitionViewModel
     {
         public Competition Competition { get; set; }
+        public int CompetitiionId { get; set; }
         [Display(Name = "Nb Equipes")]
         public int NbEquipes { get; set; }
         [Display(Name = "Nb Jeux")]

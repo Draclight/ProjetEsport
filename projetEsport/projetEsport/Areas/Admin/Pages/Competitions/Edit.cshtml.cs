@@ -36,24 +36,25 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
             }
             //récupération de la compétition
             Competition = await _context.Competition
-                .Include(c => c.TypeCompetition).Include(c => c.Proprietaire).FirstOrDefaultAsync(m => m.ID == id);
+                .Include(c => c.TypeCompetition).Include(c => c.Proprietaire).Include(c => c.Jeux).FirstOrDefaultAsync(m => m.ID == id);
 
             //récupération des jeux
-            var jeux = await _context.Jeu.ToListAsync();
+            var jeux = await _context.Jeu.Include(j => j.Competitions).ToListAsync();
 
             //Affichage des jeux si déjà présent dans la compétition
             JeuxDisponible = jeux.Select(jeu => new CompetitionViewModel()
             {
                 JeuID = jeu.ID,
-                //IsInCompetition = Competition.Jeux.Contains(jeu),
-                Nom = jeu.Nom
+                IsInCompetition = Competition.Jeux.FirstOrDefault(j => j.JeuID == jeu.ID) == null ? false : true,
+                Nom = jeu.Nom,
+                CompetitiionId = Competition.ID
             }).ToList();
 
             if (Competition == null)
             {
                 return NotFound();
             }
-            
+
             ViewData["TypeCompetition"] = new SelectList(_context.TypeCompetition, "ID", "Nom");
             return Page();
         }
@@ -67,11 +68,32 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
                 return Page();
             }
 
-            _context.Attach(Competition).State = EntityState.Modified;
-
             try
             {
+                //Modification de la compétition
+                _context.Attach(Competition).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+
+                //Jeux de la compétition
+                var jeux = await _context.CompetitionJeu.Include(cj => cj.Competition).Include(cj => cj.Jeu).ToListAsync();
+                foreach (CompetitionViewModel jeu in JeuxDisponible.Where(jd => jd.IsInCompetition))
+                {
+                    CompetitionJeu competitionJeu = await _context.CompetitionJeu.FirstOrDefaultAsync(cj => cj.JeuID.Equals(jeu.JeuID));
+                    if (competitionJeu is null)
+                    {
+                        competitionJeu = new CompetitionJeu()
+                        {
+                            JeuID = jeu.JeuID,
+                            CompetitionID = Competition.ID
+                        };
+                        _context.Attach(Competition).State = EntityState.Added;
+                    }
+                    else
+                    {
+                        _context.Attach(Competition).State = EntityState.Modified;
+                    }
+                    await _context.SaveChangesAsync();
+                }
             }
             catch (DbUpdateConcurrencyException)
             {

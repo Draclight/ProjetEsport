@@ -2,13 +2,13 @@
 @model projetEsport.Areas.Admin.Pages.Competitions.IndexModel
 
 @{
-    ViewData["Title"] = "Competitions";
+    ViewData["Title"] = "Compétitions en cours";
 }
 
 <h1>@ViewData["Title"]</h1>
 
 <p>
-    <a class="btn btn-success" asp-page="Create">Create New</a>
+    <a class="btn btn-success" asp-page="Create">Créer une nouvelle compétition</a>
 </p>
 <table class="table">
     <thead>
@@ -56,9 +56,9 @@
                 @Html.DisplayFor(modelItem => item.Competition.TypeCompetition.Nom)
             </td>
             <td>
-                <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.Competition.ID">Edit</a> |
-                <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.Competition.ID">Details</a> |
-                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Competition.ID">Delete</a>
+                <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.Competition.ID">Modifier</a> |
+                <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.Competition.ID">Détails</a> |
+                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Competition.ID">Supprimer</a>
             </td>
         </tr>
 }

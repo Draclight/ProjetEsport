@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using projetEsport.Data;
 using projetEsport.Models;
+using projetEsport.ViewModels;
 
 namespace projetEsport.Areas.Admin.Pages.Licencies
 {
@@ -21,12 +22,26 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
             _context = context;
         }
 
-        public IList<Licencie> Licencie { get;set; }
+        public IList<LicencieViewModel> Licencie { get;set; }
 
         public async Task OnGetAsync()
         {
-            Licencie = await _context.Licencie
-                .Include(l => l.Equipe).ToListAsync();
+            Licencie = new List<LicencieViewModel>();
+            var listeLicencies = await _context.Licencie.Include(l => l.Equipe).ToListAsync();
+            foreach (var licencie in listeLicencies)
+            {
+                var roles = from r in _context.Roles
+                            join ur in _context.UserRoles on r.Id equals ur.RoleId
+                            where ur.UserId == licencie.IdUtilisateur
+                            select r;
+
+                var userRoles = roles.Select(r => new RoleViewModel()
+                {
+                    RoleName = r.NormalizedName
+                }).ToList();
+
+                Licencie.Add(new LicencieViewModel() { licencie = licencie, Roles = userRoles });
+            }
         }
     }
 }

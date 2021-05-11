@@ -12,50 +12,61 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Licencie.Pseudo)
+            @Html.DisplayNameFor(model => model.Licencie.licencie.Pseudo)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Licencie.Pseudo)
+            @Html.DisplayFor(model => model.Licencie.licencie.Pseudo)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Licencie.Prenom)
+            @Html.DisplayNameFor(model => model.Licencie.licencie.Prenom)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Licencie.Prenom)
+            @Html.DisplayFor(model => model.Licencie.licencie.Prenom)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Licencie.Nom)
+            @Html.DisplayNameFor(model => model.Licencie.licencie.Nom)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Licencie.Nom)
+            @Html.DisplayFor(model => model.Licencie.licencie.Nom)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Licencie.IdUtilisateur)
+            @Html.DisplayNameFor(model => model.Licencie.licencie.IdUtilisateur)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Licencie.IdUtilisateur)
+            @Html.DisplayFor(model => model.Licencie.licencie.IdUtilisateur)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Licencie.CreeLe)
+            @Html.DisplayNameFor(model => model.Licencie.licencie.Equipe)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Licencie.CreeLe)
+            @Html.DisplayFor(model => model.Licencie.licencie.Equipe.Nom)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Licencie.ModifieeLe)
+            @Html.DisplayNameFor(model => model.Licencie.Roles)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Licencie.ModifieeLe)
+            @foreach (var role in Model.Licencie.Roles)
+            {
+                <div>
+                    @Html.LabelForModel(role.RoleName)
+                </div>
+            }
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Licencie.Equipe)
+            @Html.DisplayNameFor(model => model.Licencie.licencie.CreeLe)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Licencie.Equipe.Nom)
+            @Html.DisplayFor(model => model.Licencie.licencie.CreeLe)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Licencie.licencie.ModifieeLe)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Licencie.licencie.ModifieeLe)
         </dd>
     </dl>
 </div>
 <div>
-    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Licencie.ID">Edit</a> |
+    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Licencie.licencie.ID">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>

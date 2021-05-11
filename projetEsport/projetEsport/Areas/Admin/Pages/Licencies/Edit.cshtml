@@ -13,48 +13,83 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Licencie.ID" />
+            <input type="hidden" asp-for="Licencie.licencie.ID" />
             <div class="form-group">
-                <label asp-for="Licencie.Pseudo" class="control-label"></label>
-                <input asp-for="Licencie.Pseudo" class="form-control" />
-                <span asp-validation-for="Licencie.Pseudo" class="text-danger"></span>
+                <label asp-for="Licencie.licencie.Pseudo" class="control-label"></label>
+                <input asp-for="Licencie.licencie.Pseudo" class="form-control" />
+                <span asp-validation-for="Licencie.licencie.Pseudo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Licencie.Prenom" class="control-label"></label>
-                <input asp-for="Licencie.Prenom" class="form-control" />
-                <span asp-validation-for="Licencie.Prenom" class="text-danger"></span>
+                <label asp-for="Licencie.licencie.Prenom" class="control-label"></label>
+                <input asp-for="Licencie.licencie.Prenom" class="form-control" />
+                <span asp-validation-for="Licencie.licencie.Prenom" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Licencie.Nom" class="control-label"></label>
-                <input asp-for="Licencie.Nom" class="form-control" />
-                <span asp-validation-for="Licencie.Nom" class="text-danger"></span>
+                <label asp-for="Licencie.licencie.Nom" class="control-label"></label>
+                <input asp-for="Licencie.licencie.Nom" class="form-control" />
+                <span asp-validation-for="Licencie.licencie.Nom" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Licencie.IdUtilisateur" class="control-label"></label>
-                <input asp-for="Licencie.IdUtilisateur" class="form-control" />
-                <span asp-validation-for="Licencie.IdUtilisateur" class="text-danger"></span>
+                <label asp-for="Licencie.licencie.IdUtilisateur" class="control-label"></label>
+                <input asp-for="Licencie.licencie.IdUtilisateur" class="form-control" />
+                <span asp-validation-for="Licencie.licencie.IdUtilisateur" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Licencie.CreeLe" class="control-label"></label>
-                <input asp-for="Licencie.CreeLe" class="form-control" />
-                <span asp-validation-for="Licencie.CreeLe" class="text-danger"></span>
+                <label asp-for="Licencie.licencie.CreeLe" class="control-label"></label>
+                <input asp-for="Licencie.licencie.CreeLe" class="form-control" />
+                <span asp-validation-for="Licencie.licencie.CreeLe" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Licencie.ModifieeLe" class="control-label"></label>
-                <input asp-for="Licencie.ModifieeLe" class="form-control" />
-                <span asp-validation-for="Licencie.ModifieeLe" class="text-danger"></span>
+                <label asp-for="Licencie.licencie.ModifieeLe" class="control-label"></label>
+                <input asp-for="Licencie.licencie.ModifieeLe" class="form-control" />
+                <span asp-validation-for="Licencie.licencie.ModifieeLe" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Licencie.Equipe" class="control-label"></label>
-                <select asp-for="Licencie.EquipeID" class="form-control" asp-items="ViewBag.EquipeID"></select>
-                <span asp-validation-for="Licencie.EquipeID" class="text-danger"></span>
+                <label asp-for="Licencie.licencie.Equipe" class="control-label"></label>
+                <select asp-for="Licencie.licencie.EquipeID" class="form-control" asp-items="ViewBag.EquipeID"></select>
+                <span asp-validation-for="Licencie.licencie.EquipeID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Confirmer licencié" asp-page-handler="SaveLicencie" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Roles.FirstOrDefault().RoleName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Roles.Count; i++)
+        {
+            <tr>
+                <td>
+                    <label name="Roles[@i].RoleName" class="control-label">@Model.Roles[i].RoleName</label>
+                </td>
+                <td>
+                    <form method="post">
+                        <input type="hidden" asp-for="@Model.Roles[i].RoleId" name="role.RoleId" class="form-control" />
+                        <input type="hidden" asp-for="@Model.Roles[i].LicencieUserId" name="role.LicencieUserId" class="form-control" />
+                        <input type="hidden" asp-for="@Model.Roles[i].LicencieId" name="role.LicencieId" class="form-control" />
+                        @if (Model.Roles[i].IsAcquired)
+                        {
+                            <input type="submit" class="btn btn-danger" asp-page-handler="RemoveRole" value="Enlever" />
+                        }
+                        else
+                        {
+                            <input type="submit" class="btn btn-success" asp-page-handler="AddRole" value="Ajouter" />
+                        }
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <div>
     <a asp-page="./Index">Back to List</a>

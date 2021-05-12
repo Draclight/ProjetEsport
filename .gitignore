@@ -31,3 +31,4 @@ msbuild.err
 msbuild.wrn
 projetEsport\projetEsport\Data\Migrations\
 projetEsport\.vs
+projetEsport/.vs/projetEsport/config/applicationhost.config

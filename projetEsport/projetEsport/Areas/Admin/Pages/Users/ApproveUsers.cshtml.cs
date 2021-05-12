@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 using projetEsport.Authorization;
 using projetEsport.Data;
 using projetEsport.Models;
-using projetEsport.ViewModels;
 
 namespace projetEsport.Pages.Admin.Users
 {
@@ -28,16 +27,11 @@ namespace projetEsport.Pages.Admin.Users
             _context = context;
         }
         [BindProperty]
-        public IList<UserViewModel> Users { get; set; }
+        public IList<IdentityUser> Users { get; set; }
 
         public async Task OnGetAsync()
         {
-            Users = await _context.Users.Where(u => !u.EmailConfirmed).Select(u => new UserViewModel()
-            {
-                ID = u.Id,
-                Mail = u.Email,
-                UserName = u.UserName
-            }).ToListAsync();
+            Users = await _context.Users.Where(u => !u.EmailConfirmed).ToListAsync();
             Page();
         }
 
@@ -57,7 +51,7 @@ namespace projetEsport.Pages.Admin.Users
                 _context.UserRoles.Add(newRole);
                 await _context.SaveChangesAsync();
             }
-
+            
             Page();
         }
 

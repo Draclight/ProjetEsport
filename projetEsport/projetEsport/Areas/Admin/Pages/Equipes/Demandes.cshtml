@@ -4,11 +4,9 @@
     ViewData["Title"] = "Demandes";
 }
 
-<h1>Demandes création d'équipes</h1>
+<h1>Demandes de création d'équipe</h1>
 
 <div>
-    <h4>Equipe</h4>
-
     <table class="table">
         <thead>
             <tr>
@@ -41,11 +39,11 @@
                             <input asp-for="@equipe.ID" value="@equipe.ID" type="hidden" />
                             @if (equipe.Invitations.Any(i => i.IsAccepted == false))
                             {
-                                <input type="submit" class="btn btn-success" asp-page-handler="ApproveEquipe" asp-route-id="@equipe.ID" value="Approve" disabled />
+                                <input type="submit" class="btn btn-success" asp-page-handler="ApproveEquipe" asp-route-id="@equipe.ID" value="Approuver" disabled />
                             }
                             else
                             {
-                                <input type="submit" class="btn btn-success" asp-page-handler="ApproveEquipe" asp-route-id="@equipe.ID" value="Approve"/>
+                                <input type="submit" class="btn btn-success" asp-page-handler="ApproveEquipe" asp-route-id="@equipe.ID" value="Approuver"/>
                             }
                         </form>
                     </td>
@@ -55,5 +53,5 @@
     </table>
 </div>
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index">Retour</a>
 </div>

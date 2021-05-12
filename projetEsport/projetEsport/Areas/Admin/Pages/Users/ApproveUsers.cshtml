@@ -10,13 +10,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Users[0].Id)
+                @Html.DisplayNameFor(model => model.Users[0].ID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Users[0].UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Users[0].Email)
+                @Html.DisplayNameFor(model => model.Users[0].Mail)
             </th>
             <th></th>
         </tr>
@@ -26,19 +26,19 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @Html.DisplayFor(modelItem => item.ID)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => item.Mail)
                 </td>
                 <td>
                     <form method="post">
-                        <input asp-for="@item.Id" value="@item.Id" type="hidden" />
-                        <input type="submit" class="btn btn-success" asp-page-handler="ApproveUser" asp-route-id="@item.Id" value="Approve" />
-                        <input type="submit" class="btn btn-danger" asp-page-handler="RejectUser" asp-route-id="@item.Id" value="Reject" />
+                        <input asp-for="@item.ID" value="@item.ID" type="hidden" />
+                        <input type="submit" class="btn btn-success" asp-page-handler="ApproveUser" asp-route-id="@item.ID" value="Accepter la demande" />
+                        <input type="submit" class="btn btn-danger" asp-page-handler="RejectUser" asp-route-id="@item.ID" value="Rejeter la demande" />
                     </form>
                 </td>
             </tr>

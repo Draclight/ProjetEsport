@@ -149,6 +149,11 @@ body {
     margin-right: 2px;
 }
 
+.icon-notification {
+    content: url('../images/icons/bell-fill.svg');
+    margin-right: 2px;
+}
+
 /* Dropdown Button */
 .dropbtn {
     color: white;

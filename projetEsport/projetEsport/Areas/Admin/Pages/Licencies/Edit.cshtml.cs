@@ -64,7 +64,11 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
                 return NotFound();
             }
 
-            ViewData["EquipeID"] = new SelectList(_context.Equipe, "ID", "Nom");
+            //Equipe
+            var equipesListe = new List<Equipe>();
+            equipesListe.Add(new Equipe());
+            await _context.Equipe.ForEachAsync(e => equipesListe.Add(e));
+            ViewData["EquipeID"] = new SelectList(equipesListe, "ID", "Nom");
             return Page();
         }
 
@@ -73,6 +77,12 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            if (Licencie.licencie.EquipeID.Equals(0))
+            {
+                Licencie.licencie.EquipeID = null;
+                Licencie.licencie.Equipe = null;
             }
 
             Licencie.licencie.ModifieeLe = DateTime.UtcNow;
@@ -95,7 +105,10 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
                 }
             }
 
-            return Page();
+            return RedirectToPage(new
+            {
+                id = (int?)Licencie.licencie.ID,
+            });
         }
 
         public async Task<IActionResult> OnPostAddRoleAsync(RoleViewModel role)
@@ -121,7 +134,7 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
                     throw;
                 }
             }
-            
+
             return RedirectToPage(new
             {
                 id = (int?)role.LicencieId,

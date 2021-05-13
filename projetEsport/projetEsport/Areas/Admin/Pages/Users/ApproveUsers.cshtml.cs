@@ -32,10 +32,9 @@ namespace projetEsport.Pages.Admin.Users
         public async Task OnGetAsync()
         {
             Users = await _context.Users.Where(u => !u.EmailConfirmed).ToListAsync();
-            Page();
         }
 
-        public async Task OnPostApproveUserAsync(string id)
+        public async Task<IActionResult> OnPostApproveUserAsync(string id)
         {
             //User
             if (await _context.Users.AnyAsync(u => u.Id == id))
@@ -51,11 +50,10 @@ namespace projetEsport.Pages.Admin.Users
                 _context.UserRoles.Add(newRole);
                 await _context.SaveChangesAsync();
             }
-            
-            Page();
+            return RedirectToPage();
         }
 
-        public async Task OnPostRejectUserAsync(string id)
+        public async Task<IActionResult> OnPostRejectUserAsync(string id)
         {
             //User
             if (await _context.Users.AnyAsync(u => u.Id == id))
@@ -69,7 +67,7 @@ namespace projetEsport.Pages.Admin.Users
                 }
             }
 
-            Page();
+            return RedirectToPage();
         }
     }
 }

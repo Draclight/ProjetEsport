@@ -45,7 +45,15 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
 
             try
             {
-                Roles = await _context.Roles.Select(role => new RoleViewModel()
+                //Roles = await _context.Roles.Select(role => new RoleViewModel()
+                //{
+                //    RoleId = role.Id,
+                //    LicencieUserId = Licencie.licencie.IdUtilisateur,
+                //    LicencieId = Licencie.licencie.ID,
+                //    RoleName = role.Name,
+                //    IsAcquired = _context.UserRoles.Any(ur => ur.RoleId == role.Id && ur.UserId == Licencie.licencie.IdUtilisateur)
+                //}).ToListAsync();
+                Licencie.Roles = await _context.Roles.Select(role => new RoleViewModel()
                 {
                     RoleId = role.Id,
                     LicencieUserId = Licencie.licencie.IdUtilisateur,

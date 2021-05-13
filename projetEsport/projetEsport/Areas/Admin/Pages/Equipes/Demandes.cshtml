@@ -32,7 +32,7 @@
                         <ul class="membres-equipe-demandes">
                             @foreach (var i in equipe.Invitations)
                             {
-                                <li class="@(i.IsAccepted ? "invitation-accepted" : "invitation-not-accepted")">@i.Licencie.Pseudo</li>
+                                <li class="@(i.IsAccepted ? "badge badge-success" : "badge badge-danger")">@i.Licencie.Pseudo</li>
                             }
                         </ul>
                     </td>

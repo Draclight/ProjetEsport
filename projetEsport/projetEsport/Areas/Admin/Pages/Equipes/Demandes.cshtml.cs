@@ -24,10 +24,9 @@ namespace projetEsport.Areas.Admin.Pages.Equipes
         public IList<Equipe> Equipe { get; set; }
         public IList<EquipeViewModel> Equipes { get; set; }
 
-        public async Task OnGetAsync()
+        public void OnGetAsync()
         {
-            Equipe = await _context.Equipe.Include(e => e.Membres).Where(e => e.IsApproved == false).ToListAsync();
-            Equipes = Equipe.Select(e => new EquipeViewModel()
+            Equipes = _context.Equipe.Include(i => i.Membres).Where(e => !e.IsApproved).Select(e => new EquipeViewModel()
             {
                 Equipe = e,
                 Invitations = _context.InvitationEquipe.Include(i => i.Equipe).Include(i => i.Licencie).Where(i => i.EquipeID == e.ID).ToList(),

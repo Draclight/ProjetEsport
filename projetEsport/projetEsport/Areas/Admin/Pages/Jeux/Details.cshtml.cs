@@ -30,7 +30,7 @@ namespace projetEsport.Areas.Admin.Pages.Jeux
                 return NotFound();
             }
 
-            Jeu = await _context.Jeu.Include(j => j.Competitions).FirstOrDefaultAsync(m => m.ID == id);
+            Jeu = await _context.Jeu.Include(j => j.Competitions).ThenInclude(c => c.Competition).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Jeu == null)
             {

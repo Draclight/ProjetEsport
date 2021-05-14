@@ -21,7 +21,6 @@ namespace projetEsport.Areas.Admin.Pages.Equipes
             _context = context;
         }
 
-        public IList<Equipe> Equipe { get; set; }
         public IList<EquipeViewModel> Equipes { get; set; }
 
         public void OnGetAsync()
@@ -29,28 +28,32 @@ namespace projetEsport.Areas.Admin.Pages.Equipes
             Equipes = _context.Equipe.Include(i => i.Membres).Where(e => !e.IsApproved).Select(e => new EquipeViewModel()
             {
                 Equipe = e,
-                Invitations = _context.InvitationEquipe.Include(i => i.Equipe).Include(i => i.Licencie).Where(i => i.EquipeID == e.ID).ToList(),
-                Membres = e.Membres
+                ID = e.ID,
+                Invitations = _context.InvitationEquipe.Include(i => i.Equipe).Include(i => i.Licencie).Where(i => i.EquipeID == e.ID).ToList()
             }).ToList();
         }
 
-        public async Task OnPostApproveEquipeAsync(int id)
+        public async Task<IActionResult> OnPostApproveEquipeAsync(int id)
         {
             Equipe equipe = await _context.Equipe.FirstOrDefaultAsync(e => e.ID == id);
-            equipe.IsApproved = true;
-            _context.Attach(equipe).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            //Assignation de l'équipe aux membres
-            var invitations = await _context.InvitationEquipe.Include(i => i.Licencie).Include(i => i.Equipe).Where(i => i.EquipeID == equipe.ID).ToListAsync();
-            foreach (var l in invitations)
+            var invitations = await _context.InvitationEquipe.Where(i => i.EquipeID == equipe.ID).ToListAsync();
+            if (invitations.All(i => i.IsAccepted))
             {
-                l.EquipeID = equipe.ID;
-                _context.Attach(l).State = EntityState.Modified;
+                equipe.IsApproved = true;
+                _context.Attach(equipe).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+
+                //Assignation de l'équipe aux membres
+                foreach (var i in invitations)
+                {
+                    var licencie = await _context.Licencie.FirstAsync(l => l.ID.Equals(i.LicencieID));
+                    licencie.EquipeID = i.EquipeID;
+                    _context.Attach(licencie).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+                }
             }
 
-            Page();
+            return RedirectToPage();
         }
     }
 }

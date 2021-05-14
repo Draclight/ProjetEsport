@@ -14,24 +14,43 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Equipe.Nom" class="control-label"></label>
-                <input asp-for="Equipe.Nom" class="form-control" />
-                <span asp-validation-for="Equipe.Nom" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Equipe.IsApproved" /> @Html.DisplayNameFor(model => model.Equipe.IsApproved)
-                </label>
+                <label asp-for="EquipeViewModel.Equipe.Nom" class="control-label"></label>
+                <input asp-for="EquipeViewModel.Equipe.Nom" class="form-control" />
+                <span asp-validation-for="EquipeViewModel.Equipe.Nom" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Equipe.CreeLe" class="control-label"></label>
-                <input asp-for="Equipe.CreeLe" class="form-control" />
-                <span asp-validation-for="Equipe.CreeLe" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Equipe.ModifieeLe" class="control-label"></label>
-                <input asp-for="Equipe.ModifieeLe" class="form-control" />
-                <span asp-validation-for="Equipe.ModifieeLe" class="text-danger"></span>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EquipeViewModel.Equipe.Nom)
+
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EquipeViewModel.Licencies.FirstOrDefault().InviteDansEquipe)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.LicenciesViewModel.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <label class="form-control-plaintext">@Model.LicenciesViewModel[i].licencie.Pseudo</label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" asp-for="@Model.LicenciesViewModel[i].InviteDansEquipe" name="LicenciesViewModel[@i].InviteDansEquipe" class="form-control" />
+                                </td>
+                                <td>
+                                    <input type="hidden" asp-for="EquipeViewModel.LicencieID" name="EquipeViewModel.LicencieID" class="form-control" />
+                                    <input type="hidden" asp-for="@Model.LicenciesViewModel[i].licencie.ID" name="LicenciesViewModel[@i].licencie.ID" class="form-control" />
+                                    <input type="hidden" asp-for="@Model.LicenciesViewModel[i].InviteDansEquipe" name="LicenciesViewModel[@i].InviteDansEquipe" class="form-control" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

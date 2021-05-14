@@ -39,7 +39,7 @@ namespace projetEsport.Pages.Equipes
                     ID = ivm.ID,
                     LicencieID = ivm.LicencieID,
                     NomEquipe = ivm.Equipe.Nom,
-                    Membres = _context.InvitationEquipe.Include(i => i.Licencie).Select(i => i.Licencie.Pseudo).ToList(),
+                    Membres = _context.InvitationEquipe.Include(i => i.Licencie).Where(ie => ie.EquipeID.Equals(ivm.EquipeID)).Select(i => i.Licencie.Pseudo).ToList(),
                     Quand = ivm.Equipe.CreeLe,
                     Accepter = ivm.IsAccepted
                 }).ToListAsync();

@@ -13,5 +13,7 @@ namespace projetEsport.ViewModels
         public Licencie licencie { get; set; }
         [Display(Name = "Rôles")]
         public IList<RoleViewModel> Roles { get; set; }
+        [Display(Name = "Invité")]
+        public bool InviteDansEquipe { get; set; }
     }
 }

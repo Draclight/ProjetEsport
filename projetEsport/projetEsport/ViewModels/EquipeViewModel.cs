@@ -1,4 +1,5 @@
-﻿using projetEsport.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using projetEsport.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,9 @@ namespace projetEsport.ViewModels
     {
         public int ID { get; set; }
         public Equipe Equipe { get; set; }
-        public ICollection<Licencie> Membres { get; set; }
         public ICollection<InvitationEquipe> Invitations { get; set; }
+        public int LicencieID { get; set; }
+        public IList<LicencieViewModel> Licencies { get; set; }
+        public bool IsMembre { get; set; }
     }
 }

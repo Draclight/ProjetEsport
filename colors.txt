@@ -1,0 +1,5 @@
+background-color: #213566; /*couleur du fond bleu foncé+*/
+background-color: #152140; /*couleur du fond bleu foncé+++*/
+
+Old blue : #007bff
+https://rgbcolorcode.com/color/004D33

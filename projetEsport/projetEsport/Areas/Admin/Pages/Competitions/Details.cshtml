@@ -6,54 +6,91 @@
 }
 
 <h1>Details</h1>
-
-<div>
-    <h4>Competition</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.Competition.Nom)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.Competition.Nom)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.Competition.TypeCompetition)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.Competition.TypeCompetition.Nom)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.Competition.DateDebut)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.Competition.DateDebut)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.Competition.DateFin)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.Competition.DateFin)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.NbEquipes)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.NbEquipes)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.NbJeux)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.NbJeux)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.Competition.Proprietaire.Pseudo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.Competition.Proprietaire.Pseudo)
-        </dd>
-    </dl>
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <h4>Competition</h4>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Competition.Competition.Nom)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Competition.Competition.Nom)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Competition.Competition.TypeCompetition)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Competition.Competition.TypeCompetition.Nom)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Competition.Competition.DateDebut)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Competition.Competition.DateDebut)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Competition.Competition.DateFin)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Competition.Competition.DateFin)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Competition.NbEquipes)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Competition.NbEquipes)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Competition.NbJeux)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Competition.NbJeux)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Competition.Competition.Proprietaire)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Competition.Competition.Proprietaire.Pseudo)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Competition.Competition.Jeux" class="h5 control-label"></label>
+        <table class="table">
+            <tbody>
+                @foreach (var jeu in Model.Competition.Competition.Jeux)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => jeu.Jeu.Nom)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-page="/Jeux/Details" asp-route-id="@jeu.JeuID">Détails</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Competition.Competition.EquipesDeCompetition" class="h5 control-label"></label>
+        <table class="table">
+            <tbody>
+                @foreach (var equipe in Model.Competition.Competition.EquipesDeCompetition)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => equipe.Equipe.Nom)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-page="/Equipe/Details" asp-route-id="@equipe.EquipeID">Détails</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 <div>
     <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Competition.Competition.ID">Edit</a> |

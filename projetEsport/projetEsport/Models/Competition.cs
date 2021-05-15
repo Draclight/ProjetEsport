@@ -25,7 +25,7 @@ namespace projetEsport.Models
 
         #region Clées
         public int TypeCompetitionID { get; set; }
-        [Display(Name = "Type de compétition")]
+        [Display(Name = "Type")]
         public TypeCompetition TypeCompetition { get; set; }
         public int ProprietaireID { get; set; }
         [Display(Name = "Propriétaire")]

@@ -10,7 +10,8 @@
 <h4>Licencie</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
+        <h5>Informations</h5>
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Licencie.licencie.ID" />
@@ -53,43 +54,39 @@
                 <input type="submit" value="Confirmer licencié" asp-page-handler="SaveLicencie" class="btn btn-primary" />
             </div>
         </form>
+
+    </div>
+    <div class="col-md-5">
+        <label asp-for="Licencie.Roles" class="h5 control-label"></label>
+        <table class="table">
+            <tbody>
+                @foreach (var item in Model.Licencie.Roles)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.RoleName)
+                        </td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" asp-for="@item.RoleId" name="role.RoleId" class="form-control" />
+                                <input type="hidden" asp-for="@item.LicencieUserId" name="role.LicencieUserId" class="form-control" />
+                                <input type="hidden" asp-for="@item.LicencieId" name="role.LicencieId" class="form-control" />
+                                @if (item.IsAcquired)
+                                {
+                                    <input type="submit" class="btn btn-danger" asp-page-handler="RemoveRole" value="Enlever" />
+                                }
+                                else
+                                {
+                                    <input type="submit" class="btn btn-success" asp-page-handler="AddRole" value="Ajouter" />
+                                }
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Roles.FirstOrDefault().RoleName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (int i = 0; i < Model.Roles.Count; i++)
-        {
-            <tr>
-                <td>
-                    <label name="Roles[@i].RoleName" class="control-label">@Model.Roles[i].RoleName</label>
-                </td>
-                <td>
-                    <form method="post">
-                        <input type="hidden" asp-for="@Model.Roles[i].RoleId" name="role.RoleId" class="form-control" />
-                        <input type="hidden" asp-for="@Model.Roles[i].LicencieUserId" name="role.LicencieUserId" class="form-control" />
-                        <input type="hidden" asp-for="@Model.Roles[i].LicencieId" name="role.LicencieId" class="form-control" />
-                        @if (Model.Roles[i].IsAcquired)
-                        {
-                            <input type="submit" class="btn btn-danger" asp-page-handler="RemoveRole" value="Enlever" />
-                        }
-                        else
-                        {
-                            <input type="submit" class="btn btn-success" asp-page-handler="AddRole" value="Ajouter" />
-                        }
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
 <div>
     <a asp-page="./Index">Back to List</a>

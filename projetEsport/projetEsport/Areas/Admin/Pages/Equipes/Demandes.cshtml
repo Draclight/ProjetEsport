@@ -32,13 +32,13 @@
                         <ul class="membres-equipe-demandes">
                             @foreach (var i in equipe.Invitations)
                             {
-                                <li class="@(i.IsAccepted ? "invitation-accepted" : "invitation-not-accepted")">@i.Licencie.Pseudo</li>
+                                <li class="@(i.IsAccepted ? "badge badge-success" : "badge badge-danger")">@i.Licencie.Pseudo</li>
                             }
                         </ul>
                     </td>
                     <td>
                         <form method="post">
-                            <input asp-for="@equipe.ID" value="@equipe.ID" type="hidden" />
+                            <input name="id" value="@equipe.ID" type="hidden" />
                             @if (equipe.Invitations.Any(i => i.IsAccepted == false))
                             {
                                 <input type="submit" class="btn btn-success" asp-page-handler="ApproveEquipe" asp-route-id="@equipe.ID" value="Approve" disabled />

@@ -70,6 +70,7 @@ namespace projetEsport
 
             services.AddSingleton<IAuthorizationHandler, LicencieAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, CompetitionAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationHandler, EquipeAuthorizationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

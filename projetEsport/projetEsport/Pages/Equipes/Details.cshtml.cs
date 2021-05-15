@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using projetEsport.Data;
 using projetEsport.Models;
 
-namespace projetEsport.Areas.Admin.Pages.Jeux
+namespace projetEsport.Pages.Equipes
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
     public class DetailsModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -21,7 +19,7 @@ namespace projetEsport.Areas.Admin.Pages.Jeux
             _context = context;
         }
 
-        public Jeu Jeu { get; set; }
+        public Equipe Equipe { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,9 +28,9 @@ namespace projetEsport.Areas.Admin.Pages.Jeux
                 return NotFound();
             }
 
-            Jeu = await _context.Jeu.Include(j => j.Competitions).ThenInclude(c => c.Competition).FirstOrDefaultAsync(m => m.ID == id);
+            Equipe = await _context.Equipe.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Jeu == null)
+            if (Equipe == null)
             {
                 return NotFound();
             }

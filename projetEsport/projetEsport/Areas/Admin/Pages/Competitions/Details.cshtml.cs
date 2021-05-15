@@ -32,13 +32,13 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
             }
 
             var competition = await _context.Competition
-                .Include(c => c.TypeCompetition).Include(c => c.Proprietaire).FirstOrDefaultAsync(m => m.ID == id);
+                .Include(c => c.TypeCompetition).Include(c => c.Proprietaire).Include(c => c.EquipesDeCompetition).Include(c => c.Jeux).ThenInclude(j => j.Jeu).FirstOrDefaultAsync(m => m.ID == id);
 
             Competition = new CompetitionViewModel()
             {
                 Competition = competition,
-                //NbJeux = competition.Jeux.Count,
-                //NbEquipes = competition.Equipes.Count
+                NbEquipes = competition.EquipesDeCompetition.Count,
+                NbJeux = competition.Jeux.Count
             };  
 
             if (Competition.Competition == null)

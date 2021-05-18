@@ -2,14 +2,14 @@
 @model projetEsport.Areas.Admin.Pages.Competitions.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Détails";
 }
 
-<h1>Details</h1>
+<h1>Détails</h1>
 <hr />
 <div class="row">
     <div class="col-md-5">
-        <h4>Competition</h4>
+        <h4>Compétition</h4>
         <dl class="row">
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Competition.Competition.Nom)
@@ -93,6 +93,6 @@
     </div>
 </div>
 <div>
-    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Competition.Competition.ID">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Competition.Competition.ID">Éditer</a> |
+    <a asp-page="./Index">Retour</a>
 </div>

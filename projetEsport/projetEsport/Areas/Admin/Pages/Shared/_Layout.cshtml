@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>projetEsport - Admin | @ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-custom border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="Admin" asp-page="/Index">projetEsport</a>
+                <a class="navbar-brand" asp-area="Admin" asp-page="/Index">Projet eSport</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,12 +22,12 @@
                             <a class="nav-link text-dark dropbtn" asp-area="Admin" asp-page="/Competitions/Index"><span class="icon-competition"></span>Compétitions</a>
                             <ul class="dropdown-content">
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="Admin" asp-page="/TypesCompetition/Index">Types de competition</a>
+                                    <a class="nav-link text-dark" asp-area="Admin" asp-page="/TypesCompetition/Index">Types de compétition</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropbtn" asp-area="Admin" asp-page="/Equipes/Index"><span class="icon-equipe"></span>Equipes</a>
+                            <a class="nav-link text-dark dropbtn" asp-area="Admin" asp-page="/Equipes/Index"><span class="icon-equipe"></span>Équipes</a>
                             <ul class="dropdown-content">
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="Admin" asp-page="/Equipes/Demandes">Demandes</a>
@@ -59,7 +59,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - projetEsport - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2021 - projetEsport - <a asp-area="" asp-page="/Privacy">Mentions légales</a>
         </div>
     </footer>
 

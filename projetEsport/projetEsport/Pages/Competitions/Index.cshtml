@@ -9,11 +9,11 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h1>Competitions</h1>
+<h1>Compétitions</h1>
 @if ((await AuthorizationService.AuthorizeAsync(User, new Competition(), ESportOperations.Create)).Succeeded)
 {
     <p>
-        <a class="btn btn-success" asp-page="Create">Create New</a>
+        <a class="btn btn-success" asp-page="Create">Créer une nouvelle compétition</a>
     </p>
 }
 <table class="table">
@@ -53,9 +53,9 @@
                 <td>
                     @if (item.Proprietaire.IdUtilisateur.Equals(userManager.GetUserId(User)))
                     {
-                        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.ID">Edit</a> @string.Format("|");
+                    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.ID">Éditer</a> @string.Format("|");
                     }
-                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ID">Details</a>
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ID">Détails</a>
                 </td>
             </tr>
         }

@@ -37,8 +37,8 @@
                 <td>
                     <form method="post">
                         <input asp-for="@item.Id" value="@item.Id" type="hidden" />
-                        <input type="submit" class="btn btn-success" asp-page-handler="ApproveUser" asp-route-id="@item.Id" value="Approve" />
-                        <input type="submit" class="btn btn-danger" asp-page-handler="RejectUser" asp-route-id="@item.Id" value="Reject" />
+                        <input type="submit" class="btn btn-success" asp-page-handler="ApproveUser" asp-route-id="@item.Id" value="Approuver" />
+                        <input type="submit" class="btn btn-danger" asp-page-handler="RejectUser" asp-route-id="@item.Id" value="Rejeter" />
                     </form>
                 </td>
             </tr>

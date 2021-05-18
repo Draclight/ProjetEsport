@@ -6,6 +6,20 @@ for details on configuring this project to bundle and minify static web assets. 
 
 /* AJOUTS */
 
+.form-control-plaintext {
+    display: block;
+    width: 100%;
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+    margin-bottom: 0;
+    line-height: 1.5;
+    color: forestgreen !important;
+    background-color: transparent;
+    border: solid transparent;
+    border-width: 1px 0;
+    color: #008558;
+}
+
 .texte_centre, .texte_centre2, h1, h2, h3, h4 .text-dark, .navbar-brand, p, div {
     font-family: Montserrat;
 }
@@ -42,6 +56,12 @@ p {
     background-color: #213566;
     color: white;
 }
+
+.form-control:valid {
+    background-color: #213566;
+    color: white;
+}
+
 
 .form-control:focus, .form-control:hover {
     background-color: #32519a;

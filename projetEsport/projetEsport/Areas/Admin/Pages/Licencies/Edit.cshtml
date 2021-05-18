@@ -2,12 +2,12 @@
 @model projetEsport.Areas.Admin.Pages.Licencies.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Éditer";
 }
 
-<h1>Edit</h1>
+<h1>Éditer</h1>
 
-<h4>Licencie</h4>
+<h4>Licenciés</h4>
 <hr />
 <div class="row">
     <div class="col-md-5">
@@ -51,7 +51,7 @@
                 <span asp-validation-for="Licencie.licencie.EquipeID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Confirmer licencié" asp-page-handler="SaveLicencie" class="btn btn-primary" />
+                <input type="submit" value="Valider le licencié" asp-page-handler="SaveLicencie" class="btn btn-primary" />
             </div>
         </form>
 
@@ -73,7 +73,7 @@
                                 <input type="hidden" asp-for="@item.LicencieId" name="role.LicencieId" class="form-control" />
                                 @if (item.IsAcquired)
                                 {
-                                    <input type="submit" class="btn btn-danger" asp-page-handler="RemoveRole" value="Enlever" />
+                                    <input type="submit" class="btn btn-danger" asp-page-handler="RemoveRole" value="Supprimer" />
                                 }
                                 else
                                 {
@@ -89,7 +89,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index">Retour</a>
 </div>
 
 @section Scripts {

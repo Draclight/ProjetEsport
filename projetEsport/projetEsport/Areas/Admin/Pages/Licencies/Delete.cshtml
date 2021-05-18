@@ -2,14 +2,14 @@
 @model projetEsport.Areas.Admin.Pages.Licencies.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Supprimer";
 }
 
-<h1>Delete</h1>
+<h1>Supprimer</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Souhaitez-vous vraiment supprimer ce licencié ?</h3>
 <div>
-    <h4>Licencie</h4>
+    <h4>Licencié</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -69,7 +69,7 @@
     
     <form method="post">
         <input type="hidden" asp-for="Licencie.licencie.ID"/>
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
+        <input type="submit" value="Supprimer" class="btn btn-danger" /> |
+        <a asp-page="./Index">Retour</a>
     </form>
 </div>

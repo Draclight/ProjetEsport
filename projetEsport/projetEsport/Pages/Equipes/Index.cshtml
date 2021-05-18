@@ -7,7 +7,7 @@
 @inject IAuthorizationService AuthorizationService
 @inject UserManager<IdentityUser> userManager
 @{
-    ViewData["Title"] = "Equipes";
+    ViewData["Title"] = "Index";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -16,7 +16,7 @@
     if (Model.PeutCreer)
     {
         <p>
-            <a class="btn btn-success" asp-page="Create">Create New</a>
+            <a class="btn btn-success" asp-page="Create">Créer</a>
         </p>
     }
 }
@@ -41,12 +41,12 @@
                 <td>
                     @if (equipe.IsMembre)
                     {
-                        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@equipe.ID">Edit</a> @string.Format("|");
+                    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@equipe.ID">Éditer</a> @string.Format("|");
                     }
-                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@equipe.ID">Details</a>
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@equipe.ID">Détails</a>
                     @if (equipe.IsMembre)
                     {
-                        @string.Format("|"); <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@equipe.ID">Delete</a>
+                        @string.Format("|"); <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@equipe.ID">Supprimer</a>
                     }
                 </td>
             </tr>

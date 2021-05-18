@@ -3,3 +3,13 @@ background-color: #152140; /*couleur du fond bleu foncé+++*/
 
 Old blue : #007bff
 https://rgbcolorcode.com/color/004D33
+
+#008558 /*h1 texte vert*/
+#006644 /* texte nav bar */
+#004d33 // couleur texte curseur
+#1f3260 //form
+#32519a // on form
+
+back test 
+#12232f
+hover #2a6496

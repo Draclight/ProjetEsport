@@ -1,29 +1,96 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-head {
-    background-color: #1b6ec2;
+
+
+
+/* AJOUTS */
+
+.texte_centre, .texte_centre2, h1, h2, h3, h4 .text-dark, .navbar-brand, p, div {
+    font-family: Montserrat;
 }
 
-a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
+.texte_centre {
+    position: absolute; /* postulat de départ */
+    font-size: 4.5rem;
+    top: 25%;
+    left: 50%; /* à 50%/50% du parent référent */
+    transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
 }
+.texte_centre2 {
+    position: absolute; /* postulat de départ */
+    font-size: 2.5rem;
+    top: 40%;
+    left: 50%; /* à 50%/50% du parent référent */
+    transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
+}
+
+h1 {
+    color: #008558;
+}
+
+p {
+    color: #006644;
+}
+
+
+.bg-custom /* couleur du nav */ {
+    background-color: #12232f;
+}
+
+.form-control {
+    background-color: #213566;
+    color: white;
+}
+
+.form-control:focus, .form-control:hover {
+    background-color: #32519a;
+    color: white;
+}
+
+.text-danger {
+    color: #e69900 !important;
+}
+
+.navbar-brand {
+    display: inline-block;
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
+    color: #bfbfbf !important;
+}
+
+.navbar-brand:focus, .navbar-brand:hover {
+    color: #0df0a3 !important;
+}
+
+.text-dark {
+    color: #bfbfbf !important;
+    font-size: 1.25rem;
+}
+
+a.text-dark:hover, a.text-dark:focus {
+    color: #0df0a3 !important;
+}
+
+
+.table {
+    color: #006644;
+}
+
+
+/* FIN AJOUTS */
 
 .navbar-nav.login .nav-item {
     display: flex;
 }
 
-.text-bleu {
-    color: #0366d6;
-    text-decoration: none;
-    background-color: transparent;
-}
-
 /* Provide sufficient contrast against white background */
 a {
-    color: #0366d6;
+    color: #59a3ff;
 }
 
 .btn-primary {
@@ -78,7 +145,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background-color: #213566; /*couleur du fond bleu foncé+*/
+    background-color: #152140; /*couleur du fond bleu foncé+*/
     color: #008558; /*couleur du texte*/
 }
 
@@ -88,15 +155,15 @@ body {
     width: 100%;
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
-    background-color: #152140; /*couleur du fond bleu foncé+++*/
-
+    background-color: #12232f; /*couleur du fond bleu foncé+++*/
 }
 
+}
 /*Perso*/
 @media (min-width: 1200px) {
     .container {
         max-width: 1500px;
-        color: #008558; /*couleur du texte*/
+        color: #bfbfbf; /*couleur du texte*/
     }
 }
 

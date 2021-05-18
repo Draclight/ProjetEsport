@@ -41,6 +41,9 @@ for details on configuring this project to bundle and minify static web assets. 
 
 h1 {
     color: #008558;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 p {

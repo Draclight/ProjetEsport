@@ -24,6 +24,8 @@ namespace projetEsport.Models
         ICollection<ClassementCompetition> Classements { get; set; }
         ICollection<CompetitionEquipe> CompetitionDeEquipes { get; set; }
         ICollection<InvitationEquipe> InvitationsEquipe { get; set; }
+        public int JeuId { get; set; }
+        public Jeu Jeu { get; set; }
         #endregion
     }
 }

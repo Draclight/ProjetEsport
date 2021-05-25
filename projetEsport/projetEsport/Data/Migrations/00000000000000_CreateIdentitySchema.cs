@@ -191,6 +191,29 @@ namespace projetEsport.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            //Rôles
+            migrationBuilder.Sql("INSERT INTO AspNetRoles values(1, 'Administrateur', 'ADMINISTRATEUR', '');");
+            migrationBuilder.Sql("INSERT INTO AspNetRoles values(2, 'Organisateur', 'ORGANISATEUR', '');");
+            migrationBuilder.Sql("INSERT INTO AspNetRoles values(3, 'Licencie', 'LICENCIE', '');");
+
+            //Users
+            migrationBuilder.Sql("INSERT INTO AspNetUsers values('1'," +
+                " 'Admin', 'ADMIN'," +
+                "'admin@projetEsport.com', 'ADMIN@PROJETESPORT.COM'," +
+                "1," +
+                "'@dm1n'," +
+                "''," +
+                "''," +
+                "''," +
+                "0," +
+                "0," +
+                "null," +
+                "0," +
+                "0)");
+
+            //UserRole
+            migrationBuilder.Sql("INSERT INTO AspNetUserRoles values('1', '1')");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

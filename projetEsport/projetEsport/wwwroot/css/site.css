@@ -6,6 +6,55 @@ for details on configuring this project to bundle and minify static web assets. 
 
 /* AJOUTS */
 
+
+.arrondi_d {
+    height: 750px;
+    width: 500px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: darkgrey;
+    background-color: rgba(92,152,162,0.1);
+    border-radius: 40px 40px 40px 40px;
+    text-align: center;
+    float: right;
+}
+.arrondi_g {
+    height: 750px;
+    width: 500px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    background-color: rgba(92,152,162,0.1);
+    border-radius: 40px 40px 40px 40px;
+    text-align: center;
+    float: left;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: #fbfafc; /*couleur corps*/
+    color: black; /*couleur du texte*/
+}
+
+.coin {
+    background-color: #E4EFFF;
+    border: 1px solid #9FC6FF;
+    padding: 5px;
+    /*arrondir les coins en haut à gauche et en bas à droite*/
+    -moz-border-radius: 10px 0;
+    -webkit-border-radius: 10px 0;
+    border-radius: 10px 0;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: rgba(92,52,162,0.1); /*footer*/
+    color: #828ba0 !important;
+}
+
 .form-control-plaintext {
     display: block;
     width: 100%;
@@ -20,88 +69,71 @@ for details on configuring this project to bundle and minify static web assets. 
     color: #008558;
 }
 
-.texte_centre, .texte_centre2, h1, h2, h3, h4 .text-dark, .navbar-brand, p, div {
+h1, h2, h3, h4 .text-dark, .navbar-brand, p, div {
     font-family: Montserrat;
 }
 
-.texte_centre {
-    position: absolute; /* postulat de départ */
-    font-size: 4.5rem;
-    top: 25%;
-    left: 50%; /* à 50%/50% du parent référent */
-    transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
-}
-.texte_centre2 {
-    position: absolute; /* postulat de départ */
-    font-size: 2.5rem;
-    top: 40%;
-    left: 50%; /* à 50%/50% du parent référent */
-    transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
-}
-
 h1 {
-    color: #008558;
+    color: black;
     text-align: center;
     margin-top: 50px;
     margin-bottom: 50px;
 }
 
 p {
-    color: #006644;
+    color: black;
 }
 
-
 .bg-custom /* couleur du nav */ {
-    background-color: #12232f;
+    background-color: #ffffff;
 }
 
 .form-control {
-    background-color: #213566;
-    color: white;
+    background-color: #f5f6fa;
+    color: black;
 }
 
 .form-control:valid {
-    background-color: #213566;
-    color: white;
+    background-color: #f5f6fa;
+    color: black;
 }
 
 
 .form-control:focus, .form-control:hover {
-    background-color: #32519a;
-    color: white;
+    background-color: rgba(92,52,162,0.1);
+    color: #333;
+    transition: all .4s ease-in-out;
 }
 
 .text-danger {
-    color: #e69900 !important;
+    color: darkred !important;
 }
 
 .navbar-brand {
-    display: inline-block;
-    padding-top: 0.3125rem;
-    padding-bottom: 0.3125rem;
-    margin-right: 1rem;
-    font-size: 1.25rem;
-    line-height: inherit;
-    white-space: nowrap;
-    color: #bfbfbf !important;
+    color: #828ba0 !important;
+    font-size: 18px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
 }
 
-.navbar-brand:focus, .navbar-brand:hover {
-    color: #0df0a3 !important;
+.text-dark /*texte des nav bar*/ {
+    color: #828ba0 !important;
+    font-size: 18px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: 14px;
 }
 
-.text-dark {
-    color: #bfbfbf !important;
-    font-size: 1.25rem;
+.text-dark:hover, .text-dark:focus, a.text-dark:focus, a.text-dark:hover, .navbar-brand:focus, .navbar-brand:hover {
+    color: #8258cd !important;
+    transition: all .4s ease-in-out;
 }
-
-a.text-dark:hover, a.text-dark:focus {
-    color: #0df0a3 !important;
-}
-
 
 .table {
-    color: #006644;
+    color: #828ba0;
 }
 
 
@@ -124,7 +156,7 @@ a {
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
-    background-color: #1b6ec2;
+    background-color: #ffffff;
     border-color: #1861ac;
 }
 
@@ -165,21 +197,6 @@ html {
     min-height: 100%;
 }
 
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
-    background-color: #152140; /*couleur du fond bleu foncé+*/
-    color: #008558; /*couleur du texte*/
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
-    background-color: #12232f; /*couleur du fond bleu foncé+++*/
-}
 
 }
 /*Perso*/

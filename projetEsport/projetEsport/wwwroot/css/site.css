@@ -160,6 +160,16 @@ body {
     margin-right: 2px;
 }
 
+.icon-matche {
+    content: url('../images/icons/calendar2-check-fill.svg');
+    margin-right: 2px;
+}
+
+.icon-type-matche {
+    content: url('../images/icons/dice-5.svg');
+    margin-right: 2px;
+}
+
 /* Dropdown Button */
 .dropbtn {
     color: white;

@@ -1,0 +1,45 @@
+﻿@page
+@model projetEsport.Areas.Admin.Pages.TypesMatches.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>TypeMatche</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TypeMatche.ID" />
+            <div class="form-group">
+                <label asp-for="TypeMatche.Nom" class="control-label"></label>
+                <input asp-for="TypeMatche.Nom" class="form-control" />
+                <span asp-validation-for="TypeMatche.Nom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeMatche.CreeLe" class="control-label"></label>
+                <input asp-for="TypeMatche.CreeLe" class="form-control" />
+                <span asp-validation-for="TypeMatche.CreeLe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeMatche.ModifieeLe" class="control-label"></label>
+                <input asp-for="TypeMatche.ModifieeLe" class="form-control" />
+                <span asp-validation-for="TypeMatche.ModifieeLe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

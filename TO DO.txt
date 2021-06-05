@@ -1,9 +1,4 @@
-Principale :
-	- faire les classes des tables manquantes + recreer la base
-		- competitionEquipe
-		- competitionJeu
-		- matchCompetition (table Matche existe déjà)isu
-		- equipeMatche
-
-Secondaire :
-	- rajouter un boolean pour débuter competition sur l'entite competition
+- rajouter un boolean pour autorisé la competition à débuter sur l'entite competition
+	- si nombre equipes paire == true
+	- si nombre equipes impaire == false
+- 

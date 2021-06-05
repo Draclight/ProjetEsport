@@ -1,0 +1,52 @@
+﻿@page
+@model projetEsport.Areas.Admin.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<div class="wrapper wrapper-content">
+    <h1>Dashboard</h1>
+    <div class="row row-center">
+        <div class="col-lg-3">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <div class="ibox-tools">
+                        <span class="badge badge-primary float-right">@DateTime.Now.Year</span>
+                    </div>
+                    <h5>Année</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">@Model.Dashboard.NbLicenciesAnnee</h1>
+                    <small>@Html.DisplayNameFor(model => Model.Dashboard.NbLicenciesAnnee)</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <div class="ibox-tools">
+                        <span class="badge badge-info float-right">@Model.Dashboard.GetCurrentMonth(DateTime.Now.Month)</span>
+                    </div>
+                    <h5>Mois</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">@Model.Dashboard.NbLicenciesMois</h1>
+                    <small>@Html.DisplayNameFor(model => Model.Dashboard.NbLicenciesMois)</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <div class="ibox-tools">
+                        <span class="badge badge-success float-right">@DateTime.Now.Date.ToShortDateString()</span>
+                    </div>
+                    <h5>Aujourd'hui</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">@Model.Dashboard.NbLicenciesJour</h1>
+                    <small>@Html.DisplayNameFor(model => Model.Dashboard.NbLicenciesJour)</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

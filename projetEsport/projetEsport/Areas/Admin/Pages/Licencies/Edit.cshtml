@@ -1,0 +1,133 @@
+﻿@page
+@model projetEsport.Areas.Admin.Pages.Licencies.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Licencie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-page-handler="EditLicencie">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="LicencieVM.ID" />
+            <div class="form-group">
+                <label asp-for="LicencieVM.Pseudo" class="control-label"></label>
+                <input asp-for="LicencieVM.Pseudo" class="form-control" />
+                <span asp-validation-for="LicencieVM.Pseudo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LicencieVM.Prenom" class="control-label"></label>
+                <input asp-for="LicencieVM.Prenom" class="form-control" />
+                <span asp-validation-for="LicencieVM.Prenom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LicencieVM.Nom" class="control-label"></label>
+                <input asp-for="LicencieVM.Nom" class="form-control" />
+                <span asp-validation-for="LicencieVM.Nom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LicencieVM.CreeLe" class="control-label"></label>
+                <input asp-for="LicencieVM.CreeLe" class="form-control" />
+                <span asp-validation-for="LicencieVM.CreeLe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LicencieVM.ModifieeLe" class="control-label"></label>
+                <input asp-for="LicencieVM.ModifieeLe" class="form-control" />
+                <span asp-validation-for="LicencieVM.ModifieeLe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LicencieVM.UtilisateurID" class="control-label"></label>
+                <select asp-for="LicencieVM.UtilisateurID" class="form-control" asp-items="ViewBag.UtilisateurID"></select>
+                <span asp-validation-for="LicencieVM.UtilisateurID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LicencieVM.EquipeID" class="control-label"></label>
+                <select asp-for="LicencieVM.EquipeID" class="form-control" asp-items="ViewBag.EquipeID"></select>
+                <span asp-validation-for="LicencieVM.EquipeID" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="LicencieVM.Createur" /> @Html.DisplayNameFor(model => model.LicencieVM.Createur)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LicencieVM.Invitations)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var invitation in Model.LicencieVM.Invitations)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => invitation.NomEquipe)
+                        </td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" asp-for="@invitation.ID" name="invitation.ID" />
+                                <input type="hidden" asp-for="@invitation.LicencieID" name="invitation.LicencieID" />
+                                <input type="submit" class="btn btn-success" asp-page-handler="AccepterInvitation" value="Accepter" /> |
+                                <input type="submit" class="btn btn-danger" asp-page-handler="RejeterInvitation" value="Rejeter" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.LicencieVM.UtilisateurID))
+    {
+        <div class="col-md-4">
+            <label asp-for="LicencieVM.Roles" class="h5 control-label"></label>
+            <table class="table">
+                <tbody>
+                    @foreach (var role in Model.LicencieVM.Roles)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => role.RoleName)
+                            </td>
+                            <td>
+                                <form method="post">
+                                    <input type="hidden" asp-for="@role.RoleId" name="role.RoleId" class="form-control" />
+                                    <input type="hidden" asp-for="@role.LicencieUserId" name="role.LicencieUserId" class="form-control" />
+                                    <input type="hidden" asp-for="@role.LicencieId" name="role.LicencieId" class="form-control" />
+                                    @if (role.IsAcquired)
+                                    {
+                                        <input type="submit" class="btn btn-danger" asp-page-handler="RemoveRole" value="Supprimer" />
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" class="btn btn-success" asp-page-handler="AddRole" value="Ajouter" />
+                                    }
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,54 @@
+﻿@page
+@model projetEsport.Areas.Admin.Pages.Equipes.ApprouveEquipesModel
+@{
+    ViewData["Title"] = "Approbation équipes";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipes[0].Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipes[0].Invitations)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var equipe in Model.Equipes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => equipe.Nom)
+                </td>
+                <td>
+                    @foreach (var invitation in equipe.Invitations)
+                    {
+                        <div class="d-block">
+                            <span class="@(invitation.Accepter ? "badge badge-success": "badge badge-warning")">@invitation.PseudoLicencie</span>
+
+                        </div>
+                    }
+                </td>
+                <td>
+                    <form method="post">
+                        <input asp-for="@equipe.ID" value="@equipe.ID" type="hidden" />
+                        @if (equipe.Invitations.Any(i => !i.Accepter))
+                        {
+                            <input type="submit" class="btn btn-success" asp-page-handler="ApproveEquipe" asp-route-id="@equipe.ID" value="Approve" disabled/>
+                        }
+                        else
+                        {
+                            <input type="submit" class="btn btn-success" asp-page-handler="ApproveEquipe" asp-route-id="@equipe.ID" value="Approve" />
+                        }
+                        | <input type="submit" class="btn btn-danger" asp-page-handler="RejectEquipe" asp-route-id="@equipe.ID" value="Reject" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

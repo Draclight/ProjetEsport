@@ -1,0 +1,84 @@
+﻿@page
+@model projetEsport.Areas.Admin.Pages.Competitions.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-success" asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].DateDebut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].DateFin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].TypeCompetition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].Proprietaire)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].NbJeux)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].NbEquipes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].CreeLe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].ModifieeLe)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var competition in Model.Competitions) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => competition.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => competition.DateDebut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => competition.DateFin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => competition.TypeCompetition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => competition.Proprietaire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => competition.NbJeux)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => competition.NbEquipes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => competition.CreeLe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => competition.ModifieeLe)
+            </td>
+            <td>
+                <a class="btn btn-success" asp-page="./Edit" asp-route-id="@competition.ID">Edit</a> |
+                <a class="btn btn-primary" asp-page="./Details" asp-route-id="@competition.ID">Details</a> |
+                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@competition.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

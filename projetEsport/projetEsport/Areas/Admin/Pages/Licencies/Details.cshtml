@@ -1,0 +1,151 @@
+﻿@page
+@model projetEsport.Areas.Admin.Pages.Licencies.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Licencie</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LicencieVM.Pseudo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LicencieVM.Pseudo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LicencieVM.Prenom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LicencieVM.Prenom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LicencieVM.Nom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LicencieVM.Nom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LicencieVM.CreeLe)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LicencieVM.CreeLe)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LicencieVM.ModifieeLe)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LicencieVM.ModifieeLe)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LicencieVM.Utilisateur)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LicencieVM.Utilisateur)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LicencieVM.Equipe)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LicencieVM.Equipe)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LicencieVM.Createur)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LicencieVM.Createur)
+        </dd>
+        <dd class="col-sm-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LicencieVM.Invitations)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var invitation in Model.LicencieVM.Invitations)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => invitation.NomEquipe)
+                            </td>
+                            <td>
+                                @if (invitation.Accepter)
+                                {
+                                    <span class="badge badge-success">Accepter</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">Non accepter</span>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-success" asp-page="../Equipes/Edit" asp-route-id="@invitation.ID">Edit</a> |
+                                <a class="btn btn-primary" asp-page="../Equipes/Details" asp-route-id="@invitation.ID">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </dd>
+        <dd class="col-sm-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LicencieVM.Competitions)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var competition in Model.LicencieVM.Competitions)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => competition.Nom)
+                            </td>
+                            <td>
+                                <a asp-page="../Competitions/Edit" asp-route-id="@competition.ID">Edit</a> |
+                                <a asp-page="../Competitions/Details" asp-route-id="@competition.ID">Details</a> |
+                                <a asp-page="../Competitions/Delete" asp-route-id="@competition.ID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </dd>
+        <dd class="col-sm-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LicencieVM.Roles)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Model.LicencieVM.Roles)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => role.RoleName)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.LicencieVM.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

@@ -1,0 +1,82 @@
+﻿@page
+@model projetEsport.Areas.Admin.Pages.Licencies.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-success" asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Licencies[0].Pseudo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Licencies[0].Prenom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Licencies[0].Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Licencies[0].CreeLe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Licencies[0].ModifieeLe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Licencies[0].Utilisateur)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Licencies[0].Equipe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Licencies[0].Roles)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var licencie in Model.Licencies)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => licencie.Pseudo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => licencie.Prenom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => licencie.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => licencie.CreeLe)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => licencie.ModifieeLe)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => licencie.Utilisateur)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => licencie.Equipe)
+                </td>
+                <td>
+                    @foreach (var role in licencie.Roles)
+                    {
+                        <p>@Html.DisplayFor(modelItem => role.RoleName)</p>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@licencie.ID">Edit</a> |
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@licencie.ID">Details</a> |
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@licencie.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

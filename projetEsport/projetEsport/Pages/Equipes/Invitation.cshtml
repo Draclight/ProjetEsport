@@ -1,0 +1,52 @@
+﻿@page
+@model projetEsport.Pages.Equipes.InvitationModel
+@{
+    ViewData["Title"] = "Invitations";
+}
+
+<h1>@ViewData["Title"]</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InvitationEquipe[0].NomEquipe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvitationEquipe[0].Membres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvitationEquipe[0].DateEnvoi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invitation in Model.InvitationEquipe)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => invitation.NomEquipe)
+                </td>
+                <td>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var membre in invitation.Membres)
+                        {
+                            <li class="list-group-item"><span class="@(membre.IsAccepter ? "badge badge-success" : "badge badge-warning")">@membre.Pseudo</span></li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => invitation.DateEnvoi)
+                </td>
+                <td>
+                    <form method="post">
+                        <input type="hidden" asp-for="@invitation.ID" name="invitation.ID" />
+                        <input type="hidden" asp-for="@invitation.LicencieID" name="invitation.LicencieID" />
+                        <input type="submit" class="btn btn-success" asp-page-handler="AccepterInvitation" value="Accepter" /> |
+                        <input type="submit" class="btn btn-danger" asp-page-handler="RejeterInvitation" value="Rejeter" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

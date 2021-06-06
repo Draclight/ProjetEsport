@@ -1,12 +1,14 @@
 ﻿@page
-@model projetEsport.Areas.Admin.Pages.Matches.IndexModel
+@model projetEsport.Areas.Admin.Pages.Competitions.Matches.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
-
+<p>
+    <a class="btn btn-success" asp-page="./Create" asp-route-id="@Model.CompetitionID">Nouveau</a>
+</p>
 <table class="table">
     <thead>
         <tr>

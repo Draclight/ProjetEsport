@@ -10,7 +10,7 @@ using projetEsport.Data;
 using projetEsport.Models;
 using projetEsport.ViewModels;
 
-namespace projetEsport.Areas.Admin.Pages.Matches
+namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
 {
     public class CreateModel : PageModel
     {
@@ -24,9 +24,8 @@ namespace projetEsport.Areas.Admin.Pages.Matches
         public IActionResult OnGet(int id)
         {
             ViewData["CompetitionID"] = new SelectList(_context.Competitions.Where(c => c.ID.Equals(id)).ToList(), "ID", "Nom");
-            ViewData["JeuID"] = new SelectList(_context.CompetitionJeu.Include(j => j.JeuxDeLaCompetition).Where(j => j.CompetitionsJeuSelectionneID.Equals(id)).ToList(), "ID", "Nom");
             ViewData["TypeMatcheID"] = new SelectList(_context.TypesDeMatche, "ID", "Nom");
-            ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id)).ToList(), "ID", "Nom");
+            ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id)).ToList(), "EquipeID", "Equipe.Nom");
             return Page();
         }
 

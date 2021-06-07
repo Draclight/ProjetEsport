@@ -12,7 +12,9 @@
 <h1>Competitions</h1>
 @if ((await AuthorizationService.AuthorizeAsync(User, new Competition(), ESportOperations.Create)).Succeeded)
 {
-    <a asp-page="Create">Create New</a>
+    <p>
+        <a class="btn btn-success" asp-page="Create">Create New</a>
+    </p>
 }
 <table class="table">
     <thead>
@@ -33,10 +35,7 @@
                 @Html.DisplayNameFor(model => model.Competition[0].Proprietaire)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Competition[0].CreeLe)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Competition[0].ModifieeLe)
+                @Html.DisplayNameFor(model => model.Competition[0].Jeu)
             </th>
             <th></th>
         </tr>
@@ -44,34 +43,37 @@
     <tbody>
         @foreach (var item in Model.Competition)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateDebut)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateFin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeCompetition.Nom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Proprietaire.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreeLe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifieeLe)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateDebut)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateFin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeCompetition)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Proprietaire)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jeu.Nom)
+                </td>
+                <td>
+                    @if (item.IsPropriétaire)
+                    {
+                        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.ID">Edit</a> @string.Format("|")
+                    }
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ID">Details</a> @(item.IsPropriétaire ? "|" : "")
+                    @if (item.IsPropriétaire)
+                    {
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                    }
+                </td>
+            </tr>
         }
     </tbody>
 </table>

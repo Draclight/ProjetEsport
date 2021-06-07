@@ -57,6 +57,11 @@
     </dl>
 </div>
 <div>
-    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Equipe.ID">Edit</a> |
+    @if (Model.EquipeVM.IsProprietaire)
+    {
+
+        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Equipe.ID">Edit</a> @string.Format("|")
+
+    }
     <a asp-page="./Index">Back to List</a>
 </div>

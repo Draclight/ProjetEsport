@@ -9,10 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using projetEsport.Data;
 using projetEsport.Models;
+using projetEsport.ViewModels;
 
 namespace projetEsport.Pages.Competitions
 {
-    [Authorize(Roles = "ADMINISTRATEUR,ORGANISATEUR")]
+    [Authorize(Roles = "Administrateur,Organisateur")]
     public class DeleteModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -25,6 +26,7 @@ namespace projetEsport.Pages.Competitions
         }
 
         [BindProperty]
+        public CompetitionViewModel CompetitionVM { get; set; }
         public Competition Competition { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -34,11 +36,42 @@ namespace projetEsport.Pages.Competitions
                 return NotFound();
             }
 
-            Competition = await _context.Competitions
+            CompetitionVM = await _context.Competitions
                 .Include(c => c.Proprietaire)
-                .Include(c => c.TypeCompetition).FirstOrDefaultAsync(m => m.ID == id);
+                .Include(c => c.TypeCompetition)
+                .Include(c => c.Jeu)
+                .Include(c => c.EquipesDeLaCompetition).ThenInclude(e => e.Equipe).ThenInclude(e => e.Membres)
+                .Include(c => c.MatchesDisputes).Select(c => new CompetitionViewModel
+                {
+                    ID = c.ID,
+                    CreeLe = c.CreeLe,
+                    DateDebut = c.DateDebut,
+                    DateFin = c.DateFin,
+                    EquipesDeLaCompetition = c.EquipesDeLaCompetition.Select(e => new EquipeViewModel
+                    {
+                        ID = e.EquipeID,
+                        Nom = e.Equipe.Nom,
+                        Membres = e.Equipe.Membres.Select(m => new LicencieViewModel
+                        {
+                            ID = m.ID,
+                            Pseudo = m.Pseudo
+                        }).ToList()
+                    }).ToList(),
+                    ModifieeLe = c.ModifieeLe,
+                    NbEquipes = c.EquipesDeLaCompetition.Count,
+                    Jeu = new CompetitionJeuViewModel
+                    {
+                        ID = c.JeuID,
+                        Nom = c.Jeu.Nom
+                    },
+                    Nom = c.Nom,
+                    ProprietaireID = c.ProprietaireID,
+                    Proprietaire = c.Proprietaire.Pseudo,
+                    TypeCompetitionID = c.TypeCompetitionID,
+                    TypeCompetition = c.TypeCompetition.Nom
+                }).FirstOrDefaultAsync(c => c.ID.Equals(id));
 
-            if (Competition == null)
+            if (CompetitionVM == null)
             {
                 return NotFound();
             }

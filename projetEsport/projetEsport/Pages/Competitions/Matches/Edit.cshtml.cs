@@ -12,9 +12,9 @@ using projetEsport.Data;
 using projetEsport.Models;
 using projetEsport.ViewModels;
 
-namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
+namespace projetEsport.Pages.Competitions.Matches
 {
-    [Authorize(Roles = "Administrateur")]
+    [Authorize(Roles = "Administrateur,Organisateur")]
     public class EditModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -68,6 +68,8 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
             ViewData["CompetitionID"] = new SelectList(_context.Competitions.Where(c => c.ID.Equals(Matche.CompetitionID)).ToList(), "ID", "Nom");
             ViewData["TypeMatcheID"] = new SelectList(_context.TypesDeMatche, "ID", "Nom");
             ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(Matche.CompetitionID)).ToList(), "EquipeID", "Equipe.Nom");
+
+            var test = _context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id)).ToList();
 
             return Page();
         }

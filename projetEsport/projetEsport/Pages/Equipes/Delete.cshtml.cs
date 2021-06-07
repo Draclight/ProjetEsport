@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using projetEsport.Data;
 using projetEsport.Models;
 
@@ -17,10 +18,13 @@ namespace projetEsport.Pages.Equipes
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        public DeleteModel(projetEsport.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        private readonly ILogger<DeleteModel> _logger;
+
+        public DeleteModel(projetEsport.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager, ILogger<DeleteModel> logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -55,7 +59,7 @@ namespace projetEsport.Pages.Equipes
 
             if (isCreateur)
             {
-                Equipe = await _context.Equipes.FindAsync(id);
+                Equipe = await _context.Equipes.Include(e => e.Membres).FirstOrDefaultAsync(e => e.ID.Equals(id));
 
                 if (Equipe != null)
                 {
@@ -65,7 +69,7 @@ namespace projetEsport.Pages.Equipes
                         {
                             membre.EquipeID = null;
 
-                            _context.Licencies.Remove(membre);
+                            _context.Attach(membre).State = EntityState.Modified;
                             await _context.SaveChangesAsync();
                         }
 
@@ -74,7 +78,8 @@ namespace projetEsport.Pages.Equipes
                     }
                     catch (Exception ex)
                     {
-                        return RedirectToPage("./Index");
+                        _logger.LogError(ex.Message);
+                        //return RedirectToPage("./Index");
                         throw;
                     }
                 }

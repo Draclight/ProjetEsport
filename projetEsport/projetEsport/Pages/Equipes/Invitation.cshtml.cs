@@ -37,15 +37,19 @@ namespace projetEsport.Pages.Equipes
                     ID = ivm.ID,
                     LicencieID = ivm.LicencieID,
                     NomEquipe = ivm.Equipe.Nom,
-                    Membres = _context.InvitationsEquipes.Include(i => i.Licencie).Select(i => new MembreViewModel
-                    {
-                        Pseudo = i.Licencie.Pseudo,
-                        IsAccepter = i.IsAccepted
-                    }).ToList(),
+                    EquipeId = ivm.EquipeID,
                     DateEnvoi = ivm.Equipe.CreeLe,
                     DateAccepter = ivm.DateAccepter,
                     Accepter = ivm.IsAccepted
                 }).ToListAsync();
+
+            foreach (var invitation in InvitationEquipe)
+            {
+                invitation.Membres = await _context.InvitationsEquipes.Where(ie => ie.EquipeID.Equals(invitation.EquipeId)).Include(ie => ie.Licencie).Select(ie => new MembreViewModel
+                {
+                    Pseudo = ie.Licencie.Pseudo
+                }).ToListAsync();
+            }
         }
 
         public async Task<IActionResult> OnPostAccepterInvitation(InvitationViewModel invitation)

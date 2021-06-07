@@ -31,20 +31,29 @@ namespace projetEsport.Areas.Admin.Pages.Equipes
             {
                 ID = e.ID,
                 Nom = e.Nom,
+                EquipeID = e.ID,
                 Invitations = _context.InvitationsEquipes.Include(ie => ie.Licencie).Where(ie => ie.EquipeID.Equals(e.ID)).Select(ie => new InvitationViewModel
                 {
                     ID = ie.ID,
                     PseudoLicencie = ie.Licencie.Pseudo,
-                    Accepter = ie.IsAccepted
+                    Accepter = ie.IsAccepted,
+                    EquipeId = ie.EquipeID
                 }).ToList()
             }).ToListAsync();
         }
 
         public async Task<IActionResult> OnPostApproveEquipeAsync(int id)
         {
-            var isAllInvitationsAccepte = await _context.InvitationsEquipes.Where(e => e.ID.Equals(id)).AllAsync(i => i.IsAccepted);
+            if (_context.InvitationsEquipes.Any(ie => ie.EquipeID.Equals(id)))
+            {
+                var isAllInvitationsAccepte = await _context.InvitationsEquipes.Where(ie => ie.EquipeID.Equals(id)).AllAsync(i => i.IsAccepted);
 
-            if (isAllInvitationsAccepte == false)
+                if (isAllInvitationsAccepte == false)
+                {
+                    return RedirectToPage();
+                }
+            }
+            else
             {
                 return RedirectToPage();
             }

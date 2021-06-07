@@ -21,7 +21,7 @@ namespace projetEsport.Models
 
         #region Clées
         [Display(Name = "Competitions")]
-        public ICollection<CompetitionJeu> CompetitionsJeuSelectionne { get; set; }
+        public ICollection<Competition> Competitions { get; set; }
         [Display(Name = "Equipes")]
         public ICollection<Equipe> EquipesCreePourJeu { get; set; }
         [Display(Name = "Matches")]

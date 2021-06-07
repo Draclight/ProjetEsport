@@ -43,6 +43,12 @@
             @Html.DisplayFor(model => model.CompetitionVM.Proprietaire)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompetitionVM.Jeu)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompetitionVM.Jeu.Nom)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CompetitionVM.NbEquipes)
         </dt>
         <dd class="col-sm-10">
@@ -71,35 +77,6 @@
                             </td>
                             <td>
                                 <a class="btn btn-primary" asp-page="../Equipes/Details" asp-route-id="@equipe.ID">Details</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompetitionVM.NbJeux)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompetitionVM.NbJeux)
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.CompetitionVM.JeuxDeLaCompetition[0].Nom)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var jeu in Model.CompetitionVM.JeuxDeLaCompetition)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => jeu.Nom)
-                            </td>
-                            <td>
-                                <a class="btn btn-primary" asp-page="../Jeux/Details" asp-route-id="@jeu.ID">Details</a>
                             </td>
                         </tr>
                     }

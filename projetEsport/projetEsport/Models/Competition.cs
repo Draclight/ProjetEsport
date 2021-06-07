@@ -30,8 +30,10 @@ namespace projetEsport.Models
         public int ProprietaireID { get; set; }
         [Display(Name = "Propriétaire")]
         public Licencie Proprietaire { get; set; }
-        [Display(Name = "Jeux")]
-        public ICollection<CompetitionJeu> JeuxDeLaCompetition { get; set; }
+        [Display(Name = "Jeu")]
+        public int JeuID{ get; set; }
+        [Display(Name = "Jeu")]
+        public Jeu Jeu { get; set; }
         [Display(Name = "Equipes")]
         public ICollection<CompetitionEquipe> EquipesDeLaCompetition { get; set; }
         [Display(Name = "Matches")]

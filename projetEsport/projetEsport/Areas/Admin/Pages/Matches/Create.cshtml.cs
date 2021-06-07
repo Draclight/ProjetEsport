@@ -24,7 +24,7 @@ namespace projetEsport.Areas.Admin.Pages.Matches
         public IActionResult OnGet(int id)
         {
             ViewData["CompetitionID"] = new SelectList(_context.Competitions.Where(c => c.ID.Equals(id)).ToList(), "ID", "Nom");
-            ViewData["JeuID"] = new SelectList(_context.CompetitionJeu.Include(j => j.JeuxDeLaCompetition).Where(j => j.CompetitionsJeuSelectionneID.Equals(id)).ToList(), "ID", "Nom");
+            ViewData["JeuID"] = new SelectList(_context.Competitions.Where(c => c.ID.Equals(id)), "Jeu.ID", "Jeu.Nom");
             ViewData["TypeMatcheID"] = new SelectList(_context.TypesDeMatche, "ID", "Nom");
             ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id)).ToList(), "ID", "Nom");
             return Page();

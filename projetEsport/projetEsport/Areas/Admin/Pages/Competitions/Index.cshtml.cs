@@ -29,24 +29,20 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
             Competitions = await _context.Competitions
                 .Include(c => c.Proprietaire)
                 .Include(c => c.TypeCompetition)
-                .Include(c => c.JeuxDeLaCompetition)
+                .Include(c => c.Jeu)
                 .Include(c => c.MatchesDisputes).Select(c => new CompetitionViewModel
                 {
                     ID = c.ID,
                     CreeLe = c.CreeLe,
                     DateDebut = c.DateDebut,
                     DateFin = c.DateFin,
-                    EquipesDeLaCompetition = c.EquipesDeLaCompetition.Select(e => new EquipeViewModel
-                    {
-
-                    }).ToList(),
-                    JeuxDeLaCompetition = c.JeuxDeLaCompetition.Select(j => new CompetitionJeuViewModel
-                    {
-
-                    }).ToList(),
                     ModifieeLe = c.ModifieeLe,
                     NbEquipes = c.EquipesDeLaCompetition.Count,
-                    NbJeux = c.JeuxDeLaCompetition.Count,
+                    Jeu = new CompetitionJeuViewModel
+                    {
+                        ID = c.JeuID,
+                        Nom = c.Jeu.Nom
+                    },
                     Nom = c.Nom,
                     ProprietaireID = c.ProprietaireID,
                     Proprietaire = c.Proprietaire.Pseudo,

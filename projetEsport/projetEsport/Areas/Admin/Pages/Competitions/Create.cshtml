@@ -49,35 +49,10 @@
             <select asp-for="CompetitionVM.ProprietaireID" class="form-control" asp-items="ViewBag.ProprietaireID"></select>
         </div>
         <div class="form-group">
-            <h2>Jeux</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.CompetitionVM.JeuxDeLaCompetition[0].Nom)
-                        </th>
-                        <th>@Html.DisplayNameFor(model => model.CompetitionVM.JeuxDeLaCompetition[0].IsInCompetition)</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var jeu in Model.CompetitionVM.JeuxDeLaCompetition)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => jeu.Nom)
-                            </td>
-                            <td>
-                                <input class="form-check-input" asp-for="@jeu.IsInCompetition" name="CompetitionVM.JeuxDeLaCompetition[@compteurJeux].IsInCompetition" />
-                                <input type="hidden" asp-for="@jeu.ID" name="CompetitionVM.JeuxDeLaCompetition[@compteurJeux].ID" />
-                            </td>
-                        </tr>
-                        compteurJeux++;
-                    }
-                </tbody>
-            </table>
+            <label asp-for="CompetitionVM.JeuID" class="control-label"></label>
+            <select asp-for="CompetitionVM.JeuID" class="form-control" asp-items="ViewBag.JeuID"></select>
         </div>
-        <div class="form-group">
+        @*<div class="form-group">
             <h2>Equipes</h2>
             <table class="table">
                 <thead>
@@ -105,7 +80,7 @@
                     }
                 </tbody>
             </table>
-        </div>
+        </div>*@
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-primary" />
         </div>

@@ -14,8 +14,6 @@ namespace projetEsport.Models
         public TypeMatche TypeMatche { get; set; }
         public int CompetitionID { get; set; }
         public Competition Competition { get; set; }
-        public int JeuID { get; set; }
-        public Jeu Jeu { get; set; }
         [Display(Name = "Equipes")]
         public ICollection<EquipeMatche> EquipesDisputes { get; set; }
         public int VictoireAEquipe1 { get; set; }

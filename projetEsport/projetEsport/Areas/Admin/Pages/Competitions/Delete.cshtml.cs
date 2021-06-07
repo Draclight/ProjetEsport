@@ -36,7 +36,7 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
             CompetitionVM = await _context.Competitions
                 .Include(c => c.Proprietaire)
                 .Include(c => c.TypeCompetition)
-                .Include(c => c.JeuxDeLaCompetition).ThenInclude(j => j.JeuxDeLaCompetition)
+                .Include(c => c.Jeu)
                 .Include(c => c.EquipesDeLaCompetition).ThenInclude(e => e.Equipe).ThenInclude(e => e.Membres)
                 .Include(c => c.MatchesDisputes).Select(c => new CompetitionViewModel
                 {
@@ -54,14 +54,13 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
                             Pseudo = m.Pseudo
                         }).ToList()
                     }).ToList(),
-                    JeuxDeLaCompetition = c.JeuxDeLaCompetition.Select(j => new CompetitionJeuViewModel
-                    {
-                        ID = j.JeuxDeLaCompetitionID,
-                        Nom = j.JeuxDeLaCompetition.Nom
-                    }).ToList(),
                     ModifieeLe = c.ModifieeLe,
                     NbEquipes = c.EquipesDeLaCompetition.Count,
-                    NbJeux = c.JeuxDeLaCompetition.Count,
+                    Jeu = new CompetitionJeuViewModel
+                    {
+                        ID = c.JeuID,
+                        Nom = c.Jeu.Nom
+                    },
                     Nom = c.Nom,
                     ProprietaireID = c.ProprietaireID,
                     Proprietaire = c.Proprietaire.Pseudo,

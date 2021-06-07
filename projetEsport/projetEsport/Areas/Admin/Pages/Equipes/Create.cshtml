@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    int compteurLicencie = 0;
 }
 
 <h1>Create</h1>
@@ -36,6 +37,35 @@
                 <label asp-for="Equipe.ModifieeLe" class="control-label"></label>
                 <input asp-for="Equipe.ModifieeLe" class="form-control" />
                 <span asp-validation-for="Equipe.ModifieeLe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h2>Licencies</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Equipe.LicenciesAInviter[0].Pseudo)
+                            </th>
+                            <th>@Html.DisplayNameFor(model => model.Equipe.LicenciesAInviter[0].InviteDansEquipe)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var licencie in Model.Equipe.LicenciesAInviter)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => licencie.Pseudo)
+                                </td>
+                                <td>
+                                    <input class="form-check-input" asp-for="@licencie.InviteDansEquipe" name="Equipe.LicenciesAInviter[@compteurLicencie].InviteDansEquipe" />
+                                    <input type="hidden" asp-for="@licencie.ID" name="Equipe.LicenciesAInviter[@compteurLicencie].ID" />
+                                </td>
+                            </tr>
+                            compteurLicencie++;
+                        }
+                    </tbody>
+                </table>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

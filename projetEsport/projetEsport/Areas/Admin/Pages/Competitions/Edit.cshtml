@@ -3,8 +3,6 @@
 
 @{
     ViewData["Title"] = "Edit";
-    int compteurJeux = 0;
-    int compteurEquipe = 0;
 }
 
 <h1>Edit</h1>
@@ -52,85 +50,14 @@
                 <span asp-validation-for="Competition.ProprietaireID" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Competition.JeuID" class="control-label"></label>
+                <select asp-for="Competition.JeuID" class="form-control" asp-items="ViewBag.JeuID"></select>
+                <span asp-validation-for="Competition.JeuID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
-    </div>
-    <div class="col-md-4">
-        <h4>@Html.DisplayNameFor(model => model.Competition.JeuxDeLaCompetition)</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Competition.JeuxDeLaCompetition[0].Nom)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var jeu in Model.Competition.JeuxDeLaCompetition)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => jeu.Nom)
-                        </td>
-                        <td>
-                            <form method="post">
-                                <input type="hidden" asp-for="@jeu.ID" name="jeu.ID" />
-                                <input type="hidden" asp-for="@jeu.JeuID" name="jeu.JeuID" />
-                                <input type="hidden" asp-for="@jeu.CompetitionID" name="jeu.CompetitionID" />
-                                @if (jeu.IsInCompetition)
-                                {
-                                    <input type="submit" class="btn btn-danger" asp-page-handler="RemoveJeu" value="Supprimer" />
-                                }
-                                else
-                                {
-                                    <input type="submit" class="btn btn-success" asp-page-handler="AddJeu" value="Ajouter" />
-                                }
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-4">
-        <h4>@Html.DisplayNameFor(model => model.Competition.EquipesDeLaCompetition)</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Competition.EquipesDeLaCompetition[0].Nom)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var equipe in Model.Competition.EquipesDeLaCompetition)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => equipe.Nom)
-                        </td>
-                        <td>
-                            <form method="post">
-                                <input type="hidden" asp-for="@equipe.ID" name="equipe.ID" />
-                                <input type="hidden" asp-for="@equipe.EquipeID" name="equipe.EquipeID" />
-                                <input type="hidden" asp-for="@equipe.CompetitionID" name="equipe.CompetitionID" />
-                                @if (equipe.IsInCompetition)
-                                {
-                                    <input type="submit" class="btn btn-danger" asp-page-handler="RemoveEquipe" value="Supprimer" />
-                                }
-                                else
-                                {
-                                    <input type="submit" class="btn btn-success" asp-page-handler="AddEquipe" value="Ajouter" />
-                                }
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
     </div>
 </div>
 

@@ -25,8 +25,7 @@ namespace projetEsport.Areas.Admin.Pages.Matches
         public async Task OnGetAsync(int? id)
         {
             Matche = await _context.Matches
-                .Include(m => m.Competition)
-                .Include(m => m.Jeu)
+                .Include(m => m.Competition).ThenInclude(m => m.Jeu)
                 .Include(m => m.EquipesDisputes).ThenInclude(e => e.EquipesDisputes)
                 .Include(m => m.TypeMatche).Where(m => m.CompetitionID.Equals(id)).Select(m => new MatcheViewModel
                 {
@@ -39,8 +38,8 @@ namespace projetEsport.Areas.Admin.Pages.Matches
                     CompetitionID = m.CompetitionID,
                     CompetitionNom = m.Competition.Nom,
                     CreeLe = m.CreeLe,
-                    JeuID = m.JeuID,
-                    JeuNom = _context.Jeux.FirstOrDefault(j => j.ID.Equals(m.JeuID)).Nom,
+                    JeuID = m.Competition.JeuID,
+                    JeuNom = m.Competition.Nom,
                     ModifieeLe = m.ModifieeLe,
                     TypeMatcheID = m.TypeMatcheID,
                     TypeMatche = m.TypeMatche.Nom,

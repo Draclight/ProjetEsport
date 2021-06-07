@@ -35,7 +35,7 @@ namespace projetEsport.Pages.Competitions
             Competition = await _context.Competitions
                 .Include(c => c.Proprietaire)
                 .Include(c => c.EquipesDeLaCompetition)
-                .Include(c => c.JeuxDeLaCompetition)
+                .Include(c => c.Jeu)
                 .Include(c => c.MatchesDisputes)
                 .Include(c => c.TypeCompetition).FirstOrDefaultAsync(m => m.ID == id);
 

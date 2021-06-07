@@ -13,6 +13,7 @@ namespace projetEsport.ViewModels
         public int ID { get; set; }
         public int EquipeID { get; set; }
         public String Nom { get; set; }
+        [Display(Name = "Jeu")]
         public int JeuID { get; set; }
         [Display(Name = "Approuvé?")]
         public bool IsApproved { get; set; }

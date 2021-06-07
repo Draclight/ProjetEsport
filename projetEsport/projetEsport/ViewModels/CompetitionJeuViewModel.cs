@@ -10,10 +10,8 @@ namespace projetEsport.ViewModels
     {
         public int ID { get; set; }
         public string Nom { get; set; }
-        [Display(Name = "Sélectionné")]
-        public bool IsInCompetition { get; set; }
         [Display(Name = "Competition")]
         public int CompetitionID { get; set; }
-        public int JeuID { get; set; }
+        public bool IsInCompetition { get; set; }
     }
 }

@@ -29,7 +29,7 @@
                 @Html.DisplayNameFor(model => model.Competitions[0].Proprietaire)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Competitions[0].NbJeux)
+                @Html.DisplayNameFor(model => model.Competitions[0].Jeu)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Competitions[0].NbEquipes)
@@ -62,7 +62,7 @@
                 @Html.DisplayFor(modelItem => competition.Proprietaire)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => competition.NbJeux)
+                @Html.DisplayFor(modelItem => competition.Jeu.Nom)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => competition.NbEquipes)

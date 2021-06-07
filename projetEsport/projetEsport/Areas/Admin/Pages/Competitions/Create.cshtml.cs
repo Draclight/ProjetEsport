@@ -37,12 +37,6 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
                 ModifieeLe = date,
                 DateDebut = date,
                 DateFin = date,
-                JeuxDeLaCompetition = await _context.Jeux.Select(j => new CompetitionJeuViewModel
-                {
-                    ID = j.ID,
-                    Nom = j.Nom,
-                    IsInCompetition = false
-                }).ToListAsync(),
                 EquipesDeLaCompetition = await _context.Equipes.Where(e => e.IsApproved).Select(e => new EquipeViewModel
                 {
                     ID = e.ID,
@@ -53,6 +47,7 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
 
             ViewData["ProprietaireID"] = new SelectList(_context.Licencies, "ID", "Pseudo");
             ViewData["TypeCompetitionID"] = new SelectList(_context.TypesDeCompetition, "ID", "Nom");
+            ViewData["JeuID"] = new SelectList(_context.Jeux, "ID", "Nom");
 
             return Page();
         }
@@ -92,46 +87,29 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
                 Competition.Nom = CompetitionVM.Nom;
                 Competition.TypeCompetitionID = CompetitionVM.TypeCompetitionID;
                 Competition.ProprietaireID = CompetitionVM.ProprietaireID;
+                //Jeux
+                Competition.JeuID = CompetitionVM.JeuID;
 
                 _context.Competitions.Add(Competition);
                 await _context.SaveChangesAsync();
 
-                //Jeux
-                if (CompetitionVM.JeuxDeLaCompetition != null)
-                {
-                    foreach (CompetitionJeuViewModel jeu in CompetitionVM.JeuxDeLaCompetition)
-                    {
-                        if (jeu.IsInCompetition)
-                        {
-                            CompetitionJeu competitionJeu = new CompetitionJeu
-                            {
-                                CompetitionsJeuSelectionneID = Competition.ID,
-                                JeuxDeLaCompetitionID = jeu.ID
-                            };
-                            _context.CompetitionJeu.Add(competitionJeu);
-                            await _context.SaveChangesAsync();
-                        }
-                    }
-                }
-
                 //Equipes
-                if (CompetitionVM.EquipesDeLaCompetition != null)
-                {
-                    foreach (EquipeViewModel equipe in CompetitionVM.EquipesDeLaCompetition)
-                    {
-                        if (equipe.IsInCompetition)
-                        {
-                            CompetitionEquipe competitionEquipe = new CompetitionEquipe
-                            {
-                                CompetitionID = Competition.ID,
-                                EquipeID = equipe.ID
-                            };
-                            _context.CompetitionEquipe.Add(competitionEquipe);
-                            await _context.SaveChangesAsync();
-                        }
-                    }
-                }
-
+                //if (CompetitionVM.EquipesDeLaCompetition != null)
+                //{
+                //    foreach (EquipeViewModel equipe in CompetitionVM.EquipesDeLaCompetition)
+                //    {
+                //        if (equipe.IsInCompetition)
+                //        {
+                //            CompetitionEquipe competitionEquipe = new CompetitionEquipe
+                //            {
+                //                CompetitionID = Competition.ID,
+                //                EquipeID = equipe.ID
+                //            };
+                //            _context.CompetitionEquipe.Add(competitionEquipe);
+                //            await _context.SaveChangesAsync();
+                //        }
+                //    }
+                //}
             }
             catch (Exception ex)
             {

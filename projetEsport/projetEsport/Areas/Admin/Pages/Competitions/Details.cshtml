@@ -44,6 +44,12 @@
             @Html.DisplayFor(model => model.Competition.Proprietaire)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Competition.Jeu)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Competition.Jeu.Nom)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Competition.NbEquipes)
         </dt>
         <dd class="col-sm-10">
@@ -71,36 +77,22 @@
                                 @Html.DisplayFor(modelItem => equipe.Membres.Count)
                             </td>
                             <td>
-                                <a class="btn btn-primary" asp-page="../Equipes/Details" asp-route-id="@equipe.ID">Details</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.NbJeux)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.NbJeux)
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Competition.JeuxDeLaCompetition[0].Nom)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var jeu in Model.Competition.JeuxDeLaCompetition)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => jeu.Nom)
-                            </td>
-                            <td>
-                                <a class="btn btn-primary" asp-page="../Jeux/Details" asp-route-id="@jeu.ID">Details</a>
+                                <form method="post">
+                                    <input type="hidden" asp-for="@equipe.ID" name="equipe.ID" />
+                                    <input type="hidden" asp-for="@equipe.EquipeID" name="equipe.EquipeID" />
+                                    <input type="hidden" asp-for="@equipe.CompetitionID" name="equipe.CompetitionID" />
+                                    <input type="hidden" asp-for="@equipe.JeuID" name="equipe.JeuID" />
+                                    <input type="hidden" asp-for="Competition.JeuID" name="Competition.JeuID" />
+                                    @if (equipe.IsInCompetition)
+                                    {
+                                        <input type="submit" class="btn btn-danger" asp-page-handler="RemoveEquipe" value="Supprimer" />
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" class="btn btn-success" asp-page-handler="AddEquipe" value="Ajouter" />
+                                    }
+                                    | <a class="btn btn-primary" asp-page="../Equipes/Details" asp-route-id="@equipe.ID">Details</a>
+                                </form>
                             </td>
                         </tr>
                     }

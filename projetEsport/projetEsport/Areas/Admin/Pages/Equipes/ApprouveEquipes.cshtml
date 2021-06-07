@@ -37,15 +37,15 @@
                 <td>
                     <form method="post">
                         <input asp-for="@equipe.ID" value="@equipe.ID" type="hidden" />
-                        @if (equipe.Invitations.Any(i => !i.Accepter))
+                        @if (equipe.Invitations.Count > 0 && equipe.Invitations.All(i => i.Accepter))
                         {
-                            <input type="submit" class="btn btn-success" asp-page-handler="ApproveEquipe" asp-route-id="@equipe.ID" value="Approve" disabled/>
+                            <input type="submit" class="btn btn-success" asp-page-handler="ApproveEquipe" asp-route-id="@equipe.EquipeID" value="Approve"/>
                         }
                         else
                         {
-                            <input type="submit" class="btn btn-success" asp-page-handler="ApproveEquipe" asp-route-id="@equipe.ID" value="Approve" />
+                            <input type="submit" class="btn btn-success" asp-page-handler="ApproveEquipe" asp-route-id="@equipe.EquipeID" value="Approve" disabled/>
                         }
-                        | <input type="submit" class="btn btn-danger" asp-page-handler="RejectEquipe" asp-route-id="@equipe.ID" value="Reject" />
+                        | <input type="submit" class="btn btn-danger" asp-page-handler="RejectEquipe" asp-route-id="@equipe.EquipeID" value="Reject" />
                     </form>
                 </td>
             </tr>

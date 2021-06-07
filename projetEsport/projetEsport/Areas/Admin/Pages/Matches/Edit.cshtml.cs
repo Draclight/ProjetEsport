@@ -31,8 +31,7 @@ namespace projetEsport.Areas.Admin.Pages.Matches
             }
 
             Matche = await _context.Matches
-                .Include(m => m.Competition)
-                .Include(m => m.Jeu)
+                .Include(m => m.Competition).ThenInclude(m => m.Jeu)
                 .Include(m => m.TypeMatche).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Matche == null)

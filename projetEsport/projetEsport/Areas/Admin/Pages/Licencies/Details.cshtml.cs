@@ -46,6 +46,7 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
             LicencieVM = new LicencieViewModel()
             {
                 ID = Licencie.ID,
+                EquipeID = Licencie.EquipeID,
                 CreeLe = Licencie.CreeLe,
                 ModifieeLe = Licencie.ModifieeLe,
                 Nom = Licencie.Nom,
@@ -60,7 +61,7 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
                     RoleId = ur.UserId,
                     RoleName = _context.Roles.FirstOrDefault(r => r.Id.Equals(ur.RoleId)).Name
                 }).ToListAsync(),
-                Competitions = await _context.Competitions.Include(c => c.EquipesDeLaCompetition).Include(c => c.JeuxDeLaCompetition).Where(c => c.ProprietaireID.Equals(Licencie.ID))
+                Competitions = await _context.Competitions.Include(c => c.EquipesDeLaCompetition).Include(c => c.Jeu).Where(c => c.ProprietaireID.Equals(Licencie.ID))
                 .Select(c => new CompetitionViewModel { 
                     ID = c.ID,
                     CreeLe = c.CreeLe,
@@ -68,7 +69,11 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
                     DateFin = c.DateFin,
                     ModifieeLe = c.ModifieeLe,
                     NbEquipes = c.EquipesDeLaCompetition.Count(),
-                    NbJeux = c.JeuxDeLaCompetition.Count(),
+                    Jeu = new CompetitionJeuViewModel
+                    {
+                        ID = c.JeuID,
+                        Nom = c.Jeu.Nom
+                    },
                     Nom = c.Nom
                 }).ToListAsync(),
                 Invitations = await _context.InvitationsEquipes.Include(ie => ie.Equipe).Where(ie => ie.LicencieID.Equals(Licencie.ID)).Select(ie => new InvitationViewModel
@@ -78,7 +83,8 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
                     Accepter = ie.IsAccepted,
                     NomEquipe = ie.Equipe.Nom,
                     DateAccepter = ie.DateAccepter,
-                    DateEnvoi = ie.DateEnvoi
+                    DateEnvoi = ie.DateEnvoi,
+                    EquipeId = ie.EquipeID
                 }).ToListAsync()
             };
 

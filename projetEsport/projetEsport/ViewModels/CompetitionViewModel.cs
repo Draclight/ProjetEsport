@@ -23,8 +23,8 @@ namespace projetEsport.ViewModels
         public DateTime ModifieeLe { get; set; }
         [Display(Name = "Equipes")]
         public int NbEquipes { get; set; }
-        [Display(Name = "Jeux")]
-        public int NbJeux { get; set; }
+        public int JeuID { get; set; }
+        public CompetitionJeuViewModel Jeu { get; set; }
         [Display(Name = "Proprietaire")]
         public int ProprietaireID { get; set; }
         [Display(Name = "Proprietaire")]

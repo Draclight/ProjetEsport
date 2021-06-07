@@ -39,7 +39,7 @@ namespace projetEsport.Pages.Competitions
                 .Include(c => c.Proprietaire)
                 .Include(c => c.TypeCompetition)
                 .Include(c => c.EquipesDeLaCompetition)
-                .Include(c => c.JeuxDeLaCompetition)
+                .Include(c => c.Jeu)
                 .Include(c => c.MatchesDisputes).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Competition == null)

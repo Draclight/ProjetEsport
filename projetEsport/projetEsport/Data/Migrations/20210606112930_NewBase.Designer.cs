@@ -10,8 +10,8 @@ using projetEsport.Data;
 namespace projetEsport.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210602183943_AjoutDateInvitationEquipe")]
-    partial class AjoutDateInvitationEquipe
+    [Migration("20210606112930_NewBase")]
+    partial class NewBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,36 +20,6 @@ namespace projetEsport.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CompetitionJeu", b =>
-                {
-                    b.Property<int>("CompetitionsJeuSelectionneID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("JeuxDeLaCompetitionID")
-                        .HasColumnType("int");
-
-                    b.HasKey("CompetitionsJeuSelectionneID", "JeuxDeLaCompetitionID");
-
-                    b.HasIndex("JeuxDeLaCompetitionID");
-
-                    b.ToTable("CompetitionJeu");
-                });
-
-            modelBuilder.Entity("EquipeMatche", b =>
-                {
-                    b.Property<int>("EquipesDisputesID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MatchesDisputesID")
-                        .HasColumnType("int");
-
-                    b.HasKey("EquipesDisputesID", "MatchesDisputesID");
-
-                    b.HasIndex("MatchesDisputesID");
-
-                    b.ToTable("EquipeMatche");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -267,6 +237,9 @@ namespace projetEsport.Data.Migrations
                     b.Property<DateTime?>("DateFin")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("JeuID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("ModifieeLe")
                         .HasColumnType("datetime2");
 
@@ -282,11 +255,35 @@ namespace projetEsport.Data.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("JeuID");
+
                     b.HasIndex("ProprietaireID");
 
                     b.HasIndex("TypeCompetitionID");
 
                     b.ToTable("Competitions");
+                });
+
+            modelBuilder.Entity("projetEsport.Models.CompetitionEquipe", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompetitionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EquipeID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CompetitionID");
+
+                    b.HasIndex("EquipeID");
+
+                    b.ToTable("CompetitionEquipe");
                 });
 
             modelBuilder.Entity("projetEsport.Models.Equipe", b =>
@@ -295,9 +292,6 @@ namespace projetEsport.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CompetitionID")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreeLe")
                         .HasColumnType("datetime2");
@@ -317,11 +311,31 @@ namespace projetEsport.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CompetitionID");
-
                     b.HasIndex("JeuID");
 
                     b.ToTable("Equipes");
+                });
+
+            modelBuilder.Entity("projetEsport.Models.EquipeMatche", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EquipesDisputesID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MatchesDisputesID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("EquipesDisputesID");
+
+                    b.HasIndex("MatchesDisputesID");
+
+                    b.ToTable("EquipeMatche");
                 });
 
             modelBuilder.Entity("projetEsport.Models.InvitationEquipe", b =>
@@ -384,6 +398,9 @@ namespace projetEsport.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("CreateurEquipe")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("CreeLe")
                         .HasColumnType("datetime2");
 
@@ -427,7 +444,7 @@ namespace projetEsport.Data.Migrations
                     b.Property<DateTime>("CreeLe")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("JeuID")
+                    b.Property<int?>("JeuID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifieeLe")
@@ -502,36 +519,6 @@ namespace projetEsport.Data.Migrations
                     b.ToTable("TypesDeMatche");
                 });
 
-            modelBuilder.Entity("CompetitionJeu", b =>
-                {
-                    b.HasOne("projetEsport.Models.Competition", null)
-                        .WithMany()
-                        .HasForeignKey("CompetitionsJeuSelectionneID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("projetEsport.Models.Jeu", null)
-                        .WithMany()
-                        .HasForeignKey("JeuxDeLaCompetitionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EquipeMatche", b =>
-                {
-                    b.HasOne("projetEsport.Models.Equipe", null)
-                        .WithMany()
-                        .HasForeignKey("EquipesDisputesID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("projetEsport.Models.Matche", null)
-                        .WithMany()
-                        .HasForeignKey("MatchesDisputesID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -585,6 +572,12 @@ namespace projetEsport.Data.Migrations
 
             modelBuilder.Entity("projetEsport.Models.Competition", b =>
                 {
+                    b.HasOne("projetEsport.Models.Jeu", "Jeu")
+                        .WithMany("Competitions")
+                        .HasForeignKey("JeuID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("projetEsport.Models.Licencie", "Proprietaire")
                         .WithMany("CompetitionsCrees")
                         .HasForeignKey("ProprietaireID")
@@ -597,17 +590,34 @@ namespace projetEsport.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Jeu");
+
                     b.Navigation("Proprietaire");
 
                     b.Navigation("TypeCompetition");
                 });
 
+            modelBuilder.Entity("projetEsport.Models.CompetitionEquipe", b =>
+                {
+                    b.HasOne("projetEsport.Models.Competition", "Competition")
+                        .WithMany("EquipesDeLaCompetition")
+                        .HasForeignKey("CompetitionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("projetEsport.Models.Equipe", "Equipe")
+                        .WithMany()
+                        .HasForeignKey("EquipeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Competition");
+
+                    b.Navigation("Equipe");
+                });
+
             modelBuilder.Entity("projetEsport.Models.Equipe", b =>
                 {
-                    b.HasOne("projetEsport.Models.Competition", null)
-                        .WithMany("EquipesDeLaCompetition")
-                        .HasForeignKey("CompetitionID");
-
                     b.HasOne("projetEsport.Models.Jeu", "Jeu")
                         .WithMany("EquipesCreePourJeu")
                         .HasForeignKey("JeuID")
@@ -615,6 +625,25 @@ namespace projetEsport.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Jeu");
+                });
+
+            modelBuilder.Entity("projetEsport.Models.EquipeMatche", b =>
+                {
+                    b.HasOne("projetEsport.Models.Equipe", "EquipesDisputes")
+                        .WithMany("MatchesDisputes")
+                        .HasForeignKey("EquipesDisputesID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("projetEsport.Models.Matche", "MatchesDisputes")
+                        .WithMany("EquipesDisputes")
+                        .HasForeignKey("MatchesDisputesID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EquipesDisputes");
+
+                    b.Navigation("MatchesDisputes");
                 });
 
             modelBuilder.Entity("projetEsport.Models.InvitationEquipe", b =>
@@ -659,11 +688,9 @@ namespace projetEsport.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("projetEsport.Models.Jeu", "Jeu")
+                    b.HasOne("projetEsport.Models.Jeu", null)
                         .WithMany("MatchesDisputes")
-                        .HasForeignKey("JeuID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JeuID");
 
                     b.HasOne("projetEsport.Models.TypeMatche", "TypeMatche")
                         .WithMany("Matches")
@@ -672,8 +699,6 @@ namespace projetEsport.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Competition");
-
-                    b.Navigation("Jeu");
 
                     b.Navigation("TypeMatche");
                 });
@@ -694,11 +719,15 @@ namespace projetEsport.Data.Migrations
 
             modelBuilder.Entity("projetEsport.Models.Equipe", b =>
                 {
+                    b.Navigation("MatchesDisputes");
+
                     b.Navigation("Membres");
                 });
 
             modelBuilder.Entity("projetEsport.Models.Jeu", b =>
                 {
+                    b.Navigation("Competitions");
+
                     b.Navigation("EquipesCreePourJeu");
 
                     b.Navigation("MatchesDisputes");
@@ -709,6 +738,11 @@ namespace projetEsport.Data.Migrations
                     b.Navigation("CompetitionsCrees");
 
                     b.Navigation("InvitationEquipe");
+                });
+
+            modelBuilder.Entity("projetEsport.Models.Matche", b =>
+                {
+                    b.Navigation("EquipesDisputes");
                 });
 
             modelBuilder.Entity("projetEsport.Models.TypeCompetition", b =>

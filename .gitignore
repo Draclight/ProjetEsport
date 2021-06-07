@@ -29,7 +29,6 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
-projetEsport\projetEsport\Data\Migrations\
 projetEsport\.vs
 projetEsport/.vs/projetEsport/config/applicationhost.config
 projetEsport/.vs/projetEsport/DesignTimeBuild/.dtbcache.v2

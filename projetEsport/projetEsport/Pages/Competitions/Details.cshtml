@@ -106,6 +106,10 @@
     </dl>
 </div>
 <div>
-    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Competition.ID">Edit</a> |
+    @if (Model.Competition.IsPropriétaire)
+    {
+
+        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Competition.ID">Edit</a> @string.Format("|")
+    }
     <a asp-page="./Index">Back to List</a>
 </div>

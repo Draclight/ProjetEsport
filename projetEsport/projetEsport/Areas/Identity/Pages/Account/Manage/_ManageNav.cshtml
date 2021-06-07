@@ -2,6 +2,8 @@
 @using projetEsport.Authorization
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    var userClaim = await SignInManager.UserManager.GetUserAsync(User);
+    var displayAdmin = SignInManager.UserManager.IsInRoleAsync(userClaim, Constants.AdministrateursRole).Result;
 }
 <ul class="nav nav-pills flex-column">
     <li class="nav-item">

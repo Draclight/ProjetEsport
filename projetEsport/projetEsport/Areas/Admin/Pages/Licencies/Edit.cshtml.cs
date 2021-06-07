@@ -9,29 +9,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using projetEsport.Authorization;
 using projetEsport.Data;
 using projetEsport.Models;
 using projetEsport.ViewModels;
 
 namespace projetEsport.Areas.Admin.Pages.Licencies
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
+    [Authorize(Roles = "Administrateur")]
     public class EditModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<EditModel> _logger;
 
-        public EditModel(projetEsport.Data.ApplicationDbContext context, ILogger<IndexModel> logger)
+        public EditModel(projetEsport.Data.ApplicationDbContext context, ILogger<EditModel> logger)
         {
             _context = context;
             _logger = logger;
         }
 
+        public Licencie Licencie { get; set; }
         [BindProperty]
-        public LicencieViewModel Licencie { get; set; }
-        [BindProperty]
-        public IList<RoleViewModel> Roles { get; set; }
+        public LicencieViewModel LicencieVM { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -40,83 +38,127 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
                 return NotFound();
             }
 
-            Licencie = new LicencieViewModel();
-            Licencie.licencie = await _context.Licencie.Include(l => l.Equipe).FirstOrDefaultAsync(m => m.ID == id);
-
-            try
-            {
-                //Roles = await _context.Roles.Select(role => new RoleViewModel()
-                //{
-                //    RoleId = role.Id,
-                //    LicencieUserId = Licencie.licencie.IdUtilisateur,
-                //    LicencieId = Licencie.licencie.ID,
-                //    RoleName = role.Name,
-                //    IsAcquired = _context.UserRoles.Any(ur => ur.RoleId == role.Id && ur.UserId == Licencie.licencie.IdUtilisateur)
-                //}).ToListAsync();
-                Licencie.Roles = await _context.Roles.Select(role => new RoleViewModel()
-                {
-                    RoleId = role.Id,
-                    LicencieUserId = Licencie.licencie.IdUtilisateur,
-                    LicencieId = Licencie.licencie.ID,
-                    RoleName = role.Name,
-                    IsAcquired = _context.UserRoles.Any(ur => ur.RoleId == role.Id && ur.UserId == Licencie.licencie.IdUtilisateur)
-                }).ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
+            Licencie = await _context.Licencies
+                .Include(l => l.CompetitionsCrees)
+                .Include(l => l.Equipe)
+                .Include(l => l.InvitationEquipe).ThenInclude(ie => ie.Equipe)
+                .Include(l => l.Utilisateur).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Licencie == null)
             {
                 return NotFound();
             }
 
-            //Equipe
-            var equipesListe = new List<Equipe>();
-            equipesListe.Add(new Equipe());
-            await _context.Equipe.ForEachAsync(e => equipesListe.Add(e));
-            ViewData["EquipeID"] = new SelectList(equipesListe, "ID", "Nom");
+            LicencieVM = new LicencieViewModel()
+            {
+                ID = Licencie.ID,
+                CreeLe = Licencie.CreeLe,
+                ModifieeLe = Licencie.ModifieeLe,
+                Nom = Licencie.Nom,
+                Prenom = Licencie.Prenom,
+                Pseudo = Licencie.Pseudo,
+                EquipeID = Licencie.EquipeID == null ? 0 : Licencie.EquipeID,
+                Equipe = Licencie.Equipe?.Nom,
+                Createur = Licencie.CreateurEquipe,
+                UtilisateurID = Licencie.UtilisateurID,
+                Roles = await _context.Roles.Select(r => new RoleViewModel
+                {
+                    RoleId = r.Id,
+                    RoleName = r.Name,
+                    LicencieId = Licencie.ID,
+                    LicencieUserId = Licencie.UtilisateurID,
+                    IsAcquired = _context.UserRoles.Any(ur => ur.RoleId.Equals(r.Id) && ur.UserId.Equals(Licencie.UtilisateurID))
+                }).ToListAsync(),
+                Competitions = await _context.Competitions.Include(c => c.EquipesDeLaCompetition).Include(c => c.Jeu).Where(c => c.ProprietaireID.Equals(Licencie.ID))
+                .Select(c => new CompetitionViewModel
+                {
+                    ID = c.ID,
+                    CreeLe = c.CreeLe,
+                    DateDebut = c.DateDebut,
+                    DateFin = c.DateFin,
+                    ModifieeLe = c.ModifieeLe,
+                    NbEquipes = c.EquipesDeLaCompetition.Count(),
+                    Jeu = new CompetitionJeuViewModel
+                    {
+                        ID = c.JeuID,
+                        Nom = c.Nom
+                    },
+                    Nom = c.Nom
+                }).ToListAsync(),
+                Invitations = await _context.InvitationsEquipes.Include(ie => ie.Equipe).Where(ie => ie.LicencieID.Equals(Licencie.ID)).Select(ie => new InvitationViewModel
+                {
+                    ID = ie.ID,
+                    LicencieID = ie.LicencieID,
+                    Accepter = ie.IsAccepted,
+                    NomEquipe = ie.Equipe.Nom,
+                    DateAccepter = ie.DateAccepter,
+                    DateEnvoi = ie.DateEnvoi
+                }).ToListAsync()
+            };
+
+            var equipes = await _context.Equipes.Where(e => e.IsApproved).ToListAsync();
+            equipes.Insert(0, new Equipe() { Nom = string.Empty });
+            ViewData["EquipeID"] = new SelectList(equipes, "ID", "Nom");
+            ViewData["UtilisateurID"] = new SelectList(_context.Users, "Id", "Id");
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostSaveLicencieAsync()
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see https://aka.ms/RazorPagesCRUD.
+        public async Task<IActionResult> OnPostEditLicencieAsync()
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                return RedirectToPage(new
+                {
+                    id = (int?)LicencieVM.ID,
+                });
             }
-
-            if (Licencie.licencie.EquipeID.Equals(0))
-            {
-                Licencie.licencie.EquipeID = null;
-                Licencie.licencie.Equipe = null;
-            }
-
-            Licencie.licencie.ModifieeLe = DateTime.UtcNow;
-            _context.Attach(Licencie.licencie).State = EntityState.Modified;
 
             try
             {
+                //Licencie
+                Licencie = await _context.Licencies.FirstOrDefaultAsync(l => l.ID.Equals(LicencieVM.ID));
+                Licencie.CreeLe = LicencieVM.CreeLe;
+                if (LicencieVM.EquipeID.Equals(0))
+                {
+                    Licencie.EquipeID = null;
+                }
+                else
+                {
+                    Licencie.EquipeID = LicencieVM.EquipeID;
+                }
+                if (LicencieVM.EquipeID.Equals(0))
+                {
+                    Licencie.CreateurEquipe = false;
+                }
+                else
+                {
+                    Licencie.CreateurEquipe = LicencieVM.Createur;
+                }
+                Licencie.ModifieeLe = DateTime.UtcNow;
+                Licencie.Nom = LicencieVM.Nom;
+                Licencie.Prenom = LicencieVM.Prenom;
+                Licencie.Pseudo = LicencieVM.Pseudo;
+                Licencie.UtilisateurID = LicencieVM.UtilisateurID;
+                _context.Attach(Licencie).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException ex)
+            catch (DbUpdateConcurrencyException)
             {
-                if (!LicencieExists(Licencie.licencie.ID))
+                if (!LicencieExists(Licencie.ID))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    _logger.LogError(ex.Message);
                     throw;
                 }
             }
 
-            return RedirectToPage(new
-            {
-                id = (int?)Licencie.licencie.ID,
-            });
+            return RedirectToPage("./Index");
         }
 
         public async Task<IActionResult> OnPostAddRoleAsync(RoleViewModel role)
@@ -132,7 +174,7 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                if (!LicencieExists(Licencie.licencie.ID))
+                if (!LicencieExists(LicencieVM.ID))
                 {
                     return NotFound();
                 }
@@ -162,7 +204,7 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                if (!LicencieExists(Licencie.licencie.ID))
+                if (!LicencieExists(LicencieVM.ID))
                 {
                     return NotFound();
                 }
@@ -179,9 +221,52 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
             });
         }
 
+        public async Task<IActionResult> OnPostAccepterInvitation(InvitationViewModel invitation)
+        {
+            var invitationEquipe = await _context.InvitationsEquipes.Include(ie => ie.Licencie).Include(ie => ie.Equipe)
+                .FirstOrDefaultAsync(ie => ie.ID.Equals(invitation.ID));
+
+            invitationEquipe.IsAccepted = true;
+            try
+            {
+                _context.Attach(invitationEquipe).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+
+            return RedirectToPage(new
+            {
+                id = (int?)invitation.LicencieID,
+            });
+        }
+
+        public async Task<IActionResult> OnPostRejeterInvitation(InvitationViewModel invitation)
+        {
+            var invitationEquipe = await _context.InvitationsEquipes.Include(ie => ie.Licencie).Include(ie => ie.Equipe)
+                .FirstOrDefaultAsync(ie => ie.ID.Equals(invitation.ID));
+
+            try
+            {
+                _context.InvitationsEquipes.Remove(invitationEquipe);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+            return RedirectToPage(new
+            {
+                id = (int?)invitation.LicencieID,
+            });
+        }
         private bool LicencieExists(int id)
         {
-            return _context.Licencie.Any(e => e.ID == id);
+            return _context.Licencies.Any(e => e.ID == id);
         }
     }
 }

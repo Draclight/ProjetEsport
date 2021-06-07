@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using projetEsport.Data;
 using projetEsport.Models;
 
 namespace projetEsport.Areas.Admin.Pages.Licencies
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
+    [Authorize(Roles = "Administrateur")]
     public class CreateModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -21,9 +22,12 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-        ViewData["EquipeID"] = new SelectList(_context.Equipe, "ID", "Nom");
+            var equipes = await _context.Equipes.Where(e => e.IsApproved).ToListAsync();
+            equipes.Insert(0, new Equipe() { Nom = string.Empty });
+            ViewData["EquipeID"] = new SelectList(equipes, "ID", "Nom");
+            ViewData["UtilisateurID"] = new SelectList(_context.Users, "Id", "Id");
             return Page();
         }
 
@@ -37,9 +41,19 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
             {
                 return Page();
             }
-
-            _context.Licencie.Add(Licencie);
-            await _context.SaveChangesAsync();
+            try
+            {
+                if (Licencie.EquipeID.Equals(0))
+                {
+                    Licencie.EquipeID = null;
+                }
+                _context.Licencies.Add(Licencie);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return RedirectToPage("./Index");
+            }
 
             return RedirectToPage("./Index");
         }

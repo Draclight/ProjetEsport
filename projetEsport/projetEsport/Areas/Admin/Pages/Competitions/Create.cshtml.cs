@@ -8,83 +8,115 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using projetEsport.ViewModels;
+using Microsoft.Extensions.Logging;
+using projetEsport.Authorization;
 using projetEsport.Data;
 using projetEsport.Models;
+using projetEsport.ViewModels;
 
 namespace projetEsport.Areas.Admin.Pages.Competitions
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
+    [Authorize(Roles = "Administrateur")]
     public class CreateModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly ILogger<CreateModel> _logger;
 
-        public CreateModel(projetEsport.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public CreateModel(projetEsport.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager, ILogger<CreateModel> logger)
         {
             _context = context;
-            _userManager = userManager;
+            _logger = logger;
         }
+
         public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["TypeCompetitionID"] = new SelectList(_context.TypeCompetition, "ID", "Nom");
-
-            JeuxDisponible = await _context.Jeu.Select(jeu => new CompetitionViewModel()
+            var date = DateTime.Now;
+            CompetitionVM = new CompetitionViewModel
             {
-                JeuID = jeu.ID,
-                Nom = jeu.Nom,
-                IsInCompetition = false
-            }).ToArrayAsync();
+                CreeLe = date,
+                ModifieeLe = date,
+                DateDebut = date,
+                DateFin = date,
+                EquipesDeLaCompetition = await _context.Equipes.Where(e => e.IsApproved).Select(e => new EquipeViewModel
+                {
+                    ID = e.ID,
+                    Nom = e.Nom,
+                    JeuID = e.JeuID
+                }).ToListAsync()
+            };
+
+            ViewData["ProprietaireID"] = new SelectList(_context.Licencies, "ID", "Pseudo");
+            ViewData["TypeCompetitionID"] = new SelectList(_context.TypesDeCompetition, "ID", "Nom");
+            ViewData["JeuID"] = new SelectList(_context.Jeux, "ID", "Nom");
 
             return Page();
         }
 
         [BindProperty]
+        public CompetitionViewModel CompetitionVM { get; set; }
         public Competition Competition { get; set; }
-        [BindProperty]
-        public CompetitionViewModel[] JeuxDisponible { get; set; }
 
+        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                return Page();
-            }
-
-            if (JeuxDisponible.All(j => !j.IsInCompetition))
-            {
                 return RedirectToPage();
             }
 
-            #region Compétition
-            //Propriétaire
-            var licencie = await _context.Licencie.FirstOrDefaultAsync(l => l.IdUtilisateur == _userManager.GetUserId(User));
-            Competition.ProprietaireID = licencie.ID;
-            var dateTimeCreate = DateTime.UtcNow;
-            Competition.CreeLe = dateTimeCreate;
-            Competition.ModifieeLe = dateTimeCreate;
-
-            //Sauvegarde
-            _context.Competition.Add(Competition);
-            await _context.SaveChangesAsync();
-            #endregion
-
-            #region Jeux
-            //Jeux
-            //Récupération des ids des jeux sélectionnés
-            var IdJeux = from jd in JeuxDisponible
-                         where jd.IsInCompetition.Equals(true)
-                         select jd.JeuID;
-
-            var competitionJeux = IdJeux.Select(jd => new CompetitionJeu()
+            try
             {
-                CompetitionID = Competition.ID,
-                JeuID = jd
-            }).ToList();
+                //Vérifiraction propriétaire à les droits organisateur
+                var administrateursRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name.Equals(Constants.AdministrateursRole));
+                var organisteursRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name.Equals(Constants.OrganisteursRole));
+                var licencie = await _context.Licencies.FirstOrDefaultAsync(l => l.ID.Equals(CompetitionVM.ProprietaireID));
+                var licencieIsOrganisateur = await _context.UserRoles.AnyAsync(ur => ur.UserId.Equals(licencie.UtilisateurID) && ur.RoleId == organisteursRole.Id.ToString());
+                var licencieIsAdmin = await _context.UserRoles.AnyAsync(ur => ur.UserId.Equals(licencie.UtilisateurID) && ur.RoleId == administrateursRole.Id.ToString());
 
-            _context.CompetitionJeu.AddRange(competitionJeux);
-            await _context.SaveChangesAsync();
-            #endregion
+                if (licencieIsOrganisateur == false && licencieIsAdmin == false)
+                {
+                    return RedirectToPage();
+                }
+
+                //Compétitions
+                Competition = new Competition();
+                Competition.CreeLe = DateTime.Now;
+                Competition.ModifieeLe = DateTime.Now;
+                Competition.DateDebut = CompetitionVM.DateDebut;
+                Competition.DateFin = CompetitionVM.DateFin;
+                Competition.Nom = CompetitionVM.Nom;
+                Competition.TypeCompetitionID = CompetitionVM.TypeCompetitionID;
+                Competition.ProprietaireID = CompetitionVM.ProprietaireID;
+                //Jeux
+                Competition.JeuID = CompetitionVM.JeuID;
+
+                _context.Competitions.Add(Competition);
+                await _context.SaveChangesAsync();
+
+                //Equipes
+                //if (CompetitionVM.EquipesDeLaCompetition != null)
+                //{
+                //    foreach (EquipeViewModel equipe in CompetitionVM.EquipesDeLaCompetition)
+                //    {
+                //        if (equipe.IsInCompetition)
+                //        {
+                //            CompetitionEquipe competitionEquipe = new CompetitionEquipe
+                //            {
+                //                CompetitionID = Competition.ID,
+                //                EquipeID = equipe.ID
+                //            };
+                //            _context.CompetitionEquipe.Add(competitionEquipe);
+                //            await _context.SaveChangesAsync();
+                //        }
+                //    }
+                //}
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return RedirectToPage();
+                throw;
+            }
 
             return RedirectToPage("./Index");
         }

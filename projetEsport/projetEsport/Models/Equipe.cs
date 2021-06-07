@@ -12,6 +12,7 @@ namespace projetEsport.Models
         public int ID { get; set; }
         [Required]
         public String Nom { get; set; }
+        [Display(Name = "Approuvé?")]
         public bool IsApproved { get; set; }
         [Display(Name = "Créé le")]
         public DateTime CreeLe { get; set; }
@@ -21,9 +22,12 @@ namespace projetEsport.Models
 
         #region Clées
         public ICollection<Licencie> Membres { get; set; }
-        ICollection<ClassementCompetition> Classements { get; set; }
-        ICollection<CompetitionEquipe> CompetitionDeEquipes { get; set; }
+        ICollection<CompetitionEquipe> CompetitionsParticipe { get; set; }
         ICollection<InvitationEquipe> InvitationsEquipe { get; set; }
+        public int JeuID { get; set; }
+        public Jeu Jeu { get; set; }
+        [Display(Name = "Matches")]
+        public ICollection<EquipeMatche> MatchesDisputes { get; set; }
         #endregion
     }
 }

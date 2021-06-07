@@ -5,7 +5,7 @@
     ViewData["Title"] = "Équipes";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Index</h1>
 
 <p>
     <a class="btn btn-success" asp-page="Create">Créer une nouvelle équipe</a>
@@ -17,7 +17,10 @@
                 @Html.DisplayNameFor(model => model.Equipe[0].Nom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Equipe[0].Membres)
+                @Html.DisplayNameFor(model => model.Equipe[0].IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipe[0].Jeu)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Equipe[0].CreeLe)
@@ -35,7 +38,10 @@
                 @Html.DisplayFor(modelItem => item.Nom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Membres.Count)
+                @Html.DisplayFor(modelItem => item.IsApproved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jeu.Nom)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreeLe)

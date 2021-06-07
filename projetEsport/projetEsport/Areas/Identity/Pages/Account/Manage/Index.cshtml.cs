@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using projetEsport.Authorization;
 using projetEsport.Data;
 using projetEsport.Models;
 
@@ -33,6 +34,7 @@ namespace projetEsport.Areas.Identity.Pages.Account.Manage
 
         [BindProperty]
         public InputModel Input { get; set; }
+        public bool DisplayAdmin { get; set; }
 
         public class InputModel
         {
@@ -51,7 +53,7 @@ namespace projetEsport.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            var licencie = await _context.Licencie.Include(l => l.Equipe).FirstOrDefaultAsync(l => l.IdUtilisateur == user.Id);
+            var licencie = await _context.Licencies.Include(l => l.Equipe).FirstOrDefaultAsync(l => l.UtilisateurID == user.Id);
 
             Input = new InputModel
             {
@@ -71,6 +73,9 @@ namespace projetEsport.Areas.Identity.Pages.Account.Manage
             }
 
             await LoadAsync(user);
+
+            DisplayAdmin = await _userManager.IsInRoleAsync(user, Constants.AdministrateursRole);
+
             return Page();
         }
 
@@ -95,7 +100,7 @@ namespace projetEsport.Areas.Identity.Pages.Account.Manage
                 {
                     await _userManager.SetUserNameAsync(user, Input.Pseudo);
 
-                    Licencie licencie = await _context.Licencie.Include(l => l.Equipe).FirstOrDefaultAsync(l => l.IdUtilisateur == user.Id);
+                    Licencie licencie = await _context.Licencies.Include(l => l.Equipe).FirstOrDefaultAsync(l => l.UtilisateurID == user.Id);
                     licencie.Pseudo = Input.Pseudo;
                     licencie.Nom = Input.Nom;
                     licencie.Prenom = Input.Prenom;

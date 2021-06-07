@@ -13,31 +13,64 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Equipe.ID" />
+            <input type="hidden" asp-for="EquipeVM.ID" />
             <div class="form-group">
-                <label asp-for="Equipe.Nom" class="control-label"></label>
-                <input asp-for="Equipe.Nom" class="form-control" />
-                <span asp-validation-for="Equipe.Nom" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Equipe.IsApproved" /> @Html.DisplayNameFor(model => model.Equipe.IsApproved)
-                </label>
+                <label asp-for="EquipeVM.Nom" class="control-label"></label>
+                <input asp-for="EquipeVM.Nom" class="form-control" />
+                <span asp-validation-for="EquipeVM.Nom" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Equipe.CreeLe" class="control-label"></label>
-                <input asp-for="Equipe.CreeLe" class="form-control" />
-                <span asp-validation-for="Equipe.CreeLe" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Equipe.ModifieeLe" class="control-label"></label>
-                <input asp-for="Equipe.ModifieeLe" class="form-control" />
-                <span asp-validation-for="Equipe.ModifieeLe" class="text-danger"></span>
+                <label asp-for="EquipeVM.JeuID" class="control-label"></label>
+                <select asp-for="EquipeVM.JeuID" class="form-control" asp-items="ViewBag.JeuID"></select>
+                <span asp-validation-for="EquipeVM.JeuID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Confirmer" class="btn btn-primary" />
             </div>
         </form>
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EquipeVM.LicenciesAInviter)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var invitation in Model.EquipeVM.Invitations)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => invitation.PseudoLicencie)
+                        </td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" asp-for="@invitation.LicencieID" name="invitation.LicencieID" />
+                                <input type="hidden" asp-for="@invitation.EquipeId" name="invitation.EquipeId" />
+                                @if (invitation.Envoyer)
+                                {
+                                    @if (invitation.Accepter)
+                                    {
+                                        <span class="badge badge-success">Accepté</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-warning">Envoyé</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <input type="submit" class="btn btn-success" asp-page-handler="Inviter" value="Inviter" />
+                                }
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 

@@ -2,21 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using projetEsport.Data;
 using projetEsport.Models;
 
 namespace projetEsport.Pages.Equipes
 {
+    [Authorize]
     public class DeleteModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(projetEsport.Data.ApplicationDbContext context)
+        public DeleteModel(projetEsport.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager, ILogger<DeleteModel> logger)
         {
             _context = context;
+            _userManager = userManager;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -29,7 +37,8 @@ namespace projetEsport.Pages.Equipes
                 return NotFound();
             }
 
-            Equipe = await _context.Equipe.FirstOrDefaultAsync(m => m.ID == id);
+            Equipe = await _context.Equipes
+                .Include(e => e.Jeu).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Equipe == null)
             {
@@ -45,12 +54,35 @@ namespace projetEsport.Pages.Equipes
                 return NotFound();
             }
 
-            Equipe = await _context.Equipe.FindAsync(id);
+            var createur = await _context.Licencies.Where(l => l.EquipeID.Equals(id) && l.CreateurEquipe).FirstOrDefaultAsync();
+            var isCreateur = createur.UtilisateurID.Equals(_userManager.GetUserId(User));
 
-            if (Equipe != null)
+            if (isCreateur)
             {
-                _context.Equipe.Remove(Equipe);
-                await _context.SaveChangesAsync();
+                Equipe = await _context.Equipes.Include(e => e.Membres).FirstOrDefaultAsync(e => e.ID.Equals(id));
+
+                if (Equipe != null)
+                {
+                    try
+                    {
+                        foreach (var membre in Equipe.Membres)
+                        {
+                            membre.EquipeID = null;
+
+                            _context.Attach(membre).State = EntityState.Modified;
+                            await _context.SaveChangesAsync();
+                        }
+
+                        _context.Equipes.Remove(Equipe);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex.Message);
+                        //return RedirectToPage("./Index");
+                        throw;
+                    }
+                }
             }
 
             return RedirectToPage("./Index");

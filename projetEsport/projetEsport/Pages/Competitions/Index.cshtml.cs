@@ -3,31 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using projetEsport.Authorization;
 using projetEsport.Data;
 using projetEsport.Models;
+using projetEsport.ViewModels;
 
 namespace projetEsport.Pages.Competitions
 {
     public class IndexModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
-        protected IAuthorizationService AuthorizationService { get; }
-        public IndexModel(projetEsport.Data.ApplicationDbContext context, IAuthorizationService authorizationService)
+        protected IAuthorizationService AuthorizationService { get; set; }
+        private readonly ILogger<IndexModel> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public IndexModel(projetEsport.Data.ApplicationDbContext context, IAuthorizationService authorizationService, ILogger<IndexModel> logger, UserManager<IdentityUser> userManager)
         {
             _context = context;
             AuthorizationService = authorizationService;
+            _logger = logger;
+            _userManager = userManager;
         }
 
-        public IList<Competition> Competition { get; set; }
+        public IList<CompetitionViewModel> Competition { get;set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Competition = await _context.Competition
-                    .Include(c => c.TypeCompetition).Include(c => c.Proprietaire).Include(c => c.Jeux).Include(c => c.EquipesDeCompetition).Include(c => c.Classements).ToListAsync();
+            Competition = await _context.Competitions
+                .Include(c => c.TypeCompetition)
+                .Include(c => c.Proprietaire)
+                .Include(c => c.Jeu)
+                .Include(c => c.EquipesDeLaCompetition).Select(c => new CompetitionViewModel
+                {
+                    ID = c.ID,
+                    DateDebut = c.DateDebut,
+                    DateFin = c.DateFin,
+                    NbEquipes = c.EquipesDeLaCompetition.Count,
+                    JeuID = c.JeuID,
+                    Jeu = new CompetitionJeuViewModel
+                    {
+                        ID = c.ID,
+                        Nom = c.Jeu.Nom
+                    },
+                    Proprietaire = c.Proprietaire.Pseudo,
+                    Nom = c.Nom,
+                    TypeCompetition = c.TypeCompetition.Nom,
+                    IsPropriétaire = c.Proprietaire.UtilisateurID.Equals(_userManager.GetUserId(User))
+                }).ToListAsync();
 
             if (User.Identity.IsAuthenticated)
             {

@@ -20,7 +20,12 @@ namespace projetEsport.Models
         #endregion
 
         #region Clées
-        public ICollection<CompetitionJeu> Competitions { get; set; }
+        [Display(Name = "Competitions")]
+        public ICollection<Competition> Competitions { get; set; }
+        [Display(Name = "Equipes")]
+        public ICollection<Equipe> EquipesCreePourJeu { get; set; }
+        [Display(Name = "Matches")]
+        public ICollection<Matche> MatchesDisputes { get; set; }
         #endregion
     }
 }

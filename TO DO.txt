@@ -1,0 +1,3 @@
+- rajouter un boolean pour autorisé la competition à débuter sur l'entite competition
+	- si nombre equipes paire == true
+	- si nombre equipes impaire == false

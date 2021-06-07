@@ -6,19 +6,22 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using projetEsport.Data;
 using projetEsport.Models;
 
 namespace projetEsport.Areas.Admin.Pages.Equipes
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
+    [Authorize(Roles = "Administrateur")]
     public class DeleteModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
+        private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(projetEsport.Data.ApplicationDbContext context)
+        public DeleteModel(projetEsport.Data.ApplicationDbContext context, ILogger<DeleteModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -31,7 +34,8 @@ namespace projetEsport.Areas.Admin.Pages.Equipes
                 return NotFound();
             }
 
-            Equipe = await _context.Equipe.FirstOrDefaultAsync(m => m.ID == id);
+            Equipe = await _context.Equipes
+                .Include(e => e.Jeu).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Equipe == null)
             {
@@ -47,12 +51,29 @@ namespace projetEsport.Areas.Admin.Pages.Equipes
                 return NotFound();
             }
 
-            Equipe = await _context.Equipe.FindAsync(id);
+            Equipe = await _context.Equipes.Include(e => e.Membres).FirstOrDefaultAsync(e => e.ID.Equals(id));
 
             if (Equipe != null)
             {
-                _context.Equipe.Remove(Equipe);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    foreach (var membre in Equipe.Membres)
+                    {
+                        membre.EquipeID = null;
+
+                        _context.Attach(membre).State = EntityState.Modified;
+                        await _context.SaveChangesAsync();
+                    }
+
+                    _context.Equipes.Remove(Equipe);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    //return RedirectToPage("./Index");
+                    throw;
+                }
             }
 
             return RedirectToPage("./Index");

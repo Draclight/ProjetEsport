@@ -1,0 +1,45 @@
+﻿@page
+@model projetEsport.Areas.Admin.Pages.TypesCompetitions.EditModel
+
+@{
+    ViewData["Title"] = "Éditer";
+}
+
+<h1>Éditer</h1>
+
+<h4>Type de competition</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TypeCompetition.ID" />
+            <div class="form-group">
+                <label asp-for="TypeCompetition.Nom" class="control-label"></label>
+                <input asp-for="TypeCompetition.Nom" class="form-control" />
+                <span asp-validation-for="TypeCompetition.Nom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeCompetition.CreeLe" class="control-label"></label>
+                <input asp-for="TypeCompetition.CreeLe" class="form-control" />
+                <span asp-validation-for="TypeCompetition.CreeLe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeCompetition.ModifieeLe" class="control-label"></label>
+                <input asp-for="TypeCompetition.ModifieeLe" class="form-control" />
+                <span asp-validation-for="TypeCompetition.ModifieeLe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Retour</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,40 @@
+﻿@page
+@model projetEsport.Areas.Admin.Pages.TypesCompetitions.DeleteModel
+
+@{
+    ViewData["Title"] = "Supprimer";
+}
+
+<h1>Supprimer</h1>
+
+<h3>Souhaitez-vous vraiment supprimer ce type de compétition ?</h3>
+<div>
+    <h4>TypeCompetition</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TypeCompetition.Nom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TypeCompetition.Nom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TypeCompetition.CreeLe)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TypeCompetition.CreeLe)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TypeCompetition.ModifieeLe)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TypeCompetition.ModifieeLe)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TypeCompetition.ID" />
+        <input type="submit" value="Supprimer" class="btn btn-danger" /> |
+        <a asp-page="./Index">Retour</a>
+    </form>
+</div>

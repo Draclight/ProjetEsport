@@ -11,7 +11,7 @@ using projetEsport.Models;
 
 namespace projetEsport.Areas.Admin.Pages.Equipes
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
+    [Authorize(Roles ="Administrateur")]
     public class DetailsModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -30,7 +30,10 @@ namespace projetEsport.Areas.Admin.Pages.Equipes
                 return NotFound();
             }
 
-            Equipe = await _context.Equipe.Include(e => e.Membres).FirstOrDefaultAsync(m => m.ID == id);
+            Equipe = await _context.Equipes
+                .Include(e => e.Membres)
+                .Include(e => e.Jeu)
+                .Include(e => e.Membres).Where(e => e.IsApproved).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Equipe == null)
             {

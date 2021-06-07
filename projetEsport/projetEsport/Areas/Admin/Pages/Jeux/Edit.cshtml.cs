@@ -12,7 +12,7 @@ using projetEsport.Models;
 
 namespace projetEsport.Areas.Admin.Pages.Jeux
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
+    [Authorize(Roles = "Administrateur")]
     public class EditModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -32,7 +32,7 @@ namespace projetEsport.Areas.Admin.Pages.Jeux
                 return NotFound();
             }
 
-            Jeu = await _context.Jeu.FirstOrDefaultAsync(m => m.ID == id);
+            Jeu = await _context.Jeux.FirstOrDefaultAsync(m => m.ID == id);
 
             if (Jeu == null)
             {
@@ -50,10 +50,10 @@ namespace projetEsport.Areas.Admin.Pages.Jeux
                 return Page();
             }
 
-            _context.Attach(Jeu).State = EntityState.Modified;
-
             try
             {
+                Jeu.ModifieeLe = DateTime.UtcNow;
+                _context.Attach(Jeu).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -73,7 +73,7 @@ namespace projetEsport.Areas.Admin.Pages.Jeux
 
         private bool JeuExists(int id)
         {
-            return _context.Jeu.Any(e => e.ID == id);
+            return _context.Jeux.Any(e => e.ID == id);
         }
     }
 }

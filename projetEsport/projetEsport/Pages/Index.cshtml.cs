@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using projetEsport.Data;
-using projetEsport.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +19,7 @@ namespace projetEsport.Pages
 
         public void OnGet()
         {
+
         }
     }
 }

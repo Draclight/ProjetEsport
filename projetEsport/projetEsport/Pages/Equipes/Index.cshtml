@@ -1,32 +1,23 @@
 ﻿@page
 @model projetEsport.Pages.Equipes.IndexModel
-@using Microsoft.AspNetCore.Identity
-@using projetEsport.Authorization;
-@using projetEsport.Models;
-@using Microsoft.AspNetCore.Authorization
-@inject IAuthorizationService AuthorizationService
-@inject UserManager<IdentityUser> userManager
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>@ViewData["Title"]</h1>
-@if (User.Identity.IsAuthenticated)
-{
-    if (Model.PeutCreer)
-    {
-        <p>
-            <a class="btn btn-success" asp-page="Create">Créer</a>
-        </p>
-    }
-}
+<h1>Index</h1>
 
-
+<p>
+    <a class="btn btn-success" asp-page="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Equipes[0].Equipe.Nom)
+                @Html.DisplayNameFor(model => model.Equipes[0].Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipes[0].JeuNom)
             </th>
             <th></th>
         </tr>
@@ -36,17 +27,20 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => equipe.Equipe.Nom)
+                    @Html.DisplayFor(modelItem => equipe.Nom)
                 </td>
                 <td>
-                    @if (equipe.IsMembre)
+                    @Html.DisplayFor(modelItem => equipe.JeuNom)
+                </td>
+                <td>
+                    @if (equipe.IsProprietaire)
                     {
                     <a class="btn btn-success" asp-page="./Edit" asp-route-id="@equipe.ID">Éditer</a> @string.Format("|");
                     }
-                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@equipe.ID">Détails</a>
-                    @if (equipe.IsMembre)
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@equipe.ID">Details</a> @(equipe.IsProprietaire ? "|" : "")
+                    @if (equipe.IsProprietaire)
                     {
-                        @string.Format("|"); <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@equipe.ID">Supprimer</a>
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@equipe.ID">Delete</a>
                     }
                 </td>
             </tr>

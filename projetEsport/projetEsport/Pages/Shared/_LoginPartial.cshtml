@@ -1,25 +1,23 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore;
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-@{ 
+@inject ApplicationDbContext context
+@{
     var myAreaName = string.Empty;
     object areaObj;
     if (ViewContext.RouteData.Values.TryGetValue("area", out areaObj))
     {
         myAreaName = areaObj.ToString();
     }
+
+    var nbNotifs = context.InvitationsEquipes.Include(l => l.Licencie).Where(i => i.Licencie.UtilisateurID.Equals(UserManager.GetUserId(User)) && (!i.IsAccepted && i.DateAccepter.CompareTo(DateTime.MinValue) == 0)).Count();
 }
 <ul class="navbar-nav login">
     @if (SignInManager.IsSignedIn(User))
     {
-        @if (!string.IsNullOrEmpty(myAreaName) && myAreaName == "Admin")
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-page="/Index">Accueil...</a>
-            </li>
-        }
-        <li class="nav-item" >
-            <a class="nav-link text-dark" asp-area="" asp-page="/Equipes/Invitation" title="Gestion"><span class="icon-notification"></span></a>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Equipes/Invitation" title="Manage"><span class="icon-notification border badge @(nbNotifs >= 1 ? "badge-danger" : "")">@nbNotifs</span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Gestion"><span class="icon-manage"></span>@User.Identity.Name</a>
@@ -33,7 +31,8 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register"><span class="icon-register"></span>Inscription
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">
+                <span class="icon-register"></span>Register
             </a>
         </li>
         <li class="nav-item">

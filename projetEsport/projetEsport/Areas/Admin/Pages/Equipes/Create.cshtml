@@ -2,7 +2,8 @@
 @model projetEsport.Areas.Admin.Pages.Equipes.CreateModel
 
 @{
-    ViewData["Title"] = "Créer";
+    ViewData["Title"] = "Create";
+    int compteurLicencie = 0;
 }
 
 <h1>Créer</h1>
@@ -18,6 +19,15 @@
                 <input asp-for="Equipe.Nom" class="form-control" />
                 <span asp-validation-for="Equipe.Nom" class="text-danger"></span>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Equipe.IsApproved" /> @Html.DisplayNameFor(model => model.Equipe.IsApproved)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Equipe.JeuID" class="control-label"></label>
+                <select asp-for="Equipe.JeuID" class="form-control" asp-items="ViewBag.JeuID"></select>
+            </div>
             <div class="form-group">
                 <label asp-for="Equipe.CreeLe" class="control-label"></label>
                 <input asp-for="Equipe.CreeLe" class="form-control" />
@@ -29,7 +39,36 @@
                 <span asp-validation-for="Equipe.ModifieeLe" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Créer" class="btn btn-primary" />
+                <h2>Licencies</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Equipe.LicenciesAInviter[0].Pseudo)
+                            </th>
+                            <th>@Html.DisplayNameFor(model => model.Equipe.LicenciesAInviter[0].InviteDansEquipe)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var licencie in Model.Equipe.LicenciesAInviter)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => licencie.Pseudo)
+                                </td>
+                                <td>
+                                    <input class="form-check-input" asp-for="@licencie.InviteDansEquipe" name="Equipe.LicenciesAInviter[@compteurLicencie].InviteDansEquipe" />
+                                    <input type="hidden" asp-for="@licencie.ID" name="Equipe.LicenciesAInviter[@compteurLicencie].ID" />
+                                </td>
+                            </tr>
+                            compteurLicencie++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

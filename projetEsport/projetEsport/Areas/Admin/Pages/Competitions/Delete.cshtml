@@ -13,43 +13,90 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.Nom)
+            @Html.DisplayNameFor(model => model.CompetitionVM.Nom)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.Nom)
+            @Html.DisplayFor(model => model.CompetitionVM.Nom)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.DateDebut)
+            @Html.DisplayNameFor(model => model.CompetitionVM.DateDebut)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.DateDebut)
+            @Html.DisplayFor(model => model.CompetitionVM.DateDebut)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.DateFin)
+            @Html.DisplayNameFor(model => model.CompetitionVM.DateFin)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.DateFin)
+            @Html.DisplayFor(model => model.CompetitionVM.DateFin)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.CreeLe)
+            @Html.DisplayNameFor(model => model.CompetitionVM.TypeCompetition)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.CreeLe)
+            @Html.DisplayFor(model => model.CompetitionVM.TypeCompetition)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.ModifieeLe)
+            @Html.DisplayNameFor(model => model.CompetitionVM.Proprietaire)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.ModifieeLe)
+            @Html.DisplayFor(model => model.CompetitionVM.Proprietaire)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Competition.TypeCompetition)
+            @Html.DisplayNameFor(model => model.CompetitionVM.Jeu)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Competition.TypeCompetition.Nom)
+            @Html.DisplayFor(model => model.CompetitionVM.Jeu.Nom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompetitionVM.NbEquipes)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompetitionVM.NbEquipes)
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompetitionVM.EquipesDeLaCompetition[0].Nom)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CompetitionVM.EquipesDeLaCompetition[0].Membres)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var equipe in Model.CompetitionVM.EquipesDeLaCompetition)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => equipe.ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => equipe.Membres.Count)
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" asp-page="../Equipes/Details" asp-route-id="@equipe.ID">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompetitionVM.CreeLe)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompetitionVM.CreeLe)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompetitionVM.ModifieeLe)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompetitionVM.ModifieeLe)
         </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="Competition.ID" />
         <input type="submit" value="Supprimer" class="btn btn-danger" /> |

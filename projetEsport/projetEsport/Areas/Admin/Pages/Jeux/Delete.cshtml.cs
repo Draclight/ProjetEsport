@@ -11,7 +11,7 @@ using projetEsport.Models;
 
 namespace projetEsport.Areas.Admin.Pages.Jeux
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
+    [Authorize(Roles = "Administrateur")]
     public class DeleteModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -31,7 +31,7 @@ namespace projetEsport.Areas.Admin.Pages.Jeux
                 return NotFound();
             }
 
-            Jeu = await _context.Jeu.FirstOrDefaultAsync(m => m.ID == id);
+            Jeu = await _context.Jeux.FirstOrDefaultAsync(m => m.ID == id);
 
             if (Jeu == null)
             {
@@ -47,11 +47,11 @@ namespace projetEsport.Areas.Admin.Pages.Jeux
                 return NotFound();
             }
 
-            Jeu = await _context.Jeu.FindAsync(id);
+            Jeu = await _context.Jeux.FindAsync(id);
 
             if (Jeu != null)
             {
-                _context.Jeu.Remove(Jeu);
+                _context.Jeux.Remove(Jeu);
                 await _context.SaveChangesAsync();
             }
 

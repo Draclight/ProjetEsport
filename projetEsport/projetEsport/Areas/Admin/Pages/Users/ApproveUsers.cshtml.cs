@@ -15,13 +15,13 @@ using projetEsport.Models;
 
 namespace projetEsport.Pages.Admin.Users
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
+    [Authorize(Roles = "Administrateur")]
     public class ApproveUsersModel : PageModel
     {
-        private readonly ILogger<RegisterConfirmationModel> _logger;
+        private readonly ILogger<ApproveUsersModel> _logger;
         private readonly ApplicationDbContext _context;
 
-        public ApproveUsersModel(ILogger<RegisterConfirmationModel> logger, ApplicationDbContext context)
+        public ApproveUsersModel(ILogger<ApproveUsersModel> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
@@ -29,9 +29,9 @@ namespace projetEsport.Pages.Admin.Users
         [BindProperty]
         public IList<IdentityUser> Users { get; set; }
 
-        public async Task OnGetAsync()
+        public void OnGetAsync()
         {
-            Users = await _context.Users.Where(u => !u.EmailConfirmed).ToListAsync();
+            Users = _context.Users.Where(u => !u.EmailConfirmed).ToList();
         }
 
         public async Task<IActionResult> OnPostApproveUserAsync(string id)
@@ -50,7 +50,8 @@ namespace projetEsport.Pages.Admin.Users
                 _context.UserRoles.Add(newRole);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToPage();
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostRejectUserAsync(string id)
@@ -67,7 +68,7 @@ namespace projetEsport.Pages.Admin.Users
                 }
             }
 
-            return RedirectToPage();
+            return Page();
         }
     }
 }

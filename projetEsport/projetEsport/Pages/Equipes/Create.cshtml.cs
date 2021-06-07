@@ -14,11 +14,11 @@ using projetEsport.ViewModels;
 
 namespace projetEsport.Pages.Equipes
 {
-    [Authorize(Roles = "ADMINISTRATEUR,ORGANISATEUR,LICENCIE")]
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private UserManager<IdentityUser> _userManager;
 
         public CreateModel(projetEsport.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
@@ -26,28 +26,30 @@ namespace projetEsport.Pages.Equipes
             _userManager = userManager;
         }
 
-        public IActionResult OnGetAsync()
+        public IActionResult OnGet()
         {
-            var userId = _userManager.GetUserId(User);
-            LicenciesViewModel = _context.Licencie.Where(l => l.IdUtilisateur != _userManager.GetUserId(User)).Select(l => new LicencieViewModel
+            var date = DateTime.Now;
+            Equipe = new EquipeViewModel
             {
-                licencie = l,
-                InviteDansEquipe = false
-            }).ToArray();
-
-            EquipeViewModel = new EquipeViewModel
-            {
-                LicencieID = _context.Licencie.FirstOrDefault(l => l.IdUtilisateur.Equals(userId)).ID,
-                Licencies = LicenciesViewModel
+                CreeLe = date,
+                ModifieeLe = date,
+                LicenciesAInviter = _context.Licencies.Include(l => l.Utilisateur)
+                .Where(l => l.Utilisateur.EmailConfirmed && !l.EquipeID.Equals(null) && !l.UtilisateurID.Equals(_userManager.GetUserId(User))).Select(l => new LicencieViewModel
+                {
+                    ID = l.ID,
+                    Pseudo = l.Pseudo,
+                    InviteDansEquipe = false
+                }).ToList()
             };
+
+            ViewData["JeuID"] = new SelectList(_context.Jeux, "ID", "Nom");
 
             return Page();
         }
 
         [BindProperty]
-        public EquipeViewModel EquipeViewModel { get; set; }
-        [BindProperty]
-        public IList<LicencieViewModel> LicenciesViewModel { get; set; }
+        public EquipeViewModel Equipe { get; set; }
+        public Equipe NouvelleEquipe { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -57,44 +59,61 @@ namespace projetEsport.Pages.Equipes
                 return Page();
             }
 
-            if (!string.IsNullOrEmpty(EquipeViewModel.Equipe.Nom) || LicenciesViewModel.All(l => !l.InviteDansEquipe))
+            try
             {
-                var date = DateTime.UtcNow;
-                EquipeViewModel.Equipe.IsApproved = false;
-                EquipeViewModel.Equipe.CreeLe = EquipeViewModel.Equipe.ModifieeLe = date;
+                var date = DateTime.Now;
 
-                _context.Equipe.Add(EquipeViewModel.Equipe);
+                //Equipe
+                NouvelleEquipe = new Equipe
+                {
+                    CreeLe = date,
+                    IsApproved = false,
+                    JeuID = Equipe.JeuID,
+                    ModifieeLe = date,
+                    Nom = Equipe.Nom
+                };
+
+                _context.Equipes.Add(NouvelleEquipe);
                 await _context.SaveChangesAsync();
 
-                //Invitation dans l'équipe
-                InvitationEquipe invitation = new InvitationEquipe
-                {
-                    EquipeID = EquipeViewModel.Equipe.ID,
-                    LicencieID = EquipeViewModel.LicencieID,
-                    IsAccepted = false
-                };
-                IList<InvitationEquipe> invitations = new List<InvitationEquipe>();
-                invitations.Add(invitation);
-                foreach (LicencieViewModel licencie in LicenciesViewModel)
+                //Invitations
+                foreach (LicencieViewModel licencie in Equipe.LicenciesAInviter)
                 {
                     if (licencie.InviteDansEquipe)
                     {
-                        invitations.Add(new InvitationEquipe
+                        InvitationEquipe newInvitation = new InvitationEquipe
                         {
-                            EquipeID = EquipeViewModel.Equipe.ID,
-                            LicencieID = licencie.licencie.ID,
-                            IsAccepted = false
-                        });
+                            EquipeID = NouvelleEquipe.ID,
+                            LicencieID = licencie.ID,
+                            DateEnvoi = DateTime.Now
+                        };
 
+                        _context.InvitationsEquipes.Add(newInvitation);
+                        await _context.SaveChangesAsync();
                     }
                 }
 
-                _context.InvitationEquipe.AddRange(invitations);
+                var createur = await _context.Licencies.Include(l => l.Equipe).FirstOrDefaultAsync(l => l.UtilisateurID.Equals(_userManager.GetUserId(User)));
+                InvitationEquipe invitationLicencie = new InvitationEquipe
+                {
+                    EquipeID = NouvelleEquipe.ID,
+                    LicencieID = createur.ID,
+                    IsAccepted = true,
+                    DateEnvoi = DateTime.Now
+                };
+                _context.InvitationsEquipes.Add(invitationLicencie);
                 await _context.SaveChangesAsync();
+
+                createur.EquipeID = NouvelleEquipe.ID; 
+                createur.CreateurEquipe = true;
+                _context.Attach(createur).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
             }
-            else
+            catch (Exception)
             {
-                return Page();
+                return RedirectToPage();
+                throw;
             }
 
             return RedirectToPage("./Index");

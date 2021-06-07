@@ -1,0 +1,65 @@
+﻿@page
+@model projetEsport.Areas.Admin.Pages.Matches.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Matche</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Matche.ID" />
+            <div class="form-group">
+                <label asp-for="Matche.TypeMatcheID" class="control-label"></label>
+                <select asp-for="Matche.TypeMatcheID" class="form-control" asp-items="ViewBag.TypeMatcheID"></select>
+                <span asp-validation-for="Matche.TypeMatcheID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.CompetitionID" class="control-label"></label>
+                <select asp-for="Matche.CompetitionID" class="form-control" asp-items="ViewBag.CompetitionID"></select>
+                <span asp-validation-for="Matche.CompetitionID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.Competition.JeuID" class="control-label"></label>
+                <select asp-for="Matche.Competition.JeuID" class="form-control" asp-items="ViewBag.JeuID"></select>
+                <span asp-validation-for="Matche.Competition.JeuID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.VictoireEquipeA" class="control-label"></label>
+                <input asp-for="Matche.VictoireEquipeA" class="form-control" />
+                <span asp-validation-for="Matche.VictoireEquipeA" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.VictoireEquipeB" class="control-label"></label>
+                <input asp-for="Matche.VictoireEquipeB" class="form-control" />
+                <span asp-validation-for="Matche.VictoireEquipeB" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.CreeLe" class="control-label"></label>
+                <input asp-for="Matche.CreeLe" class="form-control" />
+                <span asp-validation-for="Matche.CreeLe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.ModifieeLe" class="control-label"></label>
+                <input asp-for="Matche.ModifieeLe" class="form-control" />
+                <span asp-validation-for="Matche.ModifieeLe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

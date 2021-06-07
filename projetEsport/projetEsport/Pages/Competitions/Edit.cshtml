@@ -30,19 +30,14 @@
                 <span asp-validation-for="Competition.DateFin" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Competition.CreeLe" class="control-label"></label>
-                <input asp-for="Competition.CreeLe" class="form-control" />
-                <span asp-validation-for="Competition.CreeLe" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Competition.ModifieeLe" class="control-label"></label>
-                <input asp-for="Competition.ModifieeLe" class="form-control" />
-                <span asp-validation-for="Competition.ModifieeLe" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Competition.TypeCompetitionID" class="control-label"></label>
                 <select asp-for="Competition.TypeCompetitionID" class="form-control" asp-items="ViewBag.TypeCompetitionID"></select>
                 <span asp-validation-for="Competition.TypeCompetitionID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Competition.Jeu" class="control-label"></label>
+                <select asp-for="Competition.JeuID" class="form-control" asp-items="ViewBag.JeuID"></select>
+                <span asp-validation-for="Competition.JeuID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

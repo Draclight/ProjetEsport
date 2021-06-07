@@ -1,7 +1,7 @@
 ﻿@page
 @model projetEsport.Pages.Admin.Users.ApproveUsersModel
 @{
-    ViewData["Title"] = "Demandes de licences";
+    ViewData["Title"] = "Utilisateurs";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -37,8 +37,8 @@
                 <td>
                     <form method="post">
                         <input asp-for="@item.Id" value="@item.Id" type="hidden" />
-                        <input type="submit" class="btn btn-success" asp-page-handler="ApproveUser" asp-route-id="@item.Id" value="Approuver" />
-                        <input type="submit" class="btn btn-danger" asp-page-handler="RejectUser" asp-route-id="@item.Id" value="Rejeter" />
+                        <input type="submit" class="btn btn-success" asp-page-handler="ApproveUser" asp-route-id="@item.Id" value="Approve" /> |
+                        <input type="submit" class="btn btn-danger" asp-page-handler="RejectUser" asp-route-id="@item.Id" value="Reject" />
                     </form>
                 </td>
             </tr>

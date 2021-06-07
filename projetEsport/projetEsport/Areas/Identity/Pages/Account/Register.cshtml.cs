@@ -98,14 +98,14 @@ namespace projetEsport.Areas.Identity.Pages.Account
                     //créer un licencié avec le guid et les données de base nécéssaires
                     Licencie NouveauLicencie = new Licencie
                     {
-                        IdUtilisateur = user.Id,
+                        UtilisateurID = user.Id,
                         Nom = Input.Nom,
                         Prenom = Input.Prenom,
                         Pseudo = Input.UserName,
                         CreeLe = DateTime.UtcNow,
                         ModifieeLe = DateTime.UtcNow
                     };
-                    _context.Licencie.Add(NouveauLicencie);
+                    _context.Licencies.Add(NouveauLicencie);
                     await _context.SaveChangesAsync();
                     _logger.LogInformation("Licencié crée.");
 

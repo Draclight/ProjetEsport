@@ -2,10 +2,10 @@
 @model projetEsport.Areas.Admin.Pages.Licencies.IndexModel
 
 @{
-    ViewData["Title"] = "Licenciés";
+    ViewData["Title"] = "Index";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Index</h1>
 
 <p>
     <a class="btn btn-success" asp-page="Create">Ajouter un licencié</a>
@@ -14,69 +14,67 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Licencie[0].licencie.Pseudo)
+                @Html.DisplayNameFor(model => model.Licencies[0].Pseudo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Licencie[0].licencie.Prenom)
+                @Html.DisplayNameFor(model => model.Licencies[0].Prenom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Licencie[0].licencie.Nom)
+                @Html.DisplayNameFor(model => model.Licencies[0].Nom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Licencie[0].licencie.IdUtilisateur)
+                @Html.DisplayNameFor(model => model.Licencies[0].CreeLe)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Licencie[0].licencie.Equipe)
+                @Html.DisplayNameFor(model => model.Licencies[0].ModifieeLe)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Licencie[0].Roles)
+                @Html.DisplayNameFor(model => model.Licencies[0].Utilisateur)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Licencie[0].licencie.CreeLe)
+                @Html.DisplayNameFor(model => model.Licencies[0].Equipe)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Licencie[0].licencie.ModifieeLe)
+                @Html.DisplayNameFor(model => model.Licencies[0].Roles)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Licencie)
+        @foreach (var licencie in Model.Licencies)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.licencie.Pseudo)
+                    @Html.DisplayFor(modelItem => licencie.Pseudo)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.licencie.Prenom)
+                    @Html.DisplayFor(modelItem => licencie.Prenom)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.licencie.Nom)
+                    @Html.DisplayFor(modelItem => licencie.Nom)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.licencie.IdUtilisateur)
+                    @Html.DisplayFor(modelItem => licencie.CreeLe)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.licencie.Equipe.Nom)
+                    @Html.DisplayFor(modelItem => licencie.ModifieeLe)
                 </td>
                 <td>
-                    @foreach (var role in item.Roles)
+                    @Html.DisplayFor(modelItem => licencie.Utilisateur)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => licencie.Equipe)
+                </td>
+                <td>
+                    @foreach (var role in licencie.Roles)
                     {
-                        <div>
-                            @Html.LabelForModel(role.RoleName)
-                        </div>
+                        <p>@Html.DisplayFor(modelItem => role.RoleName)</p>
                     }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.licencie.CreeLe)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.licencie.ModifieeLe)
-                </td>
-                <td>
-                    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.licencie.ID">Éditer</a> |
-                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.licencie.ID">Détails</a> |
-                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.licencie.ID">Supprimer</a>
+                    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@licencie.ID">Edit</a> |
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@licencie.ID">Details</a> |
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@licencie.ID">Delete</a>
                 </td>
             </tr>
         }

@@ -40,45 +40,20 @@
                 <span asp-validation-for="Competition.ModifieeLe" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Competition.TypeCompetition" class="control-label"></label>
-                <select asp-for="Competition.TypeCompetition" class="form-control" asp-items="ViewBag.TypeCompetition"></select>
-                <span asp-validation-for="Competition.TypeCompetition" class="text-danger"></span>
+                <label asp-for="Competition.TypeCompetitionID" class="control-label"></label>
+                <select asp-for="Competition.TypeCompetitionID" class="form-control" asp-items="ViewBag.TypeCompetitionID"></select>
+                <span asp-validation-for="Competition.TypeCompetitionID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Competition.Proprietaire" class="control-label"></label>
-                <input asp-for="Competition.Proprietaire.Pseudo" class="form-control" />
-                <span asp-validation-for="Competition.Proprietaire" class="text-danger"></span>
+                <label asp-for="Competition.ProprietaireID" class="control-label"></label>
+                <select asp-for="Competition.ProprietaireID" class="form-control" asp-items="ViewBag.ProprietaireID"></select>
+                <span asp-validation-for="Competition.ProprietaireID" class="text-danger"></span>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.JeuxDisponible.FirstOrDefault().Nom)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.JeuxDisponible.FirstOrDefault().IsInCompetition)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.JeuxDisponible.Count; i++)
-                    {
-                        <tr>
-                            <td>
-                                <input type="text" asp-for="@Model.JeuxDisponible[i].Nom" name="JeuxDisponible[i].Nom" class="form-control-plaintext" />
-                            </td>
-                            <td>
-                                <input type="checkbox" asp-for="@Model.JeuxDisponible[i].IsInCompetition" name="JeuxDisponible[@i].IsInCompetition" class="form-control" />
-                            </td>
-                            <td>
-                                <input type="hidden" asp-for="@Model.JeuxDisponible[i].JeuID" name="JeuxDisponible[@i].JeuID" class="form-control" />
-                                <input type="hidden" asp-for="@Model.JeuxDisponible[i].CompetitiionId" name="JeuxDisponible[@i].CompetitiionId" class="form-control" />
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <div class="form-group">
+                <label asp-for="Competition.JeuID" class="control-label"></label>
+                <select asp-for="Competition.JeuID" class="form-control" asp-items="ViewBag.JeuID"></select>
+                <span asp-validation-for="Competition.JeuID" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Valider" class="btn btn-primary" />
             </div>

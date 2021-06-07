@@ -1,6 +1,5 @@
 ﻿@page
 @model projetEsport.Pages.Equipes.InvitationModel
-
 @{
     ViewData["Title"] = "Invitations";
 }
@@ -16,7 +15,7 @@
                 @Html.DisplayNameFor(model => model.InvitationEquipe[0].Membres)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InvitationEquipe[0].Quand)
+                @Html.DisplayNameFor(model => model.InvitationEquipe[0].DateEnvoi)
             </th>
             <th></th>
         </tr>
@@ -32,17 +31,18 @@
                     <ul class="list-group list-group-flush">
                         @foreach (var membre in invitation.Membres)
                         {
-                            <li class="list-group-item">@membre</li>
+                            <li class="list-group-item"><span class="badge @(membre.IsAccepter ? "badge-success" : "badge-warning")">@membre.Pseudo</span></li>
                         }
                     </ul>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => invitation.Quand)
+                    @Html.DisplayFor(modelItem => invitation.DateEnvoi)
                 </td>
                 <td>
                     <form method="post">
                         <input type="hidden" asp-for="@invitation.ID" name="invitation.ID" />
                         <input type="hidden" asp-for="@invitation.LicencieID" name="invitation.LicencieID" />
+                        <input type="hidden" asp-for="@invitation.EquipeId" name="invitation.EquipeId" />
                         <input type="submit" class="btn btn-success" asp-page-handler="AccepterInvitation" value="Accepter" /> |
                         <input type="submit" class="btn btn-danger" asp-page-handler="RejeterInvitation" value="Rejeter" />
                     </form>

@@ -11,7 +11,7 @@ using projetEsport.Models;
 
 namespace projetEsport.Areas.Admin.Pages.Jeux
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
+    [Authorize(Roles = "Administrateur")]
     public class CreateModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -37,7 +37,7 @@ namespace projetEsport.Areas.Admin.Pages.Jeux
                 return Page();
             }
 
-            _context.Jeu.Add(Jeu);
+            _context.Jeux.Add(Jeu);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

@@ -203,7 +203,7 @@ body {
 }
 
 .icon-competition {
-    content: url('../images/icons/trophy-fill.svg');
+    content: url('../images/icons/diagram-3-fill.svg');
     margin-right: 2px;
 }
 
@@ -240,17 +240,33 @@ body {
 }
 
 .icon-type-competition {
-    content: url('../images/icons/people-fill.svg');
+    content: url('../images/icons/trophy-fill.svg');
     margin-right: 2px;
 }
 
 .icon-user {
-    content: url('../images/icons/people-fill.svg');
+    content: url('../images/icons/person-check.svg');
     margin-right: 2px;
 }
 
-.icon-notification {
+.icon-notification:before {
     content: url('../images/icons/bell-fill.svg');
+    margin-right: 2px;
+    background-color:none;
+}
+
+.icon-approuv-équipe {
+    content: url('../images/icons/shield-check.svg');
+    margin-right: 2px;
+}
+
+.icon-matche {
+    content: url('../images/icons/calendar2-check-fill.svg');
+    margin-right: 2px;
+}
+
+.icon-type-matche {
+    content: url('../images/icons/dice-5.svg');
     margin-right: 2px;
 }
 
@@ -293,9 +309,9 @@ body {
             background-color: #ddd;
         }
 
-    .nav-item.flex {
-        display: flex;
-    }
+.nav-item.flex {
+    display: flex;
+}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
@@ -319,4 +335,30 @@ body {
 .invitation-not-accepted::after {
     content: url('../images/icons/person-x-fill.svg');
     margin-left: 2px;
+}
+
+/*disabled*/
+.disabled {
+    display: none;
+}
+
+/*dashboard*/
+.col-lg-3 {
+    background-color: #f3f3f4;
+    border: solid 1px #e7eaec;
+    margin: 15px;
+    justify-content: center;
+}
+
+    .col-lg-3 .ibox-title {
+        padding: 15px 20px 20px 20px;
+        border-bottom: solid 1px #e7eaec;
+    }
+
+    .col-lg-3 .ibox-content {
+        padding: 15px 20px 20px 20px;
+    }
+
+.row.row-center {
+    justify-content: center;
 }

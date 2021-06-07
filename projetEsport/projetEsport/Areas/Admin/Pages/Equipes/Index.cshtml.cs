@@ -11,7 +11,7 @@ using projetEsport.Models;
 
 namespace projetEsport.Areas.Admin.Pages.Equipes
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
+    [Authorize(Roles ="Administrateur")]
     public class IndexModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -25,7 +25,8 @@ namespace projetEsport.Areas.Admin.Pages.Equipes
 
         public async Task OnGetAsync()
         {
-            Equipe = await _context.Equipe.Include(e => e.Membres).Where(e => e.IsApproved).ToListAsync();
+            Equipe = await _context.Equipes
+                .Include(e => e.Jeu).Include(e => e.Membres).Where(e => e.IsApproved).ToListAsync();
         }
     }
 }

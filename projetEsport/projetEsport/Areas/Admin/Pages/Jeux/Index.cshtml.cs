@@ -11,7 +11,7 @@ using projetEsport.Models;
 
 namespace projetEsport.Areas.Admin.Pages.Jeux
 {
-    [Authorize(Roles = "ADMINISTRATEUR")]
+    [Authorize(Roles = "Administrateur")]
     public class IndexModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -21,11 +21,11 @@ namespace projetEsport.Areas.Admin.Pages.Jeux
             _context = context;
         }
 
-        public IList<Jeu> Jeu { get;set; }
+        public IList<Jeu> Jeu { get; set; }
 
         public async Task OnGetAsync()
         {
-            Jeu = await _context.Jeu.ToListAsync();
+            Jeu = await _context.Jeux.ToListAsync();
         }
     }
 }

@@ -5,7 +5,7 @@
     ViewData["Title"] = "Compétitions";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Index</h1>
 
 <p>
     <a class="btn btn-success" asp-page="Créer">Créer une nouvelle compétition</a>
@@ -14,51 +14,69 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Competition[0].Nom)
+                @Html.DisplayNameFor(model => model.Competitions[0].Nom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Competition[0].DateDebut)
+                @Html.DisplayNameFor(model => model.Competitions[0].DateDebut)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Competition[0].DateFin)
+                @Html.DisplayNameFor(model => model.Competitions[0].DateFin)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Competition[0].Jeux)
+                @Html.DisplayNameFor(model => model.Competitions[0].TypeCompetition)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Competition[0].EquipesDeCompetition)
+                @Html.DisplayNameFor(model => model.Competitions[0].Proprietaire)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Competition[0].TypeCompetition)
+                @Html.DisplayNameFor(model => model.Competitions[0].Jeu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].NbEquipes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].CreeLe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competitions[0].ModifieeLe)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ListeCompetition) {
+@foreach (var competition in Model.Competitions) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Competition.Nom)
+                @Html.DisplayFor(modelItem => competition.Nom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Competition.DateDebut)
+                @Html.DisplayFor(modelItem => competition.DateDebut)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Competition.DateFin)
+                @Html.DisplayFor(modelItem => competition.DateFin)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NbJeux)
+                @Html.DisplayFor(modelItem => competition.TypeCompetition)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NbEquipes)
+                @Html.DisplayFor(modelItem => competition.Proprietaire)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Competition.TypeCompetition.Nom)
+                @Html.DisplayFor(modelItem => competition.Jeu.Nom)
             </td>
             <td>
-                <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.Competition.ID">Éditer</a> |
-                <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.Competition.ID">Détails</a> |
-                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Competition.ID">Supprimer</a>
+                @Html.DisplayFor(modelItem => competition.NbEquipes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => competition.CreeLe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => competition.ModifieeLe)
+            </td>
+            <td>
+                <a class="btn btn-success" asp-page="./Edit" asp-route-id="@competition.ID">Edit</a> |
+                <a class="btn btn-primary" asp-page="./Details" asp-route-id="@competition.ID">Details</a> |
+                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@competition.ID">Delete</a>
             </td>
         </tr>
 }

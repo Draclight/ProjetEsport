@@ -36,6 +36,8 @@ namespace projetEsport.ViewModels
         public int JeuID { get; set; }
         [Display(Name = "Jeu")]
         public string JeuNom { get; set; }
+        [Display(Name = "Date")]
+        public DateTime Date { get; set; }
         [Display(Name = "Créé le")]
         public DateTime CreeLe { get; set; }
         [Display(Name = "Modifié le")]

@@ -1,5 +1,5 @@
 ﻿@page
-@model projetEsport.Areas.Admin.Pages.Matches.EditModel
+@model projetEsport.Areas.Admin.Pages.Competitions.Matches.EditModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -20,24 +20,27 @@
                 <span asp-validation-for="Matche.TypeMatcheID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Matche.CompetitionID" class="control-label"></label>
-                <select asp-for="Matche.CompetitionID" class="form-control" asp-items="ViewBag.CompetitionID"></select>
-                <span asp-validation-for="Matche.CompetitionID" class="text-danger"></span>
+                <label asp-for="Matche.EquipeAID" class="control-label"></label>
+                <select asp-for="Matche.EquipeAID" class="form-control" asp-items="ViewBag.EquipeID"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Matche.Competition.JeuID" class="control-label"></label>
-                <select asp-for="Matche.Competition.JeuID" class="form-control" asp-items="ViewBag.JeuID"></select>
-                <span asp-validation-for="Matche.Competition.JeuID" class="text-danger"></span>
+                <label asp-for="Matche.NbVictoiresEquipeA" class="control-label"></label>
+                <input asp-for="Matche.NbVictoiresEquipeA" class="form-control" />
+                <span asp-validation-for="Matche.NbVictoiresEquipeA" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Matche.VictoireEquipeA" class="control-label"></label>
-                <input asp-for="Matche.VictoireEquipeA" class="form-control" />
-                <span asp-validation-for="Matche.VictoireEquipeA" class="text-danger"></span>
+                <label asp-for="Matche.EquipeBID" class="control-label"></label>
+                <select asp-for="Matche.EquipeBID" class="form-control" asp-items="ViewBag.EquipeID"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Matche.VictoireEquipeB" class="control-label"></label>
-                <input asp-for="Matche.VictoireEquipeB" class="form-control" />
-                <span asp-validation-for="Matche.VictoireEquipeB" class="text-danger"></span>
+                <label asp-for="Matche.NbVictoiresEquipeB" class="control-label"></label>
+                <input asp-for="Matche.NbVictoiresEquipeB" class="form-control" />
+                <span asp-validation-for="Matche.NbVictoiresEquipeB" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.Date" class="control-label"></label>
+                <input asp-for="Matche.Date" class="form-control" />
+                <span asp-validation-for="Matche.Date" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Matche.CreeLe" class="control-label"></label>
@@ -57,7 +60,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index" asp-route-id="@Model.Matche.CompetitionID">Back to List</a>
 </div>
 
 @section Scripts {

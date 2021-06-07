@@ -22,10 +22,13 @@
                 @Html.DisplayNameFor(model => model.Matche[0].JeuNom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Matche[0].EquipesDuMatche[0].Nom)
+                Equipe A
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Matche[0].EquipesDuMatche[1].Nom)
+                Equipe B
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Matche[0].Date)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Matche[0].CreeLe)
@@ -50,10 +53,13 @@
                     @Html.DisplayFor(modelItem => match.JeuNom)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => match.EquipesDuMatche[0].Nom)
+                    @Html.DisplayFor(modelItem => match.EquipesDuMatche[0].Nom) (@Html.DisplayFor(modelItem => match.NbVictoiresEquipeA))
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => match.EquipesDuMatche[1].Nom)
+                    @Html.DisplayFor(modelItem => match.EquipesDuMatche[1].Nom) (@Html.DisplayFor(modelItem => match.NbVictoiresEquipeB))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.Date)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => match.CreeLe)

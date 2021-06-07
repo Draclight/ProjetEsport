@@ -16,8 +16,12 @@ namespace projetEsport.Models
         public Competition Competition { get; set; }
         [Display(Name = "Equipes")]
         public ICollection<EquipeMatche> EquipesDisputes { get; set; }
-        public int VictoireAEquipe1 { get; set; }
-        public int VictoireAEquipe2 { get; set; }
+        [Display(Name = "Victoire équipe A")]
+        public int VictoireEquipeA { get; set; }
+        [Display(Name = "Victoire équipe B")]
+        public int VictoireEquipeB { get; set; }
+        [Display(Name = "Date du matche")]
+        public DateTime DateMatche { get; set; }
         [Display(Name = "Créé le")]
         public DateTime CreeLe { get; set; }
         [Display(Name = "Modifié le")]

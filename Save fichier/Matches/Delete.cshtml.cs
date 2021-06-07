@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using projetEsport.Data;
 using projetEsport.Models;
 
-namespace projetEsport.Areas.Admin.Pages.Matches
+namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
 {
     [Authorize(Roles = "Administrateur")]
     public class DeleteModel : PageModel
@@ -49,6 +49,14 @@ namespace projetEsport.Areas.Admin.Pages.Matches
                 return NotFound();
             }
 
+            var EquipesMatche = await _context.EquipeMatche.Where(em => em.MatchesDisputesID.Equals(id)).ToListAsync();
+
+            if (EquipesMatche != null)
+            {
+                _context.EquipeMatche.RemoveRange(EquipesMatche);
+                await _context.SaveChangesAsync();
+            }
+
             Matche = await _context.Matches.FindAsync(id);
 
             if (Matche != null)
@@ -57,7 +65,10 @@ namespace projetEsport.Areas.Admin.Pages.Matches
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new
+            {
+                id = (int?)Matche.CompetitionID
+            });
         }
     }
 }

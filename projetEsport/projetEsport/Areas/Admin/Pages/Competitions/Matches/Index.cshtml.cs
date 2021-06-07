@@ -48,8 +48,9 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
                     ModifieeLe = m.ModifieeLe,
                     TypeMatcheID = m.TypeMatcheID,
                     TypeMatche = m.TypeMatche.Nom,
-                    NbVictoiresEquipeA = m.VictoireAEquipe1,
-                    NbVictoiresEquipeB = m.VictoireAEquipe2
+                    NbVictoiresEquipeA = m.VictoireEquipeA,
+                    NbVictoiresEquipeB = m.VictoireEquipeB,
+                    Date = m.DateMatche
                 }).ToListAsync();
         }
     }

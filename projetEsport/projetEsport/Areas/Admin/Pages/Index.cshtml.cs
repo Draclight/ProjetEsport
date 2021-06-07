@@ -30,8 +30,8 @@ namespace projetEsport.Areas.Admin.Pages
         {
             Dashboard = new DashboardViewModel
             {
-                NbLicenciesAnnee = _context.Licencies.Count(),
-                NbLicenciesMois = _context.Licencies.Where(l => l.CreeLe.Date.Year.Equals(DateTime.Today.Date.Year)).Count(),
+                NbLicenciesAnnee = _context.Licencies.Where(l => l.CreeLe.Date.Year.Equals(DateTime.Today.Date.Year)).Count(),
+                NbLicenciesMois = _context.Licencies.Where(l => l.CreeLe.Date.Month.Equals(DateTime.Today.Date.Month)).Count(),
                 NbLicenciesJour = _context.Licencies.Where(l => l.CreeLe.Date.Equals(DateTime.Today.Date)).Count()
             };
         }

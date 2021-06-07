@@ -52,35 +52,6 @@
             <label asp-for="CompetitionVM.JeuID" class="control-label"></label>
             <select asp-for="CompetitionVM.JeuID" class="form-control" asp-items="ViewBag.JeuID"></select>
         </div>
-        @*<div class="form-group">
-            <h2>Equipes</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.CompetitionVM.EquipesDeLaCompetition[0].Nom)
-                        </th>
-                        <th>@Html.DisplayNameFor(model => model.CompetitionVM.EquipesDeLaCompetition[0].IsInCompetition)</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var equipe in Model.CompetitionVM.EquipesDeLaCompetition)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => equipe.Nom)
-                            </td>
-                            <td>
-                                <input class="form-check-input" asp-for="@equipe.IsInCompetition" name="CompetitionVM.EquipesDeLaCompetition[@compteurEquipe].IsInCompetition" />
-                                <input type="hidden" asp-for="@equipe.ID" name="CompetitionVM.EquipesDeLaCompetition[@compteurEquipe].ID" />
-                            </td>
-                        </tr>
-                        compteurEquipe++;
-                    }
-                </tbody>
-            </table>
-        </div>*@
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-primary" />
         </div>

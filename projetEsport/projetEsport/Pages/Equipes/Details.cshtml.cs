@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using projetEsport.Models;
 
 namespace projetEsport.Pages.Equipes
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -29,6 +31,7 @@ namespace projetEsport.Pages.Equipes
             }
 
             Equipe = await _context.Equipes
+                .Include(e => e.Membres)
                 .Include(e => e.Jeu).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Equipe == null)

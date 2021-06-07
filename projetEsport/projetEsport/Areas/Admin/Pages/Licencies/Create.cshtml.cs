@@ -27,6 +27,7 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
             var equipes = await _context.Equipes.Where(e => e.IsApproved).ToListAsync();
             equipes.Insert(0, new Equipe() { Nom = string.Empty });
             ViewData["EquipeID"] = new SelectList(equipes, "ID", "Nom");
+            ViewData["UtilisateurID"] = new SelectList(_context.Users, "Id", "Id");
             return Page();
         }
 

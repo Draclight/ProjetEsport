@@ -15,6 +15,8 @@ namespace projetEsport.ViewModels
         public String Nom { get; set; }
         [Display(Name = "Jeu")]
         public int JeuID { get; set; }
+        [Display(Name = "Jeu")]
+        public string JeuNom { get; set; }
         [Display(Name = "Approuvé?")]
         public bool IsApproved { get; set; }
         [Display(Name = "Créé le")]
@@ -28,5 +30,6 @@ namespace projetEsport.ViewModels
         [Display(Name = "Joue la compétition")]
         public bool IsInCompetition { get; set; }
         public int CompetitionID { get; set; }
+        public bool IsProprietaire { get; set; }
     }
 }

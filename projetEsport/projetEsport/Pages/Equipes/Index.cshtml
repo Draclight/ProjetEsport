@@ -8,53 +8,42 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="btn btn-success" asp-page="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Equipe[0].Nom)
+                @Html.DisplayNameFor(model => model.Equipes[0].Nom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Equipe[0].IsApproved)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Equipe[0].CreeLe)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Equipe[0].ModifieeLe)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Equipe[0].Jeu)
+                @Html.DisplayNameFor(model => model.Equipes[0].JeuNom)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Equipe) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsApproved)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreeLe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifieeLe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Jeu.Nom)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var equipe in Model.Equipes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => equipe.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => equipe.JeuNom)
+                </td>
+                <td>
+                    @if (equipe.IsProprietaire)
+                    {
+                        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@equipe.ID">Edit</a> @string.Format("|");
+                    }
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@equipe.ID">Details</a> @(equipe.IsProprietaire ? "|" : "")
+                    @if (equipe.IsProprietaire)
+                    {
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@equipe.ID">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -32,6 +32,7 @@ namespace projetEsport.Models
         public int? EquipeID { get; set; }
         [Display(Name = "Equipe")]
         public Equipe? Equipe { get; set; }
+        [Display(Name = "Chef d'équipe")]
         public bool CreateurEquipe { get; set; }
         [Display(Name = "Mes Compétitions")]
         public IList<Competition> CompetitionsCrees { get; set; }

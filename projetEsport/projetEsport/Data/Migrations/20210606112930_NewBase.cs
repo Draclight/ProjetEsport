@@ -111,7 +111,7 @@ namespace projetEsport.Data.Migrations
                         column: x => x.EquipeID,
                         principalTable: "Equipes",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(

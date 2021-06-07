@@ -31,7 +31,7 @@
                     <ul class="list-group list-group-flush">
                         @foreach (var membre in invitation.Membres)
                         {
-                            <li class="list-group-item"><span class="@(invitation.Accepter ? "badge badge-success" : "badge badge-warning")">@membre.Pseudo</span></li>
+                            <li class="list-group-item"><span class="badge @(membre.IsAccepter ? "badge-success" : "badge-warning")">@membre.Pseudo</span></li>
                         }
                     </ul>
                 </td>
@@ -42,6 +42,7 @@
                     <form method="post">
                         <input type="hidden" asp-for="@invitation.ID" name="invitation.ID" />
                         <input type="hidden" asp-for="@invitation.LicencieID" name="invitation.LicencieID" />
+                        <input type="hidden" asp-for="@invitation.EquipeId" name="invitation.EquipeId" />
                         <input type="submit" class="btn btn-success" asp-page-handler="AccepterInvitation" value="Accepter" /> |
                         <input type="submit" class="btn btn-danger" asp-page-handler="RejeterInvitation" value="Rejeter" />
                     </form>

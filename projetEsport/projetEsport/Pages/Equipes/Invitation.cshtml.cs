@@ -47,7 +47,8 @@ namespace projetEsport.Pages.Equipes
             {
                 invitation.Membres = await _context.InvitationsEquipes.Where(ie => ie.EquipeID.Equals(invitation.EquipeId)).Include(ie => ie.Licencie).Select(ie => new MembreViewModel
                 {
-                    Pseudo = ie.Licencie.Pseudo
+                    Pseudo = ie.Licencie.Pseudo,
+                    IsAccepter = ie.IsAccepted
                 }).ToListAsync();
             }
         }
@@ -63,6 +64,14 @@ namespace projetEsport.Pages.Equipes
             {
                 _context.Attach(invitationEquipe).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+
+                var licencie = await _context.Licencies.FindAsync(invitation.LicencieID);
+                if (licencie != null)
+                {
+                    licencie.EquipeID = invitation.EquipeId;
+                    _context.Attach(licencie).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+                }
             }
             catch (Exception ex)
             {

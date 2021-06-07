@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +12,15 @@ using projetEsport.Models;
 
 namespace projetEsport.Pages.Equipes
 {
+    [Authorize]
     public class DeleteModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
-
-        public DeleteModel(projetEsport.Data.ApplicationDbContext context)
+        private readonly UserManager<IdentityUser> _userManager;
+        public DeleteModel(projetEsport.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -46,12 +50,34 @@ namespace projetEsport.Pages.Equipes
                 return NotFound();
             }
 
-            Equipe = await _context.Equipes.FindAsync(id);
+            var createur = await _context.Licencies.Where(l => l.EquipeID.Equals(id) && l.CreateurEquipe).FirstOrDefaultAsync();
+            var isCreateur = createur.UtilisateurID.Equals(_userManager.GetUserId(User));
 
-            if (Equipe != null)
+            if (isCreateur)
             {
-                _context.Equipes.Remove(Equipe);
-                await _context.SaveChangesAsync();
+                Equipe = await _context.Equipes.FindAsync(id);
+
+                if (Equipe != null)
+                {
+                    try
+                    {
+                        foreach (var membre in Equipe.Membres)
+                        {
+                            membre.EquipeID = null;
+
+                            _context.Licencies.Remove(membre);
+                            await _context.SaveChangesAsync();
+                        }
+
+                        _context.Equipes.Remove(Equipe);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        return RedirectToPage("./Index");
+                        throw;
+                    }
+                }
             }
 
             return RedirectToPage("./Index");

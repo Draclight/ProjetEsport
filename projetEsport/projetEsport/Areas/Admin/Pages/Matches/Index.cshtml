@@ -25,6 +25,12 @@
                 Equipe B
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Matche[0].VainqueurNom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Matche[0].Terminer)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Matche[0].CreeLe)
             </th>
             <th>
@@ -51,6 +57,12 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => match.EquipesDuMatche[1].Nom) (@Html.DisplayFor(modelItem => match.NbVictoiresEquipeB))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.VainqueurNom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.Terminer)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => match.CreeLe)

@@ -6,8 +6,9 @@
 }
 
 <h1>Index</h1>
-<p>
+<p class="inline">
     <a class="btn btn-success" asp-page="./Create" asp-route-id="@Model.CompetitionID">Nouveau</a>
+    <a class="btn btn-outline-success" asp-page="" asp-route-id="@Model.CompetitionID">Générer match</a>
 </p>
 <table class="table">
     <thead>
@@ -26,6 +27,12 @@
             </th>
             <th>
                 Equipe B
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Matche[0].VainqueurNom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Matche[0].Terminer)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Matche[0].Date)
@@ -57,6 +64,12 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => match.EquipesDuMatche[1].Nom) (@Html.DisplayFor(modelItem => match.NbVictoiresEquipeB))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.VainqueurNom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.Terminer)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => match.Date)

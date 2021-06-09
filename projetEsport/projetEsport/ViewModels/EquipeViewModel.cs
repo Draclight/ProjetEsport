@@ -33,5 +33,6 @@ namespace projetEsport.ViewModels
         public bool EncoreEnCompetition { get; set; }
         public int CompetitionID { get; set; }
         public bool IsProprietaire { get; set; }
+        public bool Vainqueur { get; set; }
     }
 }

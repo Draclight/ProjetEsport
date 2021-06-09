@@ -37,6 +37,11 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
                 .Include(m => m.EquipesDisputes).ThenInclude(ed => ed.EquipesDisputes)
                 .Include(m => m.TypeMatche).FirstOrDefaultAsync(m => m.ID == id);
 
+            if (dbMatche == null)
+            {
+                return NotFound();
+            }
+
             Matche = new MatcheViewModel
             {
                 ID = dbMatche.ID,
@@ -52,8 +57,15 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
                 ModifieeLe = dbMatche.ModifieeLe,
                 EquipeANom = dbMatche.EquipesDisputes.ToArray()[0].EquipesDisputes.Nom,
                 EquipeBNom = dbMatche.EquipesDisputes.ToArray()[1].EquipesDisputes.Nom,
-                
+                Terminer = dbMatche.MatcheTeminer
             };
+
+            var vainqueur = _context.EquipeMatche.Include(em => em.EquipesDisputes).FirstOrDefault(e => e.MatchesDisputesID.Equals(Matche.ID) && e.Vainqueur);
+            if (vainqueur != null)
+            {
+                Matche.VainqueurId = vainqueur.ID;
+                Matche.VainqueurNom = vainqueur.EquipesDisputes.Nom;
+            }
 
             if (Matche == null)
             {

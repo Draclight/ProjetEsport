@@ -50,8 +50,20 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
                     TypeMatche = m.TypeMatche.Nom,
                     NbVictoiresEquipeA = m.VictoireEquipeA,
                     NbVictoiresEquipeB = m.VictoireEquipeB,
-                    Date = m.DateMatche
+                    Date = m.DateMatche,
+                    Terminer = m.MatcheTeminer
                 }).ToListAsync();
+
+
+            foreach (MatcheViewModel m in Matche)
+            {
+                var vainqueur = _context.EquipeMatche.Include(em => em.EquipesDisputes).FirstOrDefault(e => e.MatchesDisputesID.Equals(m.ID) && e.Vainqueur);
+                if (vainqueur != null)
+                {
+                    m.VainqueurId = vainqueur.ID;
+                    m.VainqueurNom = vainqueur.EquipesDisputes.Nom;
+                }
+            }
         }
     }
 }

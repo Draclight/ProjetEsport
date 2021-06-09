@@ -35,7 +35,8 @@ namespace projetEsport.Areas.Admin.Pages.Matches
                     EquipesDuMatche = _context.EquipeMatche.Include(e => e.EquipesDisputes).Where(e => e.MatchesDisputesID.Equals(m.ID)).Select(e => new EquipeViewModel
                     {
                         EquipeID = e.ID,
-                        Nom = e.EquipesDisputes.Nom
+                        Nom = e.EquipesDisputes.Nom,
+                        Vainqueur = e.Vainqueur
                     }).ToList(),
                     CompetitionID = m.CompetitionID,
                     CompetitionNom = m.Competition.Nom,
@@ -46,8 +47,19 @@ namespace projetEsport.Areas.Admin.Pages.Matches
                     TypeMatcheID = m.TypeMatcheID,
                     TypeMatche = m.TypeMatche.Nom,
                     NbVictoiresEquipeA = m.VictoireEquipeA,
-                    NbVictoiresEquipeB = m.VictoireEquipeB
+                    NbVictoiresEquipeB = m.VictoireEquipeB,
+                    Terminer = m.MatcheTeminer
                 }).ToListAsync();
+
+            foreach (MatcheViewModel m in Matche)
+            {
+                var vainqueur = _context.EquipeMatche.Include(em => em.EquipesDisputes).FirstOrDefault(e => e.MatchesDisputesID.Equals(m.ID) && e.Vainqueur);
+                if (vainqueur != null)
+                {
+                    m.VainqueurId = vainqueur.ID;
+                    m.VainqueurNom = vainqueur.EquipesDisputes.Nom;
+                }
+            }
         }
     }
 }

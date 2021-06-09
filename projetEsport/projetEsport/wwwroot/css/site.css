@@ -262,3 +262,11 @@ body {
 .row.row-center {
     justify-content: center;
 }
+
+p.inline {
+    display: flex;
+}
+
+    p.inline a {
+        margin-left: 5px;
+    }

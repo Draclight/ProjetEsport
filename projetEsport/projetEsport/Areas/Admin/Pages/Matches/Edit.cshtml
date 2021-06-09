@@ -42,6 +42,11 @@
                 <input asp-for="Matche.NbVictoiresEquipeB" class="form-control" />
                 <span asp-validation-for="Matche.NbVictoiresEquipeB" class="text-danger"></span>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Matche.Terminer" /> @Html.DisplayNameFor(model => model.Matche.Terminer)
+                </label>
+            </div>
             <div class="form-group">
                 <label asp-for="Matche.CreeLe" class="control-label"></label>
                 <input asp-for="Matche.CreeLe" class="form-control" />

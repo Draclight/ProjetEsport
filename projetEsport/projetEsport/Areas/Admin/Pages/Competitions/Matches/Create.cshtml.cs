@@ -34,7 +34,16 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
 
             ViewData["CompetitionID"] = new SelectList(_context.Competitions.Where(c => c.ID.Equals(id)).ToList(), "ID", "Nom");
             ViewData["TypeMatcheID"] = new SelectList(_context.TypesDeMatche, "ID", "Nom");
-            ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id)).ToList(), "EquipeID", "Equipe.Nom");
+
+            var equipesEncoreEnCompetition = from ce in _context.CompetitionEquipe.Include(ce => ce.Equipe)
+                          join em in _context.EquipeMatche on ce.EquipeID equals em.EquipesDisputesID
+                          join m in _context.Matches on em.MatchesDisputesID equals m.ID
+                          where ce.CompetitionID.Equals(id) && ce.EncoreEnCompetition && m.MatcheTeminer == true
+                          select ce;
+
+            var equipes = equipesEncoreEnCompetition.Count() > 0 ? equipesEncoreEnCompetition.ToList() : _context.CompetitionEquipe.Include(ce => ce.Equipe).ToList();
+
+            ViewData["EquipeID"] = new SelectList(equipes, "EquipeID", "Equipe.Nom");
 
             return Page();
         }
@@ -49,6 +58,14 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            if (Matche.EquipeAID.Equals(Matche.EquipeBID))
+            {
+                return RedirectToPage(new
+                {
+                    id = (int?)Matche.CompetitionID
+                });
             }
 
             var date = DateTime.Now;

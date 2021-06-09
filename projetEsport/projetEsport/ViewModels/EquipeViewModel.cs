@@ -29,6 +29,8 @@ namespace projetEsport.ViewModels
         public IList<LicencieViewModel> Membres { get; set; }
         [Display(Name = "Joue la compétition")]
         public bool IsInCompetition { get; set; }
+        [Display(Name = "Joue la compétition")]
+        public bool EncoreEnCompetition { get; set; }
         public int CompetitionID { get; set; }
         public bool IsProprietaire { get; set; }
     }

@@ -6,7 +6,7 @@
 }
 
 <h1>Index</h1>
-@if (Model.Matche.FirstOrDefault().IsProprietaire)
+@if (Model.IsProprietaire)
 {
     <p>
         <a class="btn btn-success" asp-page="./Create" asp-route-id="@Model.CompetitionID">Nouveau</a>

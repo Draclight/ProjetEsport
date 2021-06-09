@@ -27,6 +27,7 @@ namespace projetEsport.Pages.Competitions.Matches
 
         public IList<MatcheViewModel> Matche { get; set; }
         public int CompetitionID { get; set; }
+        public bool IsProprietaire { get; set; }
 
         public async Task OnGetAsync(int? id)
         {
@@ -56,6 +57,8 @@ namespace projetEsport.Pages.Competitions.Matches
                     Date = m.DateMatche,
                     IsProprietaire = m.Competition.Proprietaire.UtilisateurID.Equals(_userManager.GetUserId(User))
                 }).ToListAsync();
+
+            IsProprietaire = _context.Competitions.Include(c => c.Proprietaire).Any( c => c.ID.Equals(CompetitionID) && c.Proprietaire.UtilisateurID.Equals(_userManager.GetUserId(User)));
         }
     }
 }

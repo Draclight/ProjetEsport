@@ -34,7 +34,7 @@ namespace projetEsport.Pages.Competitions.Matches
 
             ViewData["CompetitionID"] = new SelectList(_context.Competitions.Where(c => c.ID.Equals(id)).ToList(), "ID", "Nom");
             ViewData["TypeMatcheID"] = new SelectList(_context.TypesDeMatche, "ID", "Nom");
-            ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id)).ToList(), "EquipeID", "Equipe.Nom");
+            ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id) && ce.EncoreEnCompetition).ToList(), "EquipeID", "Equipe.Nom");
 
             return Page();
         }
@@ -49,6 +49,14 @@ namespace projetEsport.Pages.Competitions.Matches
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            if (Matche.EquipeAID.Equals(Matche.EquipeBID))
+            {
+                return RedirectToPage(new
+                {
+                    id = (int?)Matche.CompetitionID
+                });
             }
 
             var date = DateTime.Now;

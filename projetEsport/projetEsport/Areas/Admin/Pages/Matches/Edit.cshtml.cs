@@ -72,7 +72,8 @@ namespace projetEsport.Areas.Admin.Pages.Matches
 
             ViewData["CompetitionID"] = new SelectList(_context.Competitions.Where(c => c.ID.Equals(Matche.CompetitionID)).ToList(), "ID", "Nom");
             ViewData["TypeMatcheID"] = new SelectList(_context.TypesDeMatche, "ID", "Nom");
-            ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(Matche.CompetitionID) && ce.EncoreEnCompetition).ToList(), "EquipeID", "Equipe.Nom");
+            ViewData["EquipeID"] = new SelectList(_context.EquipeMatche.Include(ce => ce.EquipesDisputes).Where(m => m.MatchesDisputesID.Equals(Matche.ID)).ToList(), "EquipesDisputesID", "EquipesDisputes.Nom");
+            //ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(Matche.CompetitionID) && ce.EncoreEnCompetition).ToList(), "EquipeID", "Equipe.Nom");
 
             return Page();
         }

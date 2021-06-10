@@ -90,7 +90,7 @@ namespace projetEsport.Areas.Admin.Pages.Matches
             try
             {
                 //Matche
-                if (Matche.EquipeAID.Equals(Matche.EquipeBID))
+                if (Matche.EquipeAID.Equals(Matche.EquipeBID) || Matche.NbVictoiresEquipeA.Equals(Matche.NbVictoiresEquipeB))
                 {
                     return RedirectToPage(new
                     {

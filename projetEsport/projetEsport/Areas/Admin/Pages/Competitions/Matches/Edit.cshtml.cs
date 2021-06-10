@@ -74,8 +74,6 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -85,9 +83,8 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
 
             try
             {
-
                 //Matche
-                if (Matche.EquipeAID.Equals(Matche.EquipeBID))
+                if (Matche.EquipeAID.Equals(Matche.EquipeBID) || Matche.NbVictoiresEquipeA.Equals(Matche.NbVictoiresEquipeB))
                 {
                     return RedirectToPage(new
                     {

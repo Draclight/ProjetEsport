@@ -13,20 +13,27 @@
     </p>
     <form method="post">
         <input type="hidden" asp-for="@Model.CompetitionID" />
-        <input type="submit" class="btn btn-outline-success" asp-page-handler="GenererMatch" value="Générer" />
+        @if (Model.MatchesTerminer)
+        {
+            <input type="submit" class="btn btn-outline-success" asp-page-handler="GenererMatch" value="Générer" />
+        }
+        else
+        {
+            <input type="submit" class="btn btn-outline-success" value="Générer" disabled/>
+        }
     </form>
 </div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Matche[0].TypeMatche)
+                @Html.DisplayNameFor(model => model.Matches[0].TypeMatche)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Matche[0].CompetitionNom)
+                @Html.DisplayNameFor(model => model.Matches[0].CompetitionNom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Matche[0].JeuNom)
+                @Html.DisplayNameFor(model => model.Matches[0].JeuNom)
             </th>
             <th>
                 Equipe A
@@ -35,25 +42,25 @@
                 Equipe B
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Matche[0].VainqueurNom)
+                @Html.DisplayNameFor(model => model.Matches[0].VainqueurNom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Matche[0].Terminer)
+                @Html.DisplayNameFor(model => model.Matches[0].Terminer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Matche[0].Date)
+                @Html.DisplayNameFor(model => model.Matches[0].Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Matche[0].CreeLe)
+                @Html.DisplayNameFor(model => model.Matches[0].CreeLe)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Matche[0].ModifieeLe)
+                @Html.DisplayNameFor(model => model.Matches[0].ModifieeLe)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var match in Model.Matche)
+        @foreach (var match in Model.Matches)
         {
             <tr>
                 <td>

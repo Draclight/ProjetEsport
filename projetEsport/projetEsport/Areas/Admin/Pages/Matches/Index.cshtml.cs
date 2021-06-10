@@ -48,7 +48,8 @@ namespace projetEsport.Areas.Admin.Pages.Matches
                     TypeMatche = m.TypeMatche.Nom,
                     NbVictoiresEquipeA = m.VictoireEquipeA,
                     NbVictoiresEquipeB = m.VictoireEquipeB,
-                    Terminer = m.MatcheTeminer
+                    Terminer = m.MatcheTeminer,
+                    Date = m.DateMatche
                 }).ToListAsync();
 
             foreach (MatcheViewModel m in Matche)

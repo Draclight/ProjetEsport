@@ -6,10 +6,16 @@
 }
 
 <h1>Index</h1>
-<p class="inline">
-    <a class="btn btn-success" asp-page="./Create" asp-route-id="@Model.CompetitionID">Nouveau</a>
-    <a class="btn btn-outline-success" asp-page="" asp-route-id="@Model.CompetitionID">Générer match</a>
-</p>
+<div class="inline">
+    <p>
+        <a class="btn btn-success" asp-page="./Create" asp-route-id="@Model.CompetitionID">Nouveau</a>
+        @*<a class="btn btn-outline-success" asp-page="" asp-route-id="@Model.CompetitionID">Générer match</a>*@
+    </p>
+    <form method="post">
+        <input type="hidden" asp-for="@Model.CompetitionID" />
+        <input type="submit" class="btn btn-outline-success" asp-page-handler="GenererMatch" value="Générer" />
+    </form>
+</div>
 <table class="table">
     <thead>
         <tr>

@@ -31,6 +31,9 @@
                 @Html.DisplayNameFor(model => model.Matche[0].Terminer)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Matche[0].Date)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Matche[0].CreeLe)
             </th>
             <th>
@@ -63,6 +66,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => match.Terminer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.Date)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => match.CreeLe)

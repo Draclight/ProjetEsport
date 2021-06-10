@@ -48,6 +48,11 @@
                 </label>
             </div>
             <div class="form-group">
+                <label asp-for="Matche.Date" class="control-label"></label>
+                <input asp-for="Matche.Date" class="form-control" />
+                <span asp-validation-for="Matche.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Matche.CreeLe" class="control-label"></label>
                 <input asp-for="Matche.CreeLe" class="form-control" />
                 <span asp-validation-for="Matche.CreeLe" class="text-danger"></span>

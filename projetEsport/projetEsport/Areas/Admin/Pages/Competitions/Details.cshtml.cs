@@ -128,7 +128,6 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
 
             try
             {
-                //User role
                 if (equipe.ID.Equals(0))
                 {
                     competitionEquipe = await _context.CompetitionEquipe.FirstOrDefaultAsync(e => e.EquipeID.Equals(equipe.EquipeID) && e.CompetitionID.Equals(equipe.CompetitionID));

@@ -62,8 +62,16 @@ namespace projetEsport.Pages.Competitions.Matches
                 ModifieeLe = dbMatche.ModifieeLe,
                 EquipeANom = dbMatche.EquipesDisputes.ToArray()[0].EquipesDisputes.Nom,
                 EquipeBNom = dbMatche.EquipesDisputes.ToArray()[1].EquipesDisputes.Nom,
-                IsProprietaire = dbMatche.Competition.Proprietaire.UtilisateurID.Equals(_userManager.GetUserId(User))
+                IsProprietaire = dbMatche.Competition.Proprietaire.UtilisateurID.Equals(_userManager.GetUserId(User)),
+                Terminer = dbMatche.MatcheTeminer
             };
+
+            var vainqueur = _context.EquipeMatche.Include(em => em.EquipesDisputes).FirstOrDefault(e => e.MatchesDisputesID.Equals(Matche.ID) && e.Vainqueur);
+            if (vainqueur != null)
+            {
+                Matche.VainqueurId = vainqueur.ID;
+                Matche.VainqueurNom = vainqueur.EquipesDisputes.Nom;
+            }
 
             return Page();
         }

@@ -375,6 +375,16 @@ namespace projetEsport.Data.Migrations
 
             //Licencie
             migrationBuilder.Sql("INSERT INTO Licencies(Pseudo, Prenom, Nom, CreeLe, ModifieeLe, UtilisateurID, EquipeID, CreateurEquipe) values('Admin', 'Admin', 'Admin', GETDATE(), GETDATE(), '1', null, '0');");
+
+            //Types de competition
+            migrationBuilder.Sql("INSERT INTO TypesDeCompetition values('Éliminations Directes', GETDATE(), GETDATE());");
+
+            //Types de matche
+            migrationBuilder.Sql("INSERT INTO TypesDeMatche values('Finale', GETDATE(), GETDATE());");
+            migrationBuilder.Sql("INSERT INTO TypesDeMatche values('Demi-Finale', GETDATE(), GETDATE());");
+            migrationBuilder.Sql("INSERT INTO TypesDeMatche values('Quart-De-Finale', GETDATE(), GETDATE());");
+            migrationBuilder.Sql("INSERT INTO TypesDeMatche values('Huitième-De-Finale', GETDATE(), GETDATE());");
+            migrationBuilder.Sql("INSERT INTO TypesDeMatche values('Eliminatoire', GETDATE(), GETDATE());");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

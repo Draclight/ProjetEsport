@@ -33,7 +33,7 @@ namespace projetEsport.Pages.Competitions.Matches
             Matche.ModifieeLe = date;
 
             ViewData["CompetitionID"] = new SelectList(_context.Competitions.Where(c => c.ID.Equals(id)).ToList(), "ID", "Nom");
-            ViewData["TypeMatcheID"] = new SelectList(_context.TypesDeMatche, "ID", "Nom");
+            ViewData["TypeMatcheID"] = new SelectList(_context.TypesDeMatche.Where(tm => tm.ID.Equals((int)TypeMatchesViewModel.Eliminatoire)).ToList(), "ID", "Nom");
             ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id) && ce.EncoreEnCompetition).ToList(), "EquipeID", "Equipe.Nom");
 
             return Page();

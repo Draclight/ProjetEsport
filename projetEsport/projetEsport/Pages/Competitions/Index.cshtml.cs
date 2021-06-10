@@ -53,7 +53,11 @@ namespace projetEsport.Pages.Competitions
                     Proprietaire = c.Proprietaire.Pseudo,
                     Nom = c.Nom,
                     TypeCompetition = c.TypeCompetition.Nom,
-                    IsPropriétaire = c.Proprietaire.UtilisateurID.Equals(_userManager.GetUserId(User))
+                    IsPropriétaire = c.Proprietaire.UtilisateurID.Equals(_userManager.GetUserId(User)),
+                    Vainqueur = _context.Matches.Include(m => m.EquipesDisputes).Any(m => m.CompetitionID.Equals(c.ID) && m.TypeMatcheID.Equals((int)TypeMatchesViewModel.Finale) && m.MatcheTeminer) ?
+                                                    _context.Matches.Include(m => m.EquipesDisputes).FirstOrDefault(m => m.CompetitionID.Equals(c.ID)
+                                                                                    && m.TypeMatcheID.Equals((int)TypeMatchesViewModel.Finale)
+                                                                                    && m.MatcheTeminer).EquipesDisputes.FirstOrDefault(e => e.Vainqueur).EquipesDisputes.Nom : ""
                 }).ToListAsync();
 
             if (User.Identity.IsAuthenticated)

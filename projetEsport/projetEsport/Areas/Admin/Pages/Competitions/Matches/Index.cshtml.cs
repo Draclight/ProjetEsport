@@ -47,7 +47,7 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
                     CompetitionNom = m.Competition.Nom,
                     CreeLe = m.CreeLe,
                     JeuID = m.Competition.JeuID,
-                    JeuNom = m.Competition.Nom,
+                    JeuNom = m.Competition.Jeu.Nom,
                     ModifieeLe = m.ModifieeLe,
                     TypeMatcheID = m.TypeMatcheID,
                     TypeMatche = m.TypeMatche.Nom,

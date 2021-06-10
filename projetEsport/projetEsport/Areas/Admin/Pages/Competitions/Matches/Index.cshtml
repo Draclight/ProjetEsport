@@ -15,7 +15,7 @@
     </p>
     <form method="post">
         <input type="hidden" asp-for="@Model.CompetitionID" />
-        @if (Model.MatchesTerminer && Model.CompetitionTerminer == false)
+        @if (Model.Matches.Count() > 0 && Model.MatchesTerminer && Model.CompetitionTerminer == false)
         {
             <input type="submit" class="btn btn-outline-success" asp-page-handler="GenererMatch" value="Générer" />
         }

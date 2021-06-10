@@ -38,5 +38,7 @@ namespace projetEsport.ViewModels
         [Display(Name = "Equipes de la compétiion")]
         public IList<EquipeViewModel> EquipesDeLaCompetition { get; set; }
         public bool IsPropriétaire { get; set; }
+        [Display(Name = "Vainqueur")]
+        public string Vainqueur { get; set; }
     }
 }

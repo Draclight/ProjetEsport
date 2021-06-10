@@ -39,8 +39,7 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
             //              join em in _context.EquipeMatche on ce.EquipeID equals em.EquipesDisputesID
             //              join m in _context.Matches on em.MatchesDisputesID equals m.ID
             //              where ce.CompetitionID.Equals(id) && ce.EncoreEnCompetition && (m.MatcheTeminer == true || m.MatcheTeminer == false)
-            //                                 select ce;
-
+            //              select ce;
             //var equipes = equipesEncoreEnCompetition.Count() > 0 ? equipesEncoreEnCompetition.ToList() : _context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id)).ToList();
 
             ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id) && ce.EncoreEnCompetition).ToList(), "EquipeID", "Equipe.Nom");

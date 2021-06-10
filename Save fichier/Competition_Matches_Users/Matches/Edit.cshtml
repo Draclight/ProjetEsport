@@ -1,0 +1,58 @@
+﻿@page
+@model projetEsport.Pages.Competitions.Matches.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Matche</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Matche.CompetitionID" />
+            <div class="form-group">
+                <label asp-for="Matche.TypeMatcheID" class="control-label"></label>
+                <select asp-for="Matche.TypeMatcheID" class="form-control" asp-items="ViewBag.TypeMatcheID"></select>
+                <span asp-validation-for="Matche.TypeMatcheID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.EquipeAID" class="control-label"></label>
+                <select asp-for="Matche.EquipeAID" class="form-control" asp-items="ViewBag.EquipeID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.NbVictoiresEquipeA" class="control-label"></label>
+                <input asp-for="Matche.NbVictoiresEquipeA" class="form-control" />
+                <span asp-validation-for="Matche.NbVictoiresEquipeA" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.EquipeBID" class="control-label"></label>
+                <select asp-for="Matche.EquipeBID" class="form-control" asp-items="ViewBag.EquipeID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.NbVictoiresEquipeB" class="control-label"></label>
+                <input asp-for="Matche.NbVictoiresEquipeB" class="form-control" />
+                <span asp-validation-for="Matche.NbVictoiresEquipeB" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.Date" class="control-label"></label>
+                <input asp-for="Matche.Date" class="form-control" />
+                <span asp-validation-for="Matche.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index" asp-route-id="@Model.Matche.CompetitionID">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

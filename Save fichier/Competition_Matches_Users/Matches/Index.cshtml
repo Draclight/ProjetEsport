@@ -1,0 +1,75 @@
+﻿@page
+@model projetEsport.Pages.Competitions.Matches.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@if (Model.IsProprietaire)
+{
+    <p>
+        <a class="btn btn-success" asp-page="./Create" asp-route-id="@Model.CompetitionID">Nouveau</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Matche[0].TypeMatche)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Matche[0].CompetitionNom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Matche[0].JeuNom)
+            </th>
+            <th>
+                Equipe A
+            </th>
+            <th>
+                Equipe B
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Matche[0].Date)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var match in Model.Matche)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => match.TypeMatche)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.CompetitionNom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.JeuNom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.EquipesDuMatche[0].Nom) (@Html.DisplayFor(modelItem => match.NbVictoiresEquipeA))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.EquipesDuMatche[1].Nom) (@Html.DisplayFor(modelItem => match.NbVictoiresEquipeB))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.Date)
+                </td>
+                <td>
+                    @if (match.IsProprietaire)
+                    {
+                        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@match.ID">Edit</a> @(match.IsProprietaire ? string.Format("|") : "")
+                    }
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@match.ID">Details</a> @(match.IsProprietaire ? string.Format("|") : "")
+                    @if (match.IsProprietaire)
+                    {
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@match.ID">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

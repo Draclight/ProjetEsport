@@ -1,0 +1,58 @@
+﻿@page
+@model projetEsport.Pages.Competitions.Matches.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Matche</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Matche.TypeMatche)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Matche.TypeMatche)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Matche.CompetitionNom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Matche.CompetitionNom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Matche.JeuNom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Matche.JeuNom)
+        </dd>
+        <dt class="col-sm-2">
+            @($"{Html.DisplayNameFor(model => model.Matche.NbVictoiresEquipeA)} ({Model.Matche.EquipeANom})")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Matche.NbVictoiresEquipeA)
+        </dd>
+        <dt class="col-sm-2">
+            @($"{Html.DisplayNameFor(model => model.Matche.NbVictoiresEquipeB)} ({Model.Matche.EquipeBNom})")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Matche.NbVictoiresEquipeB)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Matche.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Matche.Date)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (Model.Matche.IsProprietaire)
+    {
+        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Matche.ID">Edit</a> @string.Format("|")
+    }
+    <a asp-page="./Index" asp-route-id="@Model.Matche.CompetitionID">Back to List</a>
+</div>

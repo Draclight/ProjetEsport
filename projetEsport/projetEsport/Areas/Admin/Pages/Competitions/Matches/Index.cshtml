@@ -8,18 +8,20 @@
 <h1>Index</h1>
 <div class="inline">
     <p>
-        <a class="btn btn-success" asp-page="./Create" asp-route-id="@Model.CompetitionID">Nouveau</a>
-        @*<a class="btn btn-outline-success" asp-page="" asp-route-id="@Model.CompetitionID">Générer match</a>*@
+        @if (Model.CompetitionTerminer == false)
+        {
+            <a class="btn btn-success" asp-page="./Create" asp-route-id="@Model.CompetitionID">Nouveau</a>
+        }
     </p>
     <form method="post">
         <input type="hidden" asp-for="@Model.CompetitionID" />
-        @if (Model.MatchesTerminer)
+        @if (Model.MatchesTerminer && Model.CompetitionTerminer == false)
         {
             <input type="submit" class="btn btn-outline-success" asp-page-handler="GenererMatch" value="Générer" />
         }
         else
         {
-            <input type="submit" class="btn btn-outline-success" value="Générer" disabled/>
+            <input type="submit" class="btn btn-outline-success" value="Générer" disabled />
         }
     </form>
 </div>

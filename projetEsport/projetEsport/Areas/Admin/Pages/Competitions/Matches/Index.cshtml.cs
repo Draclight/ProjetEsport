@@ -26,6 +26,7 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
         [BindProperty]
         public int CompetitionID { get; set; }
         public bool MatchesTerminer { get; set; }
+        public bool CompetitionTerminer { get; set; }
 
         public async Task OnGetAsync(int? id)
         {
@@ -68,6 +69,7 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
             }
 
             MatchesTerminer = Matches.All(m => m.Terminer);
+            CompetitionTerminer = Matches.Any(m => m.TypeMatcheID.Equals((int)TypeMatchesViewModel.Finale) && m.Terminer);
         }
 
         public async Task<IActionResult> OnPostGenererMatchAsync()

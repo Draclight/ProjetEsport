@@ -47,7 +47,11 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
                     ProprietaireID = c.ProprietaireID,
                     Proprietaire = c.Proprietaire.Pseudo,
                     TypeCompetitionID = c.TypeCompetitionID,
-                    TypeCompetition = c.TypeCompetition.Nom
+                    TypeCompetition = c.TypeCompetition.Nom,
+                    Vainqueur = _context.Matches.Include(m => m.EquipesDisputes).Any(m => m.CompetitionID.Equals(c.ID) && m.TypeMatcheID.Equals((int)TypeMatchesViewModel.Finale) && m.MatcheTeminer) ? 
+                                                    _context.Matches.Include(m => m.EquipesDisputes).FirstOrDefault(m => m.CompetitionID.Equals(c.ID) 
+                                                                                    && m.TypeMatcheID.Equals((int)TypeMatchesViewModel.Finale) 
+                                                                                    && m.MatcheTeminer).EquipesDisputes.FirstOrDefault(e => e.Vainqueur).EquipesDisputes.Nom : ""
                 }).ToListAsync();
         }
     }

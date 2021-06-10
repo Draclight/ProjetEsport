@@ -37,6 +37,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Competition[0].Jeu)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competition[0].NbEquipes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competition[0].Vainqueur)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -61,6 +67,12 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Jeu.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NbEquipes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vainqueur)
                 </td>
                 <td>
                     @if (item.IsPropriétaire)

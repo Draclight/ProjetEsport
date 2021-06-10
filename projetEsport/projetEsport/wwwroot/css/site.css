@@ -362,3 +362,12 @@ body {
 .row.row-center {
     justify-content: center;
 }
+
+div.inline {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+    .inline a {
+        margin-right: 5px;
+    }

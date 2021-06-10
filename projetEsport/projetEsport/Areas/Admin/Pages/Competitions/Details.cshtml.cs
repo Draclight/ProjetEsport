@@ -58,7 +58,8 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
                             ID = m.ID,
                             Pseudo = m.Pseudo
                         }).ToList(),
-                        IsInCompetition = _context.CompetitionEquipe.Any(ce => ce.CompetitionID.Equals(c.ID) && ce.EquipeID.Equals(e.ID))
+                        IsInCompetition = _context.CompetitionEquipe.Any(ce => ce.CompetitionID.Equals(c.ID) && ce.EquipeID.Equals(e.ID)),
+                        EncoreEnCompetition = _context.CompetitionEquipe.Any(ce => ce.CompetitionID.Equals(c.ID) && ce.EquipeID.Equals(e.ID) && ce.EncoreEnCompetition)
                     }).ToList(),
                     ModifieeLe = c.ModifieeLe,
                     NbEquipes = c.EquipesDeLaCompetition.Count,
@@ -98,7 +99,8 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
                 CompetitionEquipe competitionEquipe = new CompetitionEquipe
                 {
                     CompetitionID = equipe.CompetitionID,
-                    EquipeID = equipe.EquipeID
+                    EquipeID = equipe.EquipeID,
+                    EncoreEnCompetition = true
                 };
 
                 _context.CompetitionEquipe.Add(competitionEquipe);
@@ -126,7 +128,6 @@ namespace projetEsport.Areas.Admin.Pages.Competitions
 
             try
             {
-                //User role
                 if (equipe.ID.Equals(0))
                 {
                     competitionEquipe = await _context.CompetitionEquipe.FirstOrDefaultAsync(e => e.EquipeID.Equals(equipe.EquipeID) && e.CompetitionID.Equals(equipe.CompetitionID));

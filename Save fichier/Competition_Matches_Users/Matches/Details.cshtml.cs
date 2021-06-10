@@ -11,21 +11,20 @@ using projetEsport.Data;
 using projetEsport.Models;
 using projetEsport.ViewModels;
 
-namespace projetEsport.Areas.Admin.Pages.Matches
+namespace projetEsport.Pages.Competitions.Matches
 {
-    [Authorize(Roles = "Administrateur")]
-    public class DeleteModel : PageModel
+    [Authorize(Roles = "Administrateur,Organisateur,Licencie")]
+    public class DetailsModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public DeleteModel(projetEsport.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public DetailsModel(projetEsport.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
 
-        [BindProperty]
         public MatcheViewModel Matche { get; set; }
         public Matche dbMatche { get; set; }
 
@@ -62,48 +61,10 @@ namespace projetEsport.Areas.Admin.Pages.Matches
                 ModifieeLe = dbMatche.ModifieeLe,
                 EquipeANom = dbMatche.EquipesDisputes.ToArray()[0].EquipesDisputes.Nom,
                 EquipeBNom = dbMatche.EquipesDisputes.ToArray()[1].EquipesDisputes.Nom,
-                IsProprietaire = dbMatche.Competition.Proprietaire.UtilisateurID.Equals(_userManager.GetUserId(User)),
-                Terminer = dbMatche.MatcheTeminer
+                IsProprietaire = dbMatche.Competition.Proprietaire.UtilisateurID.Equals(_userManager.GetUserId(User))
             };
 
-            var vainqueur = _context.EquipeMatche.Include(em => em.EquipesDisputes).FirstOrDefault(e => e.MatchesDisputesID.Equals(Matche.ID) && e.Vainqueur);
-            if (vainqueur != null)
-            {
-                Matche.VainqueurId = vainqueur.ID;
-                Matche.VainqueurNom = vainqueur.EquipesDisputes.Nom;
-            }
-
             return Page();
-        }
-
-
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var EquipesMatche = await _context.EquipeMatche.Where(em => em.MatchesDisputesID.Equals(id)).ToListAsync();
-
-            if (EquipesMatche != null)
-            {
-                _context.EquipeMatche.RemoveRange(EquipesMatche);
-                await _context.SaveChangesAsync();
-            }
-
-            var Matche = await _context.Matches.FindAsync(id);
-
-            if (Matche != null)
-            {
-                _context.Matches.Remove(Matche);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index", new
-            {
-                id = (int?)Matche.CompetitionID
-            });
         }
     }
 }

@@ -25,19 +25,32 @@
                 <span asp-validation-for="Matche.CompetitionID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Matche.Competition.JeuID" class="control-label"></label>
-                <select asp-for="Matche.Competition.JeuID" class="form-control" asp-items="ViewBag.JeuID"></select>
-                <span asp-validation-for="Matche.Competition.JeuID" class="text-danger"></span>
+                <label asp-for="Matche.EquipeAID" class="control-label"></label>
+                <select asp-for="Matche.EquipeAID" class="form-control" asp-items="ViewBag.EquipeID"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Matche.VictoireEquipeA" class="control-label"></label>
-                <input asp-for="Matche.VictoireEquipeA" class="form-control" />
-                <span asp-validation-for="Matche.VictoireEquipeA" class="text-danger"></span>
+                <label asp-for="Matche.NbVictoiresEquipeA" class="control-label"></label>
+                <input asp-for="Matche.NbVictoiresEquipeA" class="form-control" />
+                <span asp-validation-for="Matche.NbVictoiresEquipeA" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Matche.VictoireEquipeB" class="control-label"></label>
-                <input asp-for="Matche.VictoireEquipeB" class="form-control" />
-                <span asp-validation-for="Matche.VictoireEquipeB" class="text-danger"></span>
+                <label asp-for="Matche.EquipeBID" class="control-label"></label>
+                <select asp-for="Matche.EquipeBID" class="form-control" asp-items="ViewBag.EquipeID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.NbVictoiresEquipeB" class="control-label"></label>
+                <input asp-for="Matche.NbVictoiresEquipeB" class="form-control" />
+                <span asp-validation-for="Matche.NbVictoiresEquipeB" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Matche.Terminer" /> @Html.DisplayNameFor(model => model.Matche.Terminer)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Matche.Date" class="control-label"></label>
+                <input asp-for="Matche.Date" class="form-control" />
+                <span asp-validation-for="Matche.Date" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Matche.CreeLe" class="control-label"></label>

@@ -7,35 +7,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using projetEsport.Data;
 using projetEsport.Models;
 using projetEsport.ViewModels;
 
-namespace projetEsport.Areas.Admin.Pages.Matches
+namespace projetEsport.Pages.Competitions.Matches
 {
-    [Authorize(Roles = "Administrateur")]
+    [Authorize(Roles = "Administrateur,Organisateur")]
     public class EditModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
+        private readonly ILogger<EditModel> _logger;
 
-        public EditModel(projetEsport.Data.ApplicationDbContext context)
+        public EditModel(projetEsport.Data.ApplicationDbContext context, ILogger<EditModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
         public MatcheViewModel Matche { get; set; }
         public Matche EditMatche { get; set; }
 
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-
             if (id == null)
             {
                 return NotFound();
@@ -66,13 +62,12 @@ namespace projetEsport.Areas.Admin.Pages.Matches
                 NbVictoiresEquipeA = EditMatche.VictoireEquipeA,
                 NbVictoiresEquipeB = EditMatche.VictoireEquipeB,
                 TypeMatcheID = EditMatche.TypeMatcheID,
-                MatchID = EditMatche.ID,
-                Terminer = EditMatche.MatcheTeminer
+                MatchID = EditMatche.ID
             };
 
             ViewData["CompetitionID"] = new SelectList(_context.Competitions.Where(c => c.ID.Equals(Matche.CompetitionID)).ToList(), "ID", "Nom");
-            ViewData["TypeMatcheID"] = new SelectList(_context.TypesDeMatche.Where(tm => tm.ID.Equals(Matche.TypeMatcheID)).ToList(), "ID", "Nom");
-            ViewData["EquipeID"] = new SelectList(_context.EquipeMatche.Include(ce => ce.EquipesDisputes).Where(m => m.MatchesDisputesID.Equals(Matche.ID)).ToList(), "EquipesDisputesID", "EquipesDisputes.Nom");
+            ViewData["TypeMatcheID"] = new SelectList(_context.TypesDeMatche, "ID", "Nom");
+            ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(Matche.CompetitionID) && ce.EncoreEnCompetition).ToList(), "EquipeID", "Equipe.Nom");
 
             return Page();
         }
@@ -89,7 +84,7 @@ namespace projetEsport.Areas.Admin.Pages.Matches
             try
             {
                 //Matche
-                if (Matche.EquipeAID.Equals(Matche.EquipeBID) || Matche.NbVictoiresEquipeA.Equals(Matche.NbVictoiresEquipeB))
+                if (Matche.EquipeAID.Equals(Matche.EquipeBID))
                 {
                     return RedirectToPage(new
                     {
@@ -107,7 +102,6 @@ namespace projetEsport.Areas.Admin.Pages.Matches
                         EditMatche.TypeMatcheID = Matche.TypeMatcheID;
                         EditMatche.VictoireEquipeA = Matche.NbVictoiresEquipeA;
                         EditMatche.VictoireEquipeB = Matche.NbVictoiresEquipeB;
-                        EditMatche.MatcheTeminer = Matche.Terminer;
 
                         _context.Attach(EditMatche).State = EntityState.Modified;
                         await _context.SaveChangesAsync();
@@ -116,28 +110,10 @@ namespace projetEsport.Areas.Admin.Pages.Matches
                         var equipesDuMatche = await _context.EquipeMatche.Include(em => em.EquipesDisputes).Where(em => em.MatchesDisputesID.Equals(EditMatche.ID)).ToArrayAsync();
                         equipesDuMatche[0].EquipesDisputesID = Matche.EquipeAID;
                         equipesDuMatche[1].EquipesDisputesID = Matche.EquipeBID;
-                        if (EditMatche.MatcheTeminer)
-                        {
-                            if (EditMatche.VictoireEquipeA > EditMatche.VictoireEquipeB)
-                            {
-                                equipesDuMatche[0].Vainqueur = true;
-                            }
-                            else
-                            {
-                                equipesDuMatche[1].Vainqueur = true;
-                            }
 
-                            _context.Attach(equipesDuMatche[0]).State = EntityState.Modified;
-                            _context.Attach(equipesDuMatche[1]).State = EntityState.Modified;
-                            await _context.SaveChangesAsync();
-
-                            //Retrait du perdant de la compétition
-                            var perdant = equipesDuMatche.FirstOrDefault(e => e.Vainqueur == false);
-                            var competitionEquipe = _context.CompetitionEquipe.FirstOrDefault(ce => ce.CompetitionID.Equals(EditMatche.CompetitionID) && ce.EquipeID.Equals(perdant.EquipesDisputesID));
-                            competitionEquipe.EncoreEnCompetition = false;
-                            _context.Attach(competitionEquipe).State = EntityState.Modified;
-                            await _context.SaveChangesAsync();
-                        }
+                        _context.Attach(equipesDuMatche[0]).State = EntityState.Modified;
+                        _context.Attach(equipesDuMatche[1]).State = EntityState.Modified;
+                        await _context.SaveChangesAsync();
                     }
                 }
             }

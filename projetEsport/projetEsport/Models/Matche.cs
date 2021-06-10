@@ -22,6 +22,8 @@ namespace projetEsport.Models
         public int VictoireEquipeB { get; set; }
         [Display(Name = "Date du matche")]
         public DateTime DateMatche { get; set; }
+        [Display(Name = "Matche Teminer?")]
+        public bool MatcheTeminer { get; set; }
         [Display(Name = "Créé le")]
         public DateTime CreeLe { get; set; }
         [Display(Name = "Modifié le")]

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using projetEsport.Data;
 
 namespace projetEsport.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210609194717_AddEnCompetitionCompetitionEquipe")]
+    partial class AddEnCompetitionCompetitionEquipe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -272,7 +274,7 @@ namespace projetEsport.Data.Migrations
                     b.Property<int>("CompetitionID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("EncoreEnCompetition")
+                    b.Property<bool>("EnCompetition")
                         .HasColumnType("bit");
 
                     b.Property<int>("EquipeID")
@@ -329,9 +331,6 @@ namespace projetEsport.Data.Migrations
 
                     b.Property<int>("MatchesDisputesID")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Vainqueur")
-                        .HasColumnType("bit");
 
                     b.HasKey("ID");
 
@@ -453,9 +452,6 @@ namespace projetEsport.Data.Migrations
 
                     b.Property<int?>("JeuID")
                         .HasColumnType("int");
-
-                    b.Property<bool>("MatcheTeminer")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifieeLe")
                         .HasColumnType("datetime2");

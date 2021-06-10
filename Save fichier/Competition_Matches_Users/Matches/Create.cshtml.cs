@@ -11,9 +11,9 @@ using projetEsport.Data;
 using projetEsport.Models;
 using projetEsport.ViewModels;
 
-namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
+namespace projetEsport.Pages.Competitions.Matches
 {
-    [Authorize(Roles = "Administrateur")]
+    [Authorize(Roles = "Administrateur,Organisateur")]
     public class CreateModel : PageModel
     {
         private readonly projetEsport.Data.ApplicationDbContext _context;
@@ -34,14 +34,6 @@ namespace projetEsport.Areas.Admin.Pages.Competitions.Matches
 
             ViewData["CompetitionID"] = new SelectList(_context.Competitions.Where(c => c.ID.Equals(id)).ToList(), "ID", "Nom");
             ViewData["TypeMatcheID"] = new SelectList(_context.TypesDeMatche, "ID", "Nom");
-
-            //var equipesEncoreEnCompetition = from ce in _context.CompetitionEquipe.Include(ce => ce.Equipe)
-            //              join em in _context.EquipeMatche on ce.EquipeID equals em.EquipesDisputesID
-            //              join m in _context.Matches on em.MatchesDisputesID equals m.ID
-            //              where ce.CompetitionID.Equals(id) && ce.EncoreEnCompetition && (m.MatcheTeminer == true || m.MatcheTeminer == false)
-            //              select ce;
-            //var equipes = equipesEncoreEnCompetition.Count() > 0 ? equipesEncoreEnCompetition.ToList() : _context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id)).ToList();
-
             ViewData["EquipeID"] = new SelectList(_context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(id) && ce.EncoreEnCompetition).ToList(), "EquipeID", "Equipe.Nom");
 
             return Page();

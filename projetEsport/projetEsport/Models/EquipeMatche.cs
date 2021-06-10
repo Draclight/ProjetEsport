@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,5 +13,7 @@ namespace projetEsport.Models
         public Equipe EquipesDisputes { get; set; }
         public int MatchesDisputesID { get; set; }
         public Matche MatchesDisputes { get; set; }
+        [Display(Name = "Vainqueur")]
+        public bool Vainqueur { get; set; }
     }
 }

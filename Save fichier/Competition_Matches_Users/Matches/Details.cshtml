@@ -1,5 +1,5 @@
 ﻿@page
-@model projetEsport.Areas.Admin.Pages.Competitions.Matches.DetailsModel
+@model projetEsport.Pages.Competitions.Matches.DetailsModel
 
 @{
     ViewData["Title"] = "Details";
@@ -42,38 +42,17 @@
             @Html.DisplayFor(model => model.Matche.NbVictoiresEquipeB)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Matche.VainqueurNom)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Matche.VainqueurNom)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Matche.Terminer)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Matche.Terminer)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Matche.Date)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Matche.Date)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Matche.CreeLe)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Matche.CreeLe)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Matche.ModifieeLe)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Matche.ModifieeLe)
-        </dd>
     </dl>
 </div>
 <div>
-    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Matche.ID">Edit</a> |
+    @if (Model.Matche.IsProprietaire)
+    {
+        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Matche.ID">Edit</a> @string.Format("|")
+    }
     <a asp-page="./Index" asp-route-id="@Model.Matche.CompetitionID">Back to List</a>
 </div>

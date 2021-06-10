@@ -44,5 +44,13 @@ namespace projetEsport.ViewModels
         public DateTime ModifieeLe { get; set; }
         [Display(Name = "Propriétaire de la competition")]
         public bool IsProprietaire { get; set; }
+
+        [Display(Name = "Matche terminer")]
+        public bool Terminer { get; set; }
+
+        [Display(Name = "Vainqueur")]
+        public int VainqueurId { get; set; }
+        [Display(Name = "Vainqueur")]
+        public string VainqueurNom { get; set; }
     }
 }

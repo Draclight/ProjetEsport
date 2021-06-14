@@ -17,10 +17,11 @@ namespace projetEsport.Models
         public DateTime CreeLe { get; set; }
         [Display(Name = "Modifié le")]
         public DateTime ModifieeLe { get; set; }
+
         #endregion
 
         #region Clées
-        public ICollection<TypeCompetition> Competitions { get; set; }
+        public ICollection<Competition> Competitions { get; set; }
         #endregion
     }
 }

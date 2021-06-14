@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace projetEsport.Data.Migrations
 {
-    public partial class NewBase : Migration
+    public partial class CreationBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,18 +30,11 @@ namespace projetEsport.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nom = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreeLe = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifieeLe = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TypeCompetitionID = table.Column<int>(type: "int", nullable: true)
+                    ModifieeLe = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TypesDeCompetition", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_TypesDeCompetition_TypesDeCompetition_TypeCompetitionID",
-                        column: x => x.TypeCompetitionID,
-                        principalTable: "TypesDeCompetition",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,7 +181,8 @@ namespace projetEsport.Data.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EquipeID = table.Column<int>(type: "int", nullable: false),
-                    CompetitionID = table.Column<int>(type: "int", nullable: false)
+                    CompetitionID = table.Column<int>(type: "int", nullable: false),
+                    EncoreEnCompetition = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -215,8 +209,10 @@ namespace projetEsport.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TypeMatcheID = table.Column<int>(type: "int", nullable: false),
                     CompetitionID = table.Column<int>(type: "int", nullable: false),
-                    VictoireAEquipe1 = table.Column<int>(type: "int", nullable: false),
-                    VictoireAEquipe2 = table.Column<int>(type: "int", nullable: false),
+                    VictoireEquipeA = table.Column<int>(type: "int", nullable: false),
+                    VictoireEquipeB = table.Column<int>(type: "int", nullable: false),
+                    DateMatche = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MatcheTeminer = table.Column<bool>(type: "bit", nullable: false),
                     CreeLe = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifieeLe = table.Column<DateTime>(type: "datetime2", nullable: false),
                     JeuID = table.Column<int>(type: "int", nullable: true)
@@ -251,7 +247,8 @@ namespace projetEsport.Data.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EquipesDisputesID = table.Column<int>(type: "int", nullable: false),
-                    MatchesDisputesID = table.Column<int>(type: "int", nullable: false)
+                    MatchesDisputesID = table.Column<int>(type: "int", nullable: false),
+                    Vainqueur = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -345,10 +342,6 @@ namespace projetEsport.Data.Migrations
                 table: "Matches",
                 column: "TypeMatcheID");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_TypesDeCompetition_TypeCompetitionID",
-                table: "TypesDeCompetition",
-                column: "TypeCompetitionID");
 
             //Rôles
             migrationBuilder.Sql("INSERT INTO AspNetRoles values(1, 'Administrateur', 'ADMINISTRATEUR', '');");

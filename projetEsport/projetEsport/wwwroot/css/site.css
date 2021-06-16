@@ -367,3 +367,7 @@ html {
     content: url('../images/icons/person-x-fill.svg');
     margin-left: 2px;
 }
+
+.row {
+    justify-content: center;
+}

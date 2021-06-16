@@ -102,6 +102,8 @@
                         <th>
                             @Html.DisplayNameFor(model => model.LicencieVM.Competitions)
                         </th>
+                        <th>
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -113,9 +115,18 @@
                                 @Html.DisplayFor(modelItem => competition.Nom)
                             </td>
                             <td>
-                                <a asp-page="../Competitions/Edit" asp-route-id="@competition.ID">Edit</a> |
-                                <a asp-page="../Competitions/Details" asp-route-id="@competition.ID">Details</a> |
-                                <a asp-page="../Competitions/Delete" asp-route-id="@competition.ID">Delete</a>
+                                @if (competition.IsPropriétaire)
+                                {
+                                    <span class="badge badge-success">Propriétaire</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-primary">Joueur</span>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-success" asp-page="../Competitions/Edit" asp-route-id="@competition.ID">Edit</a> |
+                                <a class="btn btn-primary" asp-page="../Competitions/Details" asp-route-id="@competition.ID">Details</a>
                             </td>
                         </tr>
                     }

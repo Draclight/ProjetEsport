@@ -61,8 +61,9 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
                     RoleId = ur.UserId,
                     RoleName = _context.Roles.FirstOrDefault(r => r.Id.Equals(ur.RoleId)).Name
                 }).ToListAsync(),
-                Competitions = await _context.Competitions.Include(c => c.EquipesDeLaCompetition).Include(c => c.Jeu).Where(c => c.ProprietaireID.Equals(Licencie.ID))
-                .Select(c => new CompetitionViewModel { 
+                Competitions = await _context.Competitions
+                    .Include(c => c.EquipesDeLaCompetition).ThenInclude(e => e.Equipe).ThenInclude(e => e.Membres)
+                    .Include(c => c.Jeu).Where(c => c.ProprietaireID.Equals(Licencie.ID) || c.EquipesDeLaCompetition.Any(e => e.Equipe.Membres.Contains(Licencie))).Select(c => new CompetitionViewModel { 
                     ID = c.ID,
                     CreeLe = c.CreeLe,
                     DateDebut = c.DateDebut,
@@ -74,7 +75,8 @@ namespace projetEsport.Areas.Admin.Pages.Licencies
                         ID = c.JeuID,
                         Nom = c.Jeu.Nom
                     },
-                    Nom = c.Nom
+                    Nom = c.Nom,
+                    IsPropriétaire = c.ProprietaireID.Equals(Licencie.ID)
                 }).ToListAsync(),
                 Invitations = await _context.InvitationsEquipes.Include(ie => ie.Equipe).Where(ie => ie.LicencieID.Equals(Licencie.ID)).Select(ie => new InvitationViewModel
                 {

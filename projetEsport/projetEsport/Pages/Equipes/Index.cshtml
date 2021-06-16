@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Équipes</h1>
 
 <p>
-    <a class="btn btn-success" asp-page="Create">Create New</a>
+    <a class="btn btn-success" asp-page="Create">Créer une nouvelle équipe</a>
 </p>
 <table class="table">
     <thead>
@@ -37,10 +37,10 @@
                     {
                     <a class="btn btn-success" asp-page="./Edit" asp-route-id="@equipe.ID">Éditer</a> @string.Format("|");
                     }
-                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@equipe.ID">Details</a> @(equipe.IsProprietaire ? "|" : "")
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@equipe.ID">Détails</a> @(equipe.IsProprietaire ? "|" : "")
                     @if (equipe.IsProprietaire)
                     {
-                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@equipe.ID">Delete</a>
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@equipe.ID">Supprimer</a>
                     }
                 </td>
             </tr>

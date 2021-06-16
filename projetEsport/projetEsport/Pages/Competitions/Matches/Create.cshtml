@@ -5,9 +5,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Créer</h1>
 
-<h4>Matche</h4>
+<h4>Match</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -35,14 +35,14 @@
                 <span asp-validation-for="Matche.Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Créer" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index" asp-route-id="@Model.Matche.CompetitionID">Back to List</a>
+    <a asp-page="Index" asp-route-id="@Model.Matche.CompetitionID">Retour</a>
 </div>
 
 @section Scripts {

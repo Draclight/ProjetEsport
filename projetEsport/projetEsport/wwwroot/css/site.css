@@ -6,11 +6,38 @@ for details on configuring this project to bundle and minify static web assets. 
 
 /* AJOUTS */
 
+
+.ibox {
+    background-color: #f0f8ff;
+    border-width: 10px;
+    border: solid;
+    padding: 5px;
+    border-color: rgba(92,52,162,0.1);
+}
+
+
 form {
     max-width: 64em;
     margin: auto;
 }
 
+tdv2 {
+    text-align:center;
+    margin:auto;
+}
+
+.tdv2 {
+    text-align: center;
+    margin: auto;
+}
+
+.col-md-4v2 {
+    margin: auto;
+    text-align: center;
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%
+}
 
 body {
     /* Margin bottom by footer height */
@@ -63,6 +90,7 @@ aucentre {
     border-width: 1px 0;
     color: #008558;
 }
+
 
 h1, h2, h3, h4 .text-dark, .navbar-brand, p, div {
     font-family: Montserrat;
@@ -157,7 +185,7 @@ a {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
+    color: black;
     background-color: #ffffff;
     border-color: #1861ac;
 }
@@ -281,7 +309,7 @@ html {
 }
 
     .dropbtn:hover {
-        background-color: #0056b3;
+        /*background-color: #0056b3;*/
     }
 
 /* The container <div> - needed to position the dropdown content */
@@ -309,7 +337,7 @@ html {
 
         /* Change color of dropdown links on hover */
         .dropdown-content a:hover {
-            background-color: #ddd;
+            /*background-color: #ddd;*/
         }
 
     .nav-item.flex {
@@ -322,7 +350,7 @@ html {
 }
 
 .dropdown:hover .dropbtn {
-    background-color: #0056b3;
+    /* background-color: #0056b3;*/
 }
 
 /*Equipes*/

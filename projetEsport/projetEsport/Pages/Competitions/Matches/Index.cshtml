@@ -12,18 +12,18 @@
         <p>
             @if (Model.CompetitionTerminer == false)
             {
-                <a class="btn btn-success" asp-page="./Create" asp-route-id="@Model.CompetitionID">Nouveau</a>
+                <a class="btn btn-success" asp-page="./Create" asp-route-id="@Model.CompetitionID">Créer un match</a>
             }
         </p>
         <form method="post">
             <input type="hidden" asp-for="@Model.CompetitionID" />
             @if (Model.Matche.Count() > 0 && Model.MatchesTerminer && Model.CompetitionTerminer == false)
             {
-                <input type="submit" class="btn btn-outline-success" asp-page-handler="GenererMatch" value="Générer" />
+                <input type="submit" class="btn btn-outline-success" asp-page-handler="GenererMatch" value="Générer le match" />
             }
             else
             {
-                <input type="submit" class="btn btn-outline-success" value="Générer" disabled />
+                <input type="submit" class="btn btn-outline-success" value="Générer le match" disabled />
             }
         </form>
     }
@@ -89,12 +89,12 @@
                 <td>
                     @if (match.IsProprietaire)
                     {
-                        <a class="btn btn-success" asp-page="./Edit" asp-route-id="@match.ID">Edit</a> @(match.IsProprietaire ? string.Format("|") : "")
+                    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@match.ID">Éditer</a> @(match.IsProprietaire ? string.Format("|") : "")
                     }
-                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@match.ID">Details</a> @(match.IsProprietaire ? string.Format("|") : "")
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@match.ID">Détails</a> @(match.IsProprietaire ? string.Format("|") : "")
                     @if (match.IsProprietaire)
                     {
-                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@match.ID">Delete</a>
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@match.ID">Supprimer</a>
                     }
                 </td>
             </tr>

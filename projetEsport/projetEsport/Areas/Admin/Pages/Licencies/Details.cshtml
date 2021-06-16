@@ -87,8 +87,8 @@
                                 }
                             </td>
                             <td>
-                                <a class="btn btn-success" asp-page="../Equipes/Edit" asp-route-id="@invitation.EquipeId">Edit</a> |
-                                <a class="btn btn-primary" asp-page="../Equipes/Details" asp-route-id="@invitation.EquipeId">Details</a>
+                                <a class="btn btn-success" asp-page="../Equipes/Edit" asp-route-id="@invitation.EquipeId">Éditer</a> |
+                                <a class="btn btn-primary" asp-page="../Equipes/Details" asp-route-id="@invitation.EquipeId">Détails</a>
                             </td>
                         </tr>
                     }
@@ -113,9 +113,9 @@
                                 @Html.DisplayFor(modelItem => competition.Nom)
                             </td>
                             <td>
-                                <a asp-page="../Competitions/Edit" asp-route-id="@competition.ID">Edit</a> |
-                                <a asp-page="../Competitions/Details" asp-route-id="@competition.ID">Details</a> |
-                                <a asp-page="../Competitions/Delete" asp-route-id="@competition.ID">Delete</a>
+                                <a asp-page="../Competitions/Edit" asp-route-id="@competition.ID">Éditer</a> |
+                                <a asp-page="../Competitions/Details" asp-route-id="@competition.ID">Détails</a> |
+                                <a asp-page="../Competitions/Delete" asp-route-id="@competition.ID">Supprimer</a>
                             </td>
                         </tr>
                     }
@@ -146,6 +146,6 @@
     </dl>
 </div>
 <div>
-    <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.LicencieVM.ID">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.LicencieVM.ID">Éditer</a> |
+    <a asp-page="./Index">Retour</a>
 </div>

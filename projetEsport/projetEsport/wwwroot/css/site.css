@@ -186,7 +186,7 @@ a {
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: black;
-    background-color: #ffffff;
+    background-color: rgba(92,52,162,0.1);
     border-color: #1861ac;
 }
 
@@ -239,24 +239,39 @@ html {
 
 .icon-register {
     content: url('../images/icons/pencil-square.svg');
+    margin-right: 2px;
+    margin-bottom: 2px;
 }
 
 .icon-login {
     content: url('../images/icons/box-arrow-in-up-right.svg');
+    margin-right: 2px;
+    margin-bottom: 2px;
 }
 
 .icon-logout {
     content: url('../images/icons/box-arrow-right.svg');
+    margin-right: 2px;
+    margin-bottom: 2px;
 }
 
 .icon-competition {
     content: url('../images/icons/trophy-fill.svg');
     margin-right: 2px;
+    margin-bottom: 2px;
 }
+
+/*A METTRE */
+.icon-match {
+    /* content: url('../images/icons/match.svg'); */
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
 
 .icon-manage {
     content: url('../images/icons/person-circle.svg');
-    margin-left: 2px;
+    margin-right: 2px;
 }
 
 .icon-email {
@@ -267,23 +282,30 @@ html {
 
 .icon-password {
     content: url('../images/icons/file-earmark-lock.svg');
+    margin-right: 2px;
 }
 
 .icon-admin {
     content: url('../images/icons/gear-fill.svg');
+    margin-right: 2px;
 }
 
 .icon-equipe {
     content: url('../images/icons/people-fill.svg');
+    margin-right: 2px;
+    margin-bottom: 2px;
 }
 
 .icon-jeu {
     content: url('../images/icons/controller.svg');
+    margin-right: 2px;
+    margin-bottom: 2px;
 }
 
 .icon-licencie {
     content: url('../images/icons/person-fill.svg');
     margin-right: 2px;
+    margin-bottom: 2px;
 }
 
 .icon-type-competition {

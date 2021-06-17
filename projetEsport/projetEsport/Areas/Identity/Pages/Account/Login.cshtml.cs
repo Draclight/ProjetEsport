@@ -51,10 +51,11 @@ namespace projetEsport.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
+            [Display(Name = "Mot de passe")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Se souvenir de moi ?")]
             public bool RememberMe { get; set; }
         }
 
@@ -89,7 +90,7 @@ namespace projetEsport.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (!result.Succeeded)
                 {
-                    _logger.LogInformation("email don't work, try with user");
+                    _logger.LogInformation("Identifiants incorrects.");
                     if (_signInManager.UserManager.Users.Any(u => u.Email == Input.Email))
                     {
                         var user = _signInManager.UserManager.Users.First(u => u.Email == Input.Email);
@@ -116,7 +117,7 @@ namespace projetEsport.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Identifiants incorrects");
                     return Page();
                 }
             }

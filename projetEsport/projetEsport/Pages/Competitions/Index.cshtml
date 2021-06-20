@@ -78,12 +78,12 @@
                     <tdv2>
                         @if (item.IsPropriétaire)
                         {
-                            <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.ID">Edit</a> @string.Format("|")
+                            <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.ID">Editer</a> @string.Format("|")
                         }
-                        <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ID">Details</a> @(item.IsPropriétaire ? "|" : "")
+                        <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ID">Détails</a> @(item.IsPropriétaire ? "|" : "")
                         @if (item.IsPropriétaire)
                         {
-                            <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                            <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ID">Supprimer</a>
                         }
                     </tdv2>
                    

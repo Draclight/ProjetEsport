@@ -31,7 +31,7 @@
                     <ul class="list-group list-group-flush">
                         @foreach (var membre in invitation.Membres)
                         {
-                            <li class="list-group-item"><span class="badge @(membre.IsAccepter ? "badge-success" : "badge-warning")">@membre.Pseudo</span></li>
+                            <li class="list-group-item no-background"><span class="badge @(membre.IsAccepter ? "badge-success" : "badge-warning")">@membre.Pseudo</span></li>
                         }
                     </ul>
                 </td>

@@ -418,3 +418,7 @@ a.nav-link {
     margin: unset;
     display: flex;
 }
+
+.no-background {
+    background: transparent;
+}

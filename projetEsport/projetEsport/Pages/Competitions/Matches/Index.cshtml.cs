@@ -94,9 +94,9 @@ namespace projetEsport.Pages.Competitions.Matches
                 var equipesRestantes = await _context.CompetitionEquipe.Include(ce => ce.Equipe).Where(ce => ce.CompetitionID.Equals(CompetitionID) && ce.EncoreEnCompetition).ToListAsync();
                 IList<CompetitionEquipe> equipesAssigner = new List<CompetitionEquipe>();
 
-                //Définition du nouveau type de match
+                //Définition du nouveau type de match selon le nombre d'équipes restantes
                 TypeMatche typeMatche = null;
-                if (huitiemeDeFinale.Count().Equals(0) && equipesRestantes.Count() > 8)
+                if (huitiemeDeFinale.Count().Equals(0) && equipesRestantes.Count().Equals(16))
                 {
                     typeMatche = await _context.TypesDeMatche.FirstOrDefaultAsync(tm => tm.ID.Equals((int)TypeMatchesViewModel.HuitiemeDeFinale));
                 }

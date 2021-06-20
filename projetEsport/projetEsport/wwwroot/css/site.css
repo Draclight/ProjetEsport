@@ -264,7 +264,7 @@ html {
 
 /*A METTRE */
 .icon-match {
-    /* content: url('../images/icons/match.svg'); */
+     content: url('../images/icons/match.svg'); 
     margin-right: 2px;
     margin-bottom: 2px;
 }
@@ -393,4 +393,13 @@ html {
 
 .row {
     justify-content: center;
+}
+
+div.inline {
+    display: flex;
+}
+
+div.inline form {
+    margin: inherit;
+    margin-left : 10px;
 }

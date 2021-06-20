@@ -257,18 +257,18 @@ html {
 }
 
 .icon-competition {
-    content: url('../images/icons/trophy-fill.svg');
+    content: url('../images/icons/dice-5.svg');
     margin-right: 2px;
     margin-bottom: 2px;
 }
 
 /*A METTRE */
 .icon-match {
-     content: url('../images/icons/match.svg'); 
+    content: url('../images/icons/swords.svg'); 
     margin-right: 2px;
     margin-bottom: 2px;
+    height: 16px;
 }
-
 
 .icon-manage {
     content: url('../images/icons/person-circle.svg');
@@ -310,18 +310,28 @@ html {
 }
 
 .icon-type-competition {
-    content: url('../images/icons/people-fill.svg');
+    content: url('../images/icons/diagram-3-fill.svg');
     margin-right: 2px;
 }
 
 .icon-user {
-    content: url('../images/icons/people-fill.svg');
-    margin-right: 2px;
+    content: url('../images/icons/person-check-fill.svg');
 }
 
 .icon-notification {
     content: url('../images/icons/bell-fill.svg');
     margin-right: 2px;
+}
+
+.icon-type-match {
+    content: url('../images/icons/shield-fill.svg');
+    margin-right: 2px;
+}
+
+.icon-approuv-équipe {
+    content: url('../images/icons/group-check.svg');
+    margin-right: 2px;
+    height: 16px;
 }
 
 /* Dropdown Button */
@@ -402,4 +412,9 @@ div.inline {
 div.inline form {
     margin: inherit;
     margin-left : 10px;
+}
+
+a.nav-link {
+    margin: unset;
+    display: flex;
 }
